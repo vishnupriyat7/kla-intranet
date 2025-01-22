@@ -12,13 +12,18 @@ class PeriodicalController extends Controller
      */
     public function index()
     {
-        //
+        // dd('Hii');
+
+        $periodicals = Periodical::all();
+
+        return view('periodicals.index', compact('periodicals'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create() {
+    public function create()
+    {
         return view('periodicals.create');
     }
 

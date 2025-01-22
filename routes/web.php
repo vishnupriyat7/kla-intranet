@@ -20,6 +20,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/periodicals/store', [PeriodicalController::class, 'store'])->name('periodicals.store');
 
     Route::get('/periodicals/create', [PeriodicalController::class, 'create'])->name('periodicals.create');
+
+    Route::get('/periodicals', [PeriodicalController::class, 'index'])->name('periodicals.index');
+
+
 });
 
 
