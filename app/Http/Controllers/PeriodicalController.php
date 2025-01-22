@@ -34,7 +34,7 @@ class PeriodicalController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'path' => 'required|file|mimes:pdf,doc,docx',
+            'path' => 'required|file|mimes:pdf|max:51200',
             'img' => 'nullable|string|max:255',
         ]);
 
@@ -46,7 +46,9 @@ class PeriodicalController extends Controller
             'img' => $request->img,
         ]);
 
-        return redirect()->back()->with('success', 'Periodical created successfully!');
+        // return redirect()->back()->with('success', 'Periodical created successfully!');
+        return redirect()->route('periodicals.index')->with('success', 'Periodical created successfully!');
+
     }
 
     /**

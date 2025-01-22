@@ -23,16 +23,33 @@
 
 <body class="font-sans antialiased">
 
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <div class="d-flex">
         <!-- Sidebar -->
         <aside id="sidebar" class="sidebar-toggle">
             <div class="sidebar-logo">
-                <a href="#">CodzSword</a>
+                <a href="#">KLA INTRANET</a>
             </div>
             <!-- Sidebar Navigation -->
             <ul class="sidebar-nav p-0">
-                <li class="sidebar-header">
+                {{-- <li class="sidebar-header">
                     Tools & Components
+                </li> --}}
+                <li class="sidebar-item">
+                    <a href="{{ route('dashboard') }}" class="sidebar-link">
+                        <i class="lni lni-dashboard"></i>
+                        <span>Dashboard</span>
+                    </a>
                 </li>
                 <li class="sidebar-item">
                     <a href="{{ route('periodicals.index') }}" class="sidebar-link">
@@ -77,7 +94,7 @@
                         <a href="route('logout')" class="sidebar-link"
                             onclick="event.preventDefault();
                                             this.closest('form').submit();">
-                            <i class="lni lni-popup"></i>
+                            <i class="lni lni-exit"></i>
                             <span>Log Out</span>
                         </a>
 
@@ -88,12 +105,12 @@
 
             </ul>
             <!-- Sidebar Navigation Ends -->
-            <div class="sidebar-footer">
+            {{-- <div class="sidebar-footer">
                 <a href="#" class="sidebar-link">
                     <i class="lni lni-exit"></i>
                     <span>Setting</span>
                 </a>
-            </div>
+            </div> --}}
 
 
 
