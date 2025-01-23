@@ -1,7 +1,6 @@
 @extends('layouts.default')
 
 @section('content')
-
     <!-- Single Product Start -->
     <div class="container-fluid py-5">
         <div class="container py-5">
@@ -288,6 +287,14 @@
                                 </div>
                                 <h4 class="mb-4">Popular Categories</h4>
                                 <div class="row g-2">
+                                    @foreach ($periodicals as $periodical)
+                                        <div class="col-12">
+                                            <a href="{{ asset('storage/'.$periodical->path)}}" target="_blank"
+                                                class="link-hover btn btn-light w-100 rounded text-uppercase text-dark py-3">
+                                                {{ $periodical->name }}
+                                            </a>
+                                        </div>
+                                    @endforeach
                                     <div class="col-12">
                                         <a href="#"
                                             class="link-hover btn btn-light w-100 rounded text-uppercase text-dark py-3">

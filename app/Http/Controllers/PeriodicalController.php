@@ -48,23 +48,24 @@ class PeriodicalController extends Controller
 
         // return redirect()->back()->with('success', 'Periodical created successfully!');
         return redirect()->route('periodicals.index')->with('success', 'Periodical created successfully!');
-
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Periodical $periodical)
+    public function show(Request $request, Periodical $periodical)
     {
-        //
+        $periodical = Periodical::findOrFail($request->id);
+        return view('periodicals.show', compact('periodical'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Periodical $periodical)
+    public function edit(Request $request, Periodical $periodical)
     {
-        //
+        $periodical = Periodical::findOrFail($request->id);
+        return view('periodicals.edit', compact('periodical'));
     }
 
     /**
@@ -72,7 +73,29 @@ class PeriodicalController extends Controller
      */
     public function update(Request $request, Periodical $periodical)
     {
-        //
+
+        $periodical = Periodical::findOrFail($request->id);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'path' => 'required|file|mimes:pdf|max:51200',
+            'img' => 'nullable|string|max:255',
+        ]);
+
+        $filePath = $request->file('path')->store('uploads', 'public');
+        //Delete existing File from storage
+        $oldFile = $periodical->path;
+        if ($oldFile) {
+            unlink(storage_path('app/public/' . $oldFile));
+        }
+
+        $periodical->update([
+            'name' => $request->name,
+            'path' => $filePath,
+            'img' => $request->img,
+        ]);
+
+
+        return redirect()->route('periodicals.index')->with('success', 'Periodical updated successfully!');
     }
 
     /**
