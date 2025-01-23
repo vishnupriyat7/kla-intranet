@@ -1,10 +1,11 @@
 <x-app-layout>
 
 
-    {{-- @foreach ($periodicals as $periodical)
-        {{ $periodical->name }}
-    @endforeach --}}
     <div class="container mt-5">
+        <div class="mb-4 d-flex justify-content-end">
+            <a href="{{ route('periodicals.create') }}" class="btn btn-primary">Add New</a>
+        </div>
+
         <h2 class="mb-4">Periodicals List</h2>
         <table class="table table-striped table-bordered">
             <thead class="table-dark">
@@ -23,7 +24,7 @@
                         <td>{{ $periodical->name }}</td>
                         <td>
                             @if ($periodical->path)
-                                {{ asset('storage/' . $periodical->path) }}
+                                {{ $periodical->path }}
                             @else
                                 N/A
                             @endif
@@ -32,7 +33,7 @@
                             @if ($periodical->img)
                                 <!-- Trigger the modal to view the PDF -->
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#pdfModal{{ $loop->index }}">
-                                    View File
+                                    View PDF
                                 </a>
 
                                 <!-- Modal -->
@@ -59,6 +60,15 @@
                             @endif
                         </td>
                         <td>
+                            <!-- View Button -->
+                            <a href="{{ route('periodicals.show', $periodical->id) }}" class="btn btn-info btn-sm">
+                                View
+                            </a>
+
+                             <!-- Edit Button -->
+                             <a href="{{ route('periodicals.edit', $periodical->id) }}" class="btn btn-warning btn-sm">
+                                Edit
+                            </a>
                         </td>
                     </tr>
                 @endforeach

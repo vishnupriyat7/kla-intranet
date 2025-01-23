@@ -27,7 +27,8 @@
                             <input type="text" class="form-control" id="img" name="img"
                                 placeholder="Enter image name or URL">
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                        <a href="{{ route('periodicals.index') }}" class="btn btn-secondary">Back</a>
                     </form>
 
                 </div>
