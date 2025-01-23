@@ -3,6 +3,7 @@
 use App\Http\Controllers\PeriodicalController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\NewsUpdateController;
 
 Route::get('/', function () {
     return view('home');
@@ -22,6 +23,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/periodicals/create', [PeriodicalController::class, 'create'])->name('periodicals.create');
 
     Route::get('/periodicals', [PeriodicalController::class, 'index'])->name('periodicals.index');
+
+    Route::get('/newsupdates', [NewsUpdateController::class, 'index'])->name('newsupdates.index');
 
 
 });
