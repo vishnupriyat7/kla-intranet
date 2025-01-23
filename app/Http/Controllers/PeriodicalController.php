@@ -39,7 +39,7 @@ class PeriodicalController extends Controller
         ]);
 
         $filePath = $request->file('path')->store('uploads', 'public');
-
+        // dd(request()->file('path')->getSize());
         Periodical::create([
             'name' => $request->name,
             'path' => $filePath,
