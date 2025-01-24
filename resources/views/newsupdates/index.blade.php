@@ -16,7 +16,36 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach ($newsupdates as $news)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $news->title }}</td>
+                        <td>
+                            @if ($news->path)
+                                {{ $news->path }}
+                            @else
+                                N/A
+                            @endif
+                        </td>
+                        <td>{{ $news->order }}</td>
+                        <td>
+                            @if ($news->status)
+                                Published
+                            @else
+                                Unpublished
+                            @endif
+                        </td>
+                        <td>
+                            {{-- <a href="{{ route('newsupdates.edit', $news->id) }}" class="btn btn-primary">Edit</a>
+                            <form action="{{ route('newsupdates.destroy', $news->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form> --}}
+                        </td>
+                    </tr>
 
+                @endforeach
             </tbody>
 
         </table>

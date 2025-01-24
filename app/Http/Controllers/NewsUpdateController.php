@@ -12,8 +12,8 @@ class NewsUpdateController extends Controller
      */
     public function index()
     {
-        $news = NewsUpdate::all();
-        return view('newsupdates.index', compact('news'));
+        $newsupdates = NewsUpdate::all();
+        return view('newsupdates.index', compact('newsupdates'));
     }
 
     /**
@@ -21,7 +21,7 @@ class NewsUpdateController extends Controller
      */
     public function create()
     {
-        //
+        return view('newsupdates.create');
     }
 
     /**
@@ -29,7 +29,23 @@ class NewsUpdateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'path' => 'required|file|mimes:pdf|max:10000',
+            'date' => 'required|date',
+            'status' => 'required|string|max:1',
+        ]);
+
+        $filePath = $request->file('path')->store('uploads/news', 'public');
+        // dd(request()->file('path')->getSize());
+        NewsUpdate::create([
+            'title' => $request->title,
+            'date' => $request->date,
+            'path' => $filePath,
+            'status' => $request->status,
+        ]);
+
+        return redirect()->route('newsupdates.index')->with('success', 'News created successfully!');
     }
 
     /**

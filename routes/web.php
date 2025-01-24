@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/newsupdates', [NewsUpdateController::class, 'index'])->name('newsupdates.index');
     Route::get('/newsupdates/create', [NewsUpdateController::class, 'create'])->name('newsupdates.create');
-    Route::get('/newsupdates/store', [NewsUpdateController::class, 'store'])->name('newsupdates.store');
+    Route::post('/newsupdates/store', [NewsUpdateController::class, 'store'])->name('newsupdates.store');
 
 
 });
