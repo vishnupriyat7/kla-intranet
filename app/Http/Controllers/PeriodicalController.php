@@ -33,20 +33,23 @@ class PeriodicalController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name_eng' => 'required|string|max:255',
+            'name_mal' => 'required|string|max:255',
             'path' => 'required|file|mimes:pdf|max:51200',
+            'date' => 'required|date',
             'img' => 'nullable|string|max:255',
         ]);
 
         $filePath = $request->file('path')->store('uploads', 'public');
         // dd(request()->file('path')->getSize());
         Periodical::create([
-            'name' => $request->name,
+            'name_eng' => $request->name_eng,
+            'name_mal' => $request->name_mal,
+            'date' => $request->date,
             'path' => $filePath,
             'img' => $request->img,
         ]);
 
-        // return redirect()->back()->with('success', 'Periodical created successfully!');
         return redirect()->route('periodicals.index')->with('success', 'Periodical created successfully!');
     }
 
@@ -76,7 +79,9 @@ class PeriodicalController extends Controller
 
         $periodical = Periodical::findOrFail($request->id);
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name_eng' => 'required|string|max:255',
+            'name_mal' => 'required|string|max:255',
+            'date' => 'required|date',
             'path' => 'required|file|mimes:pdf|max:51200',
             'img' => 'nullable|string|max:255',
         ]);
@@ -89,7 +94,9 @@ class PeriodicalController extends Controller
         }
 
         $periodical->update([
-            'name' => $request->name,
+            'name_eng' => $request->name_eng,
+            'name_mal' => $request->name_mal,
+            'date' => $request->date,
             'path' => $filePath,
             'img' => $request->img,
         ]);
