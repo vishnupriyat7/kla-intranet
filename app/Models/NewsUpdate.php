@@ -16,9 +16,9 @@ class NewsUpdate extends Model
      * @var list<string>
      */
     protected $fillable = [
+        'date',
         'title',
         'path',
-        'status',
-        'order'
+        'status'
     ];
 }

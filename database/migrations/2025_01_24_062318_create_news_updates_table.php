@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('news_updates', function (Blueprint $table) {
-            $table->string('order');
-
+        Schema::create('news_updates', function (Blueprint $table) {
+            $table->id();
+            $table->date('date')->nullable();
+            $table->string('title');
+            $table->string('path');
+            $table->string('status');
+            $table->timestamps();
         });
     }
 
@@ -22,8 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('news_updates', function (Blueprint $table) {
-            $table->dropColumn('order');
-        });
+        Schema::dropIfExists('news_updates');
     }
 };

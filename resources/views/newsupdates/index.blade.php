@@ -2,9 +2,7 @@
     <div class="container mt-5">
         <h2 class="mb-4">News List</h2>
         <div class="d-flex justify-content-end mb-4">
-            <button class="btn btn-primary" id="addNews">
-                Add News
-            </button>
+            <a href="{{ route('newsupdates.create') }}" class="btn btn-primary">Add News</a>
         </div>
         <table class="table table-striped table-bordered">
             <thead class="table-dark">
