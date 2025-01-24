@@ -14,9 +14,18 @@
                     <form action="{{ route('periodicals.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="name" name="name"
+                            <label for="name_eng" class="form-label">Name in English</label>
+                            <input type="text" class="form-control" id="name_eng" name="name_eng"
                                 placeholder="Enter periodical name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="name_mal" class="form-label">Name in Malayalam</label>
+                            <input type="text" class="form-control" id="name_mal" name="name_mal"
+                                placeholder="Enter periodical name in Malayalam">
+                        </div>
+                        <div class="mb-3">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="date" name="date" required>
                         </div>
                         <div class="mb-3">
                             <label for="path" class="form-label">Upload File (Path)</label>

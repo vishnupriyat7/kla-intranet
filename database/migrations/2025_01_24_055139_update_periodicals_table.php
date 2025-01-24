@@ -11,19 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('periodicals', function (Blueprint $table) {
-            $table->id();
+        Schema::table('periodicals', function (Blueprint $table) {
 
-
-            $table->dropColumn('name');
             $table->string('name_eng');
             $table->string('name_mal');
-            $table->date('date');
+            $table->date('date')->nullable();
             $table->string('path');
             $table->string('img');
-
-
-            $table->timestamps();
         });
     }
 
@@ -32,6 +26,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('periodicals');
+        Schema::table('periodicals', function (Blueprint $table) {
+            $table->dropColumn(['name_eng', 'name_mal', 'date']);
+            $table->string('name');
+        });
     }
 };

@@ -18,7 +18,9 @@ class Periodical extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'name_eng',
+        'name_mal',
+        'date',
         'path',
         'img',
     ];
