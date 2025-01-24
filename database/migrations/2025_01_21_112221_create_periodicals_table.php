@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('periodicals', function (Blueprint $table) {
             $table->id();
 
-
-            $table->dropColumn('name');
             $table->string('name_eng');
             $table->string('name_mal');
             $table->date('date');
