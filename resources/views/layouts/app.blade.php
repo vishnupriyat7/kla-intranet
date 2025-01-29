@@ -64,7 +64,24 @@
                 <li class="sidebar-header">
                     Pages
                 </li>
+
                 <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#settings" aria-expanded="true" aria-controls="settings">
+                        <i class="lni lni-protection"></i>
+                        <span>Settings</span>
+                    </a>
+                    <ul id="settings" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+
+                            <a href="{{route('periodical-masters.index')}}" class="sidebar-link"> <i class="lni lni-agenda"></i>Periodical Items</a>
+                        </li>
+                        {{-- <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">Register</a>
+                        </li> --}}
+                    </ul>
+                </li>
+                {{-- <li class="sidebar-item">
                     <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                         data-bs-target="#auth" aria-expanded="true" aria-controls="auth">
                         <i class="lni lni-protection"></i>
@@ -78,7 +95,7 @@
                             <a href="#" class="sidebar-link">Register</a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link">
                         <i class="lni lni-popup"></i>
@@ -144,21 +161,7 @@
 
 
 
-    {{-- <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-        @include('layouts.navigation')
 
-
-        @isset($header)
-            <header class="bg-white dark:bg-gray-800 shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-        @endisset
-
-
-
-    </div> --}}
 </body>
 
 </html>

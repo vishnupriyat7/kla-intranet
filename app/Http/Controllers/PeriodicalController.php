@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Periodical;
+
+use App\Models\PeriodicalMaster;
 use Illuminate\Http\Request;
 
 class PeriodicalController extends Controller
@@ -14,7 +16,7 @@ class PeriodicalController extends Controller
     {
         // dd('Hii');
 
-        $periodicals = Periodical::all();
+        $periodicals = Periodical::with('periodicalMaster')->get();
 
         return view('periodicals.index', compact('periodicals'));
     }
@@ -23,8 +25,10 @@ class PeriodicalController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
+
     {
-        return view('periodicals.create');
+        $periodicalMasters = PeriodicalMaster::all();
+        return view('periodicals.create', compact('periodicalMasters'));
     }
 
     /**
@@ -33,21 +37,19 @@ class PeriodicalController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name_eng' => 'required|string|max:255',
-            'name_mal' => 'required|string|max:255',
+            'name_eng' => 'required|exists:periodical_masters,id',
             'path' => 'required|file|mimes:pdf|max:51200',
             'date' => 'required|date',
-            'img' => 'nullable|string|max:255',
+
         ]);
 
         $filePath = $request->file('path')->store('uploads', 'public');
-        // dd(request()->file('path')->getSize());
+
         Periodical::create([
-            'name_eng' => $request->name_eng,
-            'name_mal' => $request->name_mal,
+            'periodical_master_id' => $request->name_eng,
             'date' => $request->date,
             'path' => $filePath,
-            'img' => $request->img,
+
         ]);
 
         return redirect()->route('periodicals.index')->with('success', 'Periodical created successfully!');
@@ -58,7 +60,7 @@ class PeriodicalController extends Controller
      */
     public function show(Request $request, Periodical $periodical)
     {
-        $periodical = Periodical::findOrFail($request->id);
+        $periodical = Periodical::with('periodicalMaster')->findOrFail($request->id);
         return view('periodicals.show', compact('periodical'));
     }
 

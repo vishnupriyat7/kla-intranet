@@ -13,16 +13,17 @@
 
                     <form action="{{ route('periodicals.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
+
                         <div class="mb-3">
-                            <label for="name_eng" class="form-label">Name in English</label>
-                            <input type="text" class="form-control" id="name_eng" name="name_eng"
-                                placeholder="Enter periodical name" required>
+                            <label for="name_eng" class="form-label">Periodical Master</label>
+                            <select class="form-select" id="name_eng" name="name_eng" required>
+                                <option value="">Select Periodical Item</option>
+                                @foreach ($periodicalMasters as $periodicalMaster)
+                                    <option value="{{ $periodicalMaster->id }}">{{ $periodicalMaster->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="mb-3">
-                            <label for="name_mal" class="form-label">Name in Malayalam</label>
-                            <input type="text" class="form-control" id="name_mal" name="name_mal"
-                                placeholder="Enter periodical name in Malayalam">
-                        </div>
+
                         <div class="mb-3">
                             <label for="date" class="form-label">Date</label>
                             <input type="date" class="form-control" id="date" name="date" required>
@@ -31,11 +32,7 @@
                             <label for="path" class="form-label">Upload File (Path)</label>
                             <input type="file" class="form-control" id="path" name="path" required>
                         </div>
-                        <div class="mb-3">
-                            <label for="img" class="form-label">Image</label>
-                            <input type="text" class="form-control" id="img" name="img"
-                                placeholder="Enter image name or URL">
-                        </div>
+
                         <button type="submit" class="btn btn-success">Submit</button>
                         <a href="{{ route('periodicals.index') }}" class="btn btn-secondary">Back</a>
                     </form>

@@ -5,6 +5,7 @@ use App\Http\Controllers\PeriodicalController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsUpdateController;
+use App\Http\Controllers\PeriodicalMasterController;
 
 // Route::get('/', function () {
 //     return view('home');
@@ -37,6 +38,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/newsupdates/store', [NewsUpdateController::class, 'store'])->name('newsupdates.store');
 
 
+    Route::get('/periodical-masters', [PeriodicalMasterController::class, 'index'])->name('periodical-masters.index');
+    Route::get('/periodical-masters/create', [PeriodicalMasterController::class, 'create'])->name('periodical-masters.create');
+
+    Route::post('/periodical-masters/store', [PeriodicalMasterController::class, 'store'])->name('periodical-masters.store');
+    Route::get('/periodical-masters/edit/{id}', [PeriodicalMasterController::class, 'edit'])->name('periodical-masters.edit');
+    Route::patch('/periodical-masters/update/{id}', [PeriodicalMasterController::class, 'update'])->name('periodical-masters.update');
+    Route::delete('/periodical-masters/destroy/{id}', [PeriodicalMasterController::class, 'destroy'])->name('periodical-masters.destroy');
 });
 
 
