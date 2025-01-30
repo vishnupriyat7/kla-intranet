@@ -32,11 +32,12 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/periodicals', [PeriodicalController::class, 'index'])->name('periodicals.index');
 
-    Route::get('/newsupdates', [NewsUpdateController::class, 'index'])->name('newsupdates.index');
-    Route::get('/newsupdates/create', [NewsUpdateController::class, 'create'])->name('newsupdates.create');
-    Route::post('/newsupdates/store', [NewsUpdateController::class, 'store'])->name('newsupdates.store');
-
-
+    Route::get('/news-updates', [NewsUpdateController::class, 'index'])->name('news-updates.index');
+    Route::get('/news-updates/create', [NewsUpdateController::class, 'create'])->name('news-updates.create');
+    Route::post('/news-updates/store', [NewsUpdateController::class, 'store'])->name('news-updates.store');
+    Route::get('/news-updates/edit/{id}', [NewsUpdateController::class, 'edit'])->name('news-updates.edit');
+    Route::patch('/news-updates/update/{id}', [NewsUpdateController::class, 'update'])->name('news-updates.update');
+    Route::delete('/news-updates/destroy/{id}', [NewsUpdateController::class, 'destroy'])->name('news-updates.destroy');
 });
 
 
