@@ -295,42 +295,7 @@
                                             </a>
                                         </div>
                                     @endforeach
-                                    <div class="col-12">
-                                        <a href="#"
-                                            class="link-hover btn btn-light w-100 rounded text-uppercase text-dark py-3">
-                                            Life Style
-                                        </a>
-                                    </div>
-                                    <div class="col-12">
-                                        <a href="#"
-                                            class="link-hover btn btn-light w-100 rounded text-uppercase text-dark py-3">
-                                            Fashion
-                                        </a>
-                                    </div>
-                                    <div class="col-12">
-                                        <a href="#"
-                                            class="link-hover btn btn-light w-100 rounded text-uppercase text-dark py-3">
-                                            Relationship
-                                        </a>
-                                    </div>
-                                    <div class="col-12">
-                                        <a href="#"
-                                            class="link-hover btn btn-light w-100 rounded text-uppercase text-dark py-3">
-                                            Art & Culture
-                                        </a>
-                                    </div>
-                                    <div class="col-12">
-                                        <a href="#"
-                                            class="link-hover btn btn-light w-100 rounded text-uppercase text-dark py-3">
-                                            Self Development
-                                        </a>
-                                    </div>
-                                    <div class="col-12">
-                                        <a href="#"
-                                            class="link-hover btn btn-light w-100 rounded text-uppercase text-dark py-3 mb-4">
-                                            travel & tourism
-                                        </a>
-                                    </div>
+
                                 </div>
                                 <h4 class="my-4">Stay Connected</h4>
                                 <div class="row g-4">

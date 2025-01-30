@@ -88,7 +88,7 @@ class PeriodicalController extends Controller
         $request->validate([
             'name_eng' => 'required|exists:periodical_masters,id',
             'date' => 'required|date',
-            'path' => 'nullable|file|mimes:pdf|max:51200',
+            'path' => 'nullable|file|mimes:pdf|max:2000000',
 
         ]);
 
