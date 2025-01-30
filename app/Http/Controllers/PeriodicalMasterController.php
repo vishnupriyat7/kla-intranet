@@ -41,7 +41,7 @@ class PeriodicalMasterController extends Controller
             'img' => $filePath,
         ]);
 
-        return redirect()->route('periodicalMasters.index')->with('success', 'Periodical Master created successfully!');
+        return redirect()->route('periodical-masters.index')->with('success', 'Periodical Master created successfully!');
     }
 
     /**

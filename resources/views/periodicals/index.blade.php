@@ -13,7 +13,9 @@
                     <th>#</th>
                     <th>Name</th>
                     <th>Path</th>
+
                     <th>File</th>
+                    <th>Date</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -59,6 +61,7 @@
                                 <span>No image or PDF available</span>
                             @endif
                         </td>
+                        <td>{{ $periodical->date }}</td>
                         <td>
                             <!-- View Button -->
                             <a href="{{ route('periodicals.show', $periodical->id) }}" class="btn btn-info btn-sm">

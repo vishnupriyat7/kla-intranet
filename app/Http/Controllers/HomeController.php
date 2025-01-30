@@ -10,7 +10,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $periodicals = Periodical::all();
+        $periodicals = Periodical::with('periodicalMaster')->get();
         return view('home',compact('periodicals'));
     }
 }

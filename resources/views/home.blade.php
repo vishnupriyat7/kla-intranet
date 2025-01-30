@@ -285,13 +285,13 @@
                                     <span id="search-icon-1" class="btn btn-primary input-group-text p-3"><i
                                             class="fa fa-search text-white"></i></span>
                                 </div>
-                                <h4 class="mb-4">Popular Categories</h4>
+                                <h4 class="mb-4">Periodicals</h4>
                                 <div class="row g-2">
                                     @foreach ($periodicals as $periodical)
                                         <div class="col-12">
                                             <a href="{{ asset('storage/'.$periodical->path)}}" target="_blank"
                                                 class="link-hover btn btn-light w-100 rounded text-uppercase text-dark py-3">
-                                                {{ $periodical->name }}
+                                                {{ $periodical->periodicalMaster->name ?? 'N/A' }}
                                             </a>
                                         </div>
                                     @endforeach
