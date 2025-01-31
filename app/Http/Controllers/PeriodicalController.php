@@ -17,6 +17,7 @@ class PeriodicalController extends Controller
         // dd('Hii');
 
         $periodicals = Periodical::with('periodicalMaster')->get();
+        $periodicals = Periodical::with('periodicalMaster')->get();
 
         return view('periodicals.index', compact('periodicals'));
     }
@@ -27,6 +28,8 @@ class PeriodicalController extends Controller
     public function create()
 
     {
+        $periodicalMasters = PeriodicalMaster::all();
+        return view('periodicals.create', compact('periodicalMasters'));
         $periodicalMasters = PeriodicalMaster::all();
         return view('periodicals.create', compact('periodicalMasters'));
     }

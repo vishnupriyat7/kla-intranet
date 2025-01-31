@@ -45,8 +45,13 @@
             </div>
 
 
+<<<<<<< HEAD
             <button type="submit" class="btn btn-primary">Update Periodical</button>
             <a href="{{ route('periodical-masters.index') }}" class="btn btn-secondary">Back</a>
+=======
+            <button type="submit" class="btn btn-primary mt-3">Update Periodical</button>
+            <a href="{{ route('periodical-masters.index') }}" class="btn btn-secondary mt-4">Back</a>
+>>>>>>> ccf79db (Periodicals-upload-doing)
         </form>
     </div>
 </x-app-layout>

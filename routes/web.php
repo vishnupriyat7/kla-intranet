@@ -39,6 +39,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/news-updates/edit/{id}', [NewsUpdateController::class, 'edit'])->name('news-updates.edit');
     Route::patch('/news-updates/update/{id}', [NewsUpdateController::class, 'update'])->name('news-updates.update');
     Route::delete('/news-updates/destroy/{id}', [NewsUpdateController::class, 'destroy'])->name('news-updates.destroy');
+
+
+
+
     Route::get('/periodical-masters', [PeriodicalMasterController::class, 'index'])->name('periodical-masters.index');
     Route::get('/periodical-masters/create', [PeriodicalMasterController::class, 'create'])->name('periodical-masters.create');
 
