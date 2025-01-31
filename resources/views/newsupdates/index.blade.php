@@ -58,7 +58,7 @@
                             <form action="{{ route('news-updates.destroy', $news->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="ri-delete-bin-2-fill btn btn-danger"></button>
+                                <button type="submit" class="ri-delete-bin-2-fill btn btn-danger mt-1"></button>
                             </form>
                         </td>
                     </tr>
