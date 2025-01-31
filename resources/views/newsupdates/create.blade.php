@@ -10,7 +10,7 @@
             <h2 class="mb-4">Add News</h2>
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <form action="{{ route('newsupdates.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('news-updates.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label for="date" class="form-label">Date</label>
@@ -34,7 +34,7 @@
                             </select>
                         </div>
                         <button type="submit" class="btn btn-success">Submit</button>
-                        <a href="{{ route('newsupdates.index') }}" class="btn btn-secondary">Back</a>
+                        <a href="{{ route('news-updates.index') }}" class="btn btn-secondary">Back</a>
                     </form>
 
                 </div>
