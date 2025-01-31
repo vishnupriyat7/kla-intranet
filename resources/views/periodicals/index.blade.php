@@ -13,7 +13,9 @@
                     <th>#</th>
                     <th>Name</th>
                     <th>Path</th>
+
                     <th>File</th>
+                    <th>Date</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -21,7 +23,7 @@
                 @foreach ($periodicals as $key => $periodical)
                     <tr>
                         <td>{{ $key + 1 }}</td>
-                        <td>{{ $periodical->name }}</td>
+                        <td>{{ $periodical->periodicalMaster->name ?? 'N/A' }}</td>
                         <td>
                             @if ($periodical->path)
                                 {{ $periodical->path }}
@@ -30,9 +32,9 @@
                             @endif
                         </td>
                         <td>
-                            @if ($periodical->img)
+                            @if ($periodical->path)
                                 <!-- Trigger the modal to view the PDF -->
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#pdfModal{{ $loop->index }}">
+                                <a href="#" data-bs-toggle="modal" class="btn btn-success btn-sm" data-bs-target="#pdfModal{{ $loop->index }}">
                                     View PDF
                                 </a>
 
@@ -59,14 +61,15 @@
                                 <span>No image or PDF available</span>
                             @endif
                         </td>
+                        <td>{{ $periodical->date }}</td>
                         <td>
                             <!-- View Button -->
                             <a href="{{ route('periodicals.show', $periodical->id) }}" class="btn btn-info btn-sm">
                                 View
                             </a>
 
-                             <!-- Edit Button -->
-                             <a href="{{ route('periodicals.edit', $periodical->id) }}" class="btn btn-warning btn-sm">
+                            <!-- Edit Button -->
+                            <a href="{{ route('periodicals.edit', $periodical->id) }}" class="btn btn-warning btn-sm">
                                 Edit
                             </a>
                         </td>

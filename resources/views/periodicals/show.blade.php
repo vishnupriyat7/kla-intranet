@@ -12,7 +12,7 @@
             <tbody>
                 <tr>
                     <th style="width: 20%;">Name</th>
-                    <td>{{ $periodical->name }}</td>
+                    <td>{{ $periodical->periodicalMaster->name }}</td>
                 </tr>
                 <tr>
                     <th>Path</th>
@@ -21,7 +21,7 @@
                 <tr>
                     <th>File</th>
                     <td>
-                        @if ($periodical->img)
+                        @if ($periodical->path)
                             <!-- Trigger the modal to view the PDF -->
                             <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#pdfModal{{ $periodical->id }}">
                                 View PDF

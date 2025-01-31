@@ -3,12 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 use Illuminate\Notifications\Notifiable;
 
-class Periodical extends Model
+class PeriodicalMaster extends Model
 {
     use HasFactory, Notifiable;
 
@@ -18,14 +17,15 @@ class Periodical extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'periodical_master_id',
-        'date',
-        'path',
-
+        'name',
+        'img',
     ];
-    //Define Relationship with PeriodicalMaster
-    public function periodicalMaster()
+
+    //Define Relationship with Periodical
+    public function periodicals()
     {
-        return $this->belongsTo(PeriodicalMaster::class);
+        return $this->hasMany(Periodical::class);
     }
+
+
 }

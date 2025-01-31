@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Periodical;
+
+use App\Models\PeriodicalMaster;
 use Illuminate\Http\Request;
 
 class PeriodicalController extends Controller
@@ -14,7 +16,7 @@ class PeriodicalController extends Controller
     {
         // dd('Hii');
 
-        $periodicals = Periodical::all();
+        $periodicals = Periodical::with('periodicalMaster')->get();
 
         return view('periodicals.index', compact('periodicals'));
     }
@@ -23,8 +25,10 @@ class PeriodicalController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
+
     {
-        return view('periodicals.create');
+        $periodicalMasters = PeriodicalMaster::all();
+        return view('periodicals.create', compact('periodicalMasters'));
     }
 
     /**
@@ -33,21 +37,19 @@ class PeriodicalController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name_eng' => 'required|string|max:255',
-            'name_mal' => 'required|string|max:255',
-            'path' => 'required|file|mimes:pdf|max:51200',
+            'name_eng' => 'required|exists:periodical_masters,id',
+            'path' => 'required|file|mimes:pdf|max:1048576',
             'date' => 'required|date',
-            'img' => 'nullable|string|max:255',
+
         ]);
 
-        $filePath = $request->file('path')->store('uploads', 'public');
-        // dd(request()->file('path')->getSize());
+        $filePath = $request->file('path')->store('uploads/periodicals/pdf', 'public');
+
         Periodical::create([
-            'name_eng' => $request->name_eng,
-            'name_mal' => $request->name_mal,
+            'periodical_master_id' => $request->name_eng,
             'date' => $request->date,
             'path' => $filePath,
-            'img' => $request->img,
+
         ]);
 
         return redirect()->route('periodicals.index')->with('success', 'Periodical created successfully!');
@@ -58,7 +60,7 @@ class PeriodicalController extends Controller
      */
     public function show(Request $request, Periodical $periodical)
     {
-        $periodical = Periodical::findOrFail($request->id);
+        $periodical = Periodical::with('periodicalMaster')->findOrFail($request->id);
         return view('periodicals.show', compact('periodical'));
     }
 
@@ -67,43 +69,60 @@ class PeriodicalController extends Controller
      */
     public function edit(Request $request, Periodical $periodical)
     {
-        $periodical = Periodical::findOrFail($request->id);
-        return view('periodicals.edit', compact('periodical'));
+        $periodical = Periodical::with('periodicalMaster')->findOrFail($request->id);
+
+        $periodicalMasters = PeriodicalMaster::all();
+
+        return view('periodicals.edit', compact('periodical', 'periodicalMasters'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Periodical $periodical)
+    public function update(Request $request)
     {
 
         $periodical = Periodical::findOrFail($request->id);
+        // dd($request->all());
+
         $request->validate([
-            'name_eng' => 'required|string|max:255',
-            'name_mal' => 'required|string|max:255',
+            'name_eng' => 'required|exists:periodical_masters,id',
             'date' => 'required|date',
-            'path' => 'required|file|mimes:pdf|max:51200',
-            'img' => 'nullable|string|max:255',
+            'path' => 'nullable|file|mimes:pdf|max:2000000',
+
         ]);
 
-        $filePath = $request->file('path')->store('uploads', 'public');
-        //Delete existing File from storage
-        $oldFile = $periodical->path;
-        if ($oldFile) {
-            unlink(storage_path('app/public/' . $oldFile));
+        // dd($request->all());
+
+
+        if ($request->hasFile('path')) {
+            //Delete existing File from storage
+            // dd($periodical->path);
+            // dd(storage_path());
+
+            if ($periodical->path) {
+                unlink(storage_path('app/public/' . $periodical->path));
+            }
+
+            $filePath = $request->file('path')->store('uploads/periodicals/pdf', 'public');
+
+            $periodical->update([
+                'periodical_master_id' => $request->name_eng,
+                'date' => $request->date,
+                'path' => $filePath,
+            ]);
+
+            return redirect()->route('periodicals.index')->with('success', 'Periodical updated successfully!');
+        } else {
+            $periodical->update([
+                'periodical_master_id' => $request->name_eng,
+                'date' => $request->date,
+            ]);
+
+            return redirect()->route('periodicals.index')->with('success', 'Periodical updated successfully!');
         }
-
-        $periodical->update([
-            'name_eng' => $request->name_eng,
-            'name_mal' => $request->name_mal,
-            'date' => $request->date,
-            'path' => $filePath,
-            'img' => $request->img,
-        ]);
-
-
-        return redirect()->route('periodicals.index')->with('success', 'Periodical updated successfully!');
     }
+
 
     /**
      * Remove the specified resource from storage.
