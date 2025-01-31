@@ -31,7 +31,7 @@ class NewsUpdateController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'path' => 'required|file|mimes:pdf|max:10000',
+            'path' => 'required|file|mimes:pdf|max:100000',
             'date' => 'required|date',
             'status' => 'required|string|max:1',
         ]);
@@ -45,7 +45,7 @@ class NewsUpdateController extends Controller
             'status' => $request->status,
         ]);
 
-        return redirect()->route('newsupdates.index')->with('success', 'News created successfully!');
+        return redirect()->route('news-updates.index')->with('success', 'News created successfully!');
     }
 
     /**
