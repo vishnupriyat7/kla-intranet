@@ -16,6 +16,7 @@
 
                     <th>File</th>
                     <th>Date</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -34,8 +35,9 @@
                         <td>
                             @if ($periodical->path)
                                 <!-- Trigger the modal to view the PDF -->
-                                <a href="#" data-bs-toggle="modal" class="btn btn-success btn-sm" data-bs-target="#pdfModal{{ $loop->index }}">
-                                    View PDF
+                                <a href="#" data-bs-toggle="modal" class="btn btn-outline-info btn-sm text-black"
+                                    data-bs-target="#pdfModal{{ $loop->index }}">
+                                    <i class="ri-eye-fill"></i> PDF
                                 </a>
 
                                 <!-- Modal -->
@@ -63,14 +65,21 @@
                         </td>
                         <td>{{ $periodical->date }}</td>
                         <td>
+                            @if ($periodical->status == '0')
+                                <span class="badge bg-danger">Unpublished</span>
+                            @else
+                                <span class="badge bg-success">Published</span>
+                            @endif
+                        </td>
+                        <td>
                             <!-- View Button -->
                             <a href="{{ route('periodicals.show', $periodical->id) }}" class="btn btn-info btn-sm">
-                                View
+                                <i class="ri-eye-fill"></i>
                             </a>
 
                             <!-- Edit Button -->
                             <a href="{{ route('periodicals.edit', $periodical->id) }}" class="btn btn-warning btn-sm">
-                                Edit
+                                <i class="ri-edit-2-fill"></i>
                             </a>
                         </td>
                     </tr>
@@ -79,8 +88,12 @@
 
         </table>
 
-    </div>
+        {{-- Provide Pagination --}}
+        <div class="d-flex justify-content-center">
+            {{ $periodicals->links() }}
 
+        </div>
+    </div>
 
 
 

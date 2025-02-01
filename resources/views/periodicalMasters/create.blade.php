@@ -17,11 +17,17 @@
                             <label for="name" class="form-label">Name</label>
                             <input type="text" class="form-control" id="name" name="name"
                                 placeholder="Enter periodical name" required>
+                            @error('name')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="img" class="form-label">Upload File </label>
                             <input type="file" class="form-control" id="img" name="img" required>
+                            @error('img')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <button type="submit" class="btn btn-success">Submit</button>
