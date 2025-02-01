@@ -21,6 +21,7 @@ class Periodical extends Model
         'periodical_master_id',
         'date',
         'path',
+        'status',
 
     ];
     //Define Relationship with PeriodicalMaster

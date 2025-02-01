@@ -22,15 +22,36 @@
                                     <option value="{{ $periodicalMaster->id }}">{{ $periodicalMaster->name }}</option>
                                 @endforeach
                             </select>
+                            @error('name_eng')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="date" class="form-label">Date</label>
                             <input type="date" class="form-control" id="date" name="date" required>
+                            @error('date')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label for="path" class="form-label">Upload File (Path)</label>
                             <input type="file" class="form-control" id="path" name="path" required>
+                            @error('path')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        {{-- Add Select Box for Periodical List Published(1) /Unpublished(0) --}}
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Published / Unpublished</label>
+                            <select class="form-select" id="status" name="status" required>
+                                <option value="">Select Published / Unpublished</option>
+                                <option value="1">Published</option>
+                                <option value="0">Unpublished</option>
+                            </select>
+                            @error('status')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <button type="submit" class="btn btn-success">Submit</button>

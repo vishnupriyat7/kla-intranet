@@ -20,12 +20,32 @@
                             {{ $periodicalMaster->name }}</option>
                     @endforeach
                 </select>
+                @error('name_eng')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="mb-3">
                 <label for="date" class="form-label">Date</label>
                 <input type="date" class="form-control" id="date" name="date"
                     value="{{ $periodical->date }}">
+                @error('date')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            {{-- Add Select Box for Periodical List Published(1) /Unpublished(0) --}}
+
+            <div class="mb-3">
+                <label for="status" class="form-label">Published / Unpublished</label>
+                <select class="form-select" id="status" name="status" required>
+                    <option value="">Select Published / Unpublished</option>
+                    <option value="1" {{ $periodical->status == 1 ? 'selected' : '' }}>Published</option>
+                    <option value="0" {{ $periodical->status == 0 ? 'selected' : '' }}>Unpublished</option>
+                </select>
+                @error('status')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
             {{-- Place the choose file input field inside a row and view current pdf button in same row --}}
 

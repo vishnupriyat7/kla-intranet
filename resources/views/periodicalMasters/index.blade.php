@@ -35,17 +35,22 @@
                             </td>
 
                             <td>
-
                                 <a href="{{ route('periodical-masters.edit', $periodicalMaster->id) }}"
                                     class="btn btn-warning btn-sm">Edit</a>
-                                <form action="{{ route('periodical-masters.destroy', $periodicalMaster->id) }}"
-                                    method="POST" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm"
-                                        onclick="return confirm('Are you sure you want to delete?')">Delete</button>
-                                </form>
 
+                                {{-- If no foreign key constrains only display delete button else no delete button  --}}
+
+                                @if ($periodicalMaster->periodicals->count() == 0)
+                                    <form action="{{ route('periodical-masters.destroy', $periodicalMaster->id) }}"
+                                        method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Are you sure you want to delete?')">Delete</button>
+                                    </form>
+                                @else
+                                    <button type="button" class="btn btn-danger btn-sm" disabled>Delete</button>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

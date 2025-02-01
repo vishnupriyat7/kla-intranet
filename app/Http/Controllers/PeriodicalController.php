@@ -16,8 +16,9 @@ class PeriodicalController extends Controller
     {
         // dd('Hii');
 
-        $periodicals = Periodical::with('periodicalMaster')->get();
-        $periodicals = Periodical::with('periodicalMaster')->get();
+        $periodicals = Periodical::with('periodicalMaster')
+        ->orderBy('created_at', 'desc')
+        ->paginate(25);
 
         return view('periodicals.index', compact('periodicals'));
     }
@@ -28,8 +29,7 @@ class PeriodicalController extends Controller
     public function create()
 
     {
-        $periodicalMasters = PeriodicalMaster::all();
-        return view('periodicals.create', compact('periodicalMasters'));
+
         $periodicalMasters = PeriodicalMaster::all();
         return view('periodicals.create', compact('periodicalMasters'));
     }
@@ -43,15 +43,23 @@ class PeriodicalController extends Controller
             'name_eng' => 'required|exists:periodical_masters,id',
             'path' => 'required|file|mimes:pdf|max:1048576',
             'date' => 'required|date',
+            'status' => 'required',
 
         ]);
 
         $filePath = $request->file('path')->store('uploads/periodicals/pdf', 'public');
 
+        if ($request->status == 1) {
+
+            $periodical = Periodical::where('periodical_master_id', $request->name_eng)->update(['status' => '0']);
+        }
+
+
         Periodical::create([
             'periodical_master_id' => $request->name_eng,
             'date' => $request->date,
             'path' => $filePath,
+            'status' => $request->status,
 
         ]);
 
@@ -92,6 +100,7 @@ class PeriodicalController extends Controller
             'name_eng' => 'required|exists:periodical_masters,id',
             'date' => 'required|date',
             'path' => 'nullable|file|mimes:pdf|max:2000000',
+            'status' => 'required',
 
         ]);
 
@@ -113,6 +122,7 @@ class PeriodicalController extends Controller
                 'periodical_master_id' => $request->name_eng,
                 'date' => $request->date,
                 'path' => $filePath,
+                'status' => $request->status,
             ]);
 
             return redirect()->route('periodicals.index')->with('success', 'Periodical updated successfully!');
@@ -120,6 +130,7 @@ class PeriodicalController extends Controller
             $periodical->update([
                 'periodical_master_id' => $request->name_eng,
                 'date' => $request->date,
+                'status' => $request->status,
             ]);
 
             return redirect()->route('periodicals.index')->with('success', 'Periodical updated successfully!');

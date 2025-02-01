@@ -34,6 +34,7 @@ class PeriodicalMasterController extends Controller
             'img' => 'required|file|mimes:jpg,jpeg,png|max:51200',
         ]);
 
+
         $filePath = $request->file('img')->store('uploads/periodicals', 'public');
 
         PeriodicalMaster::create([
@@ -101,9 +102,16 @@ class PeriodicalMasterController extends Controller
      */
     public function destroy(Request $request)
     {
+
+        //provide an alert for Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails
+
         $periodicalMaster = PeriodicalMaster::findOrFail($request->id);
+
+        if ($periodicalMaster->periodicals->count() > 0) {
+            return redirect()->route('periodical-masters.index')->with('error', 'Cannot delete Periodical Master as it has associated Periodicals!');
+        }
+
         $periodicalMaster->delete();
         return redirect()->route('periodical-masters.index')->with('success', 'Periodical Master deleted successfully!');
     }
 }
-
