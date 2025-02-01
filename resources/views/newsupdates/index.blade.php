@@ -21,17 +21,18 @@
                         <td>{{ $news->title }}</td>
                         <td>{{ $news->date }}</td>
                         <td>
+
                             @if ($news->status)
-                                Published
+                                <span class="badge bg-success text-white"> Published </span>
                             @else
-                                Unpublished
+                                <span class="badge bg-secondary text-white"> Unpublished</span>
                             @endif
+                            </span>
                         </td>
-                        <td>
+                        <td class="text-nowrap">
                             @if ($news->path)
-                                <button class="ri ri-eye-fill btn btn-info" data-bs-toggle="modal" data-bs-target="#newsModal{{ $loop->iteration }}"></button>
-                            @else
-                                N/A
+                                <button class="ri ri-eye-fill btn btn-info btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#newsModal{{ $loop->iteration }}"></button>
                             @endif
                             <div class="modal fade" id="newsModal{{ $loop->iteration }}" tabindex="-1" role="dialog"
                                 aria-labelledby="newsModalLabel" aria-hidden="true">
@@ -54,11 +55,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="{{ route('news-updates.edit', $news->id) }}" class="ri-edit-fill btn btn-primary"></a>
+                            <a href="{{ route('news-updates.edit', $news->id) }}" class="ri-edit-fill btn btn-warning btn-sm"></a>
                             <form action="{{ route('news-updates.destroy', $news->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="ri-delete-bin-2-fill btn btn-danger mt-1"></button>
+                                <button type="submit" class="ri-delete-bin-2-fill btn btn-danger btn-sm"></button>
                             </form>
                         </td>
                     </tr>
