@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsUpdateController;
 use App\Http\Controllers\PeriodicalMasterController;
+use App\Http\Controllers\GovernmentOrderTypeController;
 
 // Route::get('/', function () {
 //     return view('home');
@@ -41,8 +42,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/news-updates/destroy/{id}', [NewsUpdateController::class, 'destroy'])->name('news-updates.destroy');
 
 
-
-
     Route::get('/periodical-masters', [PeriodicalMasterController::class, 'index'])->name('periodical-masters.index');
     Route::get('/periodical-masters/create', [PeriodicalMasterController::class, 'create'])->name('periodical-masters.create');
 
@@ -50,6 +49,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/periodical-masters/edit/{id}', [PeriodicalMasterController::class, 'edit'])->name('periodical-masters.edit');
     Route::patch('/periodical-masters/update/{id}', [PeriodicalMasterController::class, 'update'])->name('periodical-masters.update');
     Route::delete('/periodical-masters/destroy/{id}', [PeriodicalMasterController::class, 'destroy'])->name('periodical-masters.destroy');
+
+    Route::get('/go-types', [GovernmentOrderTypeController::class, 'index'])->name('go-types.index');
+    Route::get('/go-types/create', [GovernmentOrderTypeController::class, 'create'])->name('go-types.create');
+    Route::post('go-types/store', [GovernmentOrderTypeController::class, 'store'])->name('go-types.store');
+    Route::get('/go-types/edit/{id}', [GovernmentOrderTypeController::class, 'edit'])->name('go-types.edit');
+    Route::patch('/go-types/update/{id}', [GovernmentOrderTypeController::class, 'update'])->name('go-types.update');
 });
 
 

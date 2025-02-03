@@ -64,6 +64,16 @@
                     <a href="#" class="sidebar-link">Register</a>
                 </li> --}}
             </ul>
+
+            <ul id="settings" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                <li class="sidebar-item">
+                    <a href="{{ route('go-types.index') }}" class="sidebar-link"> <i
+                            class="lni lni-agenda"></i>GO Type</a>
+                </li>
+                {{-- <li class="sidebar-item">
+                    <a href="#" class="sidebar-link">Register</a>
+                </li> --}}
+            </ul>
         </li>
         <li class="sidebar-item">
             <a href="#" class="sidebar-link">
