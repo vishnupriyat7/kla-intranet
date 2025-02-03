@@ -72,11 +72,6 @@ class GovernmentOrderTypeController extends Controller
             'go_type' => 'required',
         ]);
 
-        // $goType = GovernmentOrderType::where('go_type', $request->go_type)->first();
-        // if ($goType) {
-        //     return redirect()->route('go-types.index')->with('error', 'Government Order Type already exists.');
-        // }
-
         $goType->update([
             'go_type' => $request->go_type,
         ]);
@@ -89,6 +84,7 @@ class GovernmentOrderTypeController extends Controller
      */
     public function destroy(GovernmentOrderType $governmentOrderType)
     {
-        //
+        $governmentOrderType->delete();
+        return redirect()->route('go-types.index')->with('success', 'Government Order Type deleted successfully.');
     }
 }

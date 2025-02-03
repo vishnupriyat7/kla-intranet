@@ -55,6 +55,7 @@ Route::middleware('auth')->group(function () {
     Route::post('go-types/store', [GovernmentOrderTypeController::class, 'store'])->name('go-types.store');
     Route::get('/go-types/edit/{id}', [GovernmentOrderTypeController::class, 'edit'])->name('go-types.edit');
     Route::patch('/go-types/update/{id}', [GovernmentOrderTypeController::class, 'update'])->name('go-types.update');
+    Route::delete('/go-types/destroy/{id}', [GovernmentOrderTypeController::class, 'destroy'])->name('go-types.destroy');
 });
 
 
