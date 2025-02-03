@@ -9,7 +9,7 @@
 
     <!-- Navbar start -->
     <div class="container-fluid sticky-top px-0">
-        <div class="container-fluid topbar bg-dark d-none d-lg-block">
+        {{-- <div class="container-fluid topbar bg-dark d-none d-lg-block">
             <div class="container px-0">
                 <div class="topbar-top d-flex justify-content-between flex-lg-wrap">
                     <div class="top-info flex-grow-0">
@@ -25,8 +25,7 @@
                                     class="img-fluid rounded-circle border border-3 border-primary me-2"
                                     style="width: 30px; height: 30px;" alt="">
                                 <a href="#">
-                                    <p class="text-white mb-0 link-hover">Newsan unknown printer took a galley of type
-                                        andscrambled Newsan.</p>
+                                    <p class="text-white mb-0 link-hover">Welcome to INTRANET Service of KERALA LEGISLATURE SECRETARIAT</p>
                                 </a>
                             </div>
                         </div>
@@ -47,13 +46,13 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div class="container-fluid bg-light">
             <div class="container px-0">
                 <nav class="navbar navbar-light navbar-expand-xl">
                     <a href="index.html" class="navbar-brand mt-3">
-                        <p class="text-primary display-6 mb-2" style="line-height: 0;">Newsers</p>
-                        <small class="text-body fw-normal" style="letter-spacing: 12px;">Nespaper</small>
+                        <p class="text-primary display-6 mb-2" style="line-height: 0;">INTRANET</p>
+                        <small class="text-body fw-normal" style="letter-spacing: 5px;">Kerala Legislature Secretariat</small>
                     </a>
                     <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarCollapse">
@@ -80,10 +79,10 @@
                             <div class="d-flex">
                                 <img src="img/weather-icon.png" class="img-fluid w-100 me-2" alt="">
                                 <div class="d-flex align-items-center">
-                                    <strong class="fs-4 text-secondary">31°C</strong>
-                                    <div class="d-flex flex-column ms-2" style="width: 150px;">
-                                        <span class="text-body">NEW YORK,</span>
-                                        <small>Mon. 10 jun 2024</small>
+                                    <strong class="fs-4 text-secondary"></strong>
+                                    <div class="d-flex flex-column ms-2" style="width: 160px;">
+                                        <span class="text-body">Thiruvananthapuram</span>
+                                        <small>{{ date('D') }} {{ date('d') }} {{ date('M') }} {{ date('Y') }}</small>
                                     </div>
                                 </div>
                             </div>

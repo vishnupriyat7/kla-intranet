@@ -4,35 +4,30 @@
 <!-- Single Product Start -->
 <div class="container-fluid py-5">
     <div class="container py-5">
-        <ol class="breadcrumb justify-content-start mb-4">
+        {{-- <ol class="breadcrumb justify-content-start mb-4">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
             <li class="breadcrumb-item"><a href="#">Pages</a></li>
             <li class="breadcrumb-item active text-dark">Single Page</li>
-        </ol>
+        </ol> --}}
         <div class="row g-4">
             <div class="col-lg-8">
-                <div class="mb-4">
-                    <a href="#" class="h2 display-6">Welcome to KLA-INTRANET</a>
-                </div>
-
-                {{-- <div class="d-flex justify-content-between">
-                    <a href="#" class="text-dark link-hover me-3"><i class="fa fa-clock"></i> 06 minute read</a>
-                    <a href="#" class="text-dark link-hover me-3"><i class="fa fa-eye"></i> 3.5k Views</a>
-                    <a href="#" class="text-dark link-hover me-3"><i class="fa fa-comment-dots"></i> 05
-                        Comment</a>
-                    <a href="#" class="text-dark link-hover"><i class="fa fa-arrow-up"></i> 1.5k Share</a>
-                </div> --}}
-                <ul>
+                <div class="row g-4">
                     @foreach ($newsupdates as $news)
-                        <li>
-                            {{ $news->date }}<br>
-                            <a href="{{ asset('storage/' . $news->path)}}" target="_blank"
-                                class="link-hover btn btn-light w-100 rounded text-uppercase text-dark py-3 mt-1 text-start">
+                        <div class="features-content d-flex flex-column">
+                            <a href="{{ asset('storage/' . $news->path)}}" class="h6" target="_blank"><i
+                                    class="fas fa-comment-dots me-1"></i>
                                 {{ $news->title }}
                             </a>
-                        </li>
+                            <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i>
+                                {{ \Carbon\Carbon::parse($news->date)->format('M d Y') }}</small>
+                        </div>
                     @endforeach
-                </ul>
+                    <div class="col-lg-12">
+                        <a href="#"
+                            class="link-hover btn border border-primary rounded-pill text-dark w-100 py-3 mb-4">View
+                            More</a>
+                    </div>
+                </div>
 
                 <div class="bg-light p-4 mb-4 rounded border-start border-3 border-primary">
                     <h1 class="mb-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</h1>
