@@ -23,7 +23,7 @@
                         </div>
                     @endforeach
                     <div class="col-lg-12">
-                        <a href="#"
+                        <a href="{{ route('updatesmore') }}"
                             class="link-hover btn border border-primary rounded-pill text-dark w-100 py-3 mb-4">View
                             More</a>
                     </div>
