@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('government_orders', function (Blueprint $table) {
+        Schema::create('order_circulars', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('go_type_id')->constrained('government_order_types');
-            $table->string('go_number');
-            $table->date('go_date');
-            $table->string('go_title');
-            $table->string('go_keywords');
+            $table->string('type',2);
+            $table->string('go_type',3)->nullable();
+            $table->string('number');
+            $table->date('date');
+            $table->string('title');
+            $table->string('keywords')->nullable();
             $table->string('path');
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('government_orders');
+        Schema::dropIfExists('order_circulars');
     }
 };

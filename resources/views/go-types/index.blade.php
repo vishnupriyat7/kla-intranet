@@ -25,6 +25,17 @@
                             <td>{{ $goType->go_type }}</td>
                             <td>
                                 <a href="{{ route('go-types.edit', $goType->id) }}" class="btn btn-primary">Edit</a>
+                                {{-- if goType has any foreign relation dont want to delete --}}
+                                {{-- @if ($goType->goTypeDetails->count() == 0) --}}
+                                    <form action="{{ route('go-types.destroy', $goType->id) }}" method="POST"
+                                        class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger"
+                                            onclick="return confirm('Are you sure you want to delete?')">Delete</button>
+                                    </form>
+                                {{-- @endif --}}
+                            </td>
 
                         </tr>
                     @endforeach

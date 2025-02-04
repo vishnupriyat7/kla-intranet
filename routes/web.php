@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GovernmentOrderController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PeriodicalController;
 use App\Http\Controllers\ProfileController;
@@ -40,20 +41,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/news-updates/edit/{id}', [NewsUpdateController::class, 'edit'])->name('news-updates.edit');
     Route::patch('/news-updates/update/{id}', [NewsUpdateController::class, 'update'])->name('news-updates.update');
     Route::delete('/news-updates/destroy/{id}', [NewsUpdateController::class, 'destroy'])->name('news-updates.destroy');
-
+    // Periodical Masters CRUD
     Route::get('/periodical-masters', [PeriodicalMasterController::class, 'index'])->name('periodical-masters.index');
     Route::get('/periodical-masters/create', [PeriodicalMasterController::class, 'create'])->name('periodical-masters.create');
-
     Route::post('/periodical-masters/store', [PeriodicalMasterController::class, 'store'])->name('periodical-masters.store');
     Route::get('/periodical-masters/edit/{id}', [PeriodicalMasterController::class, 'edit'])->name('periodical-masters.edit');
     Route::patch('/periodical-masters/update/{id}', [PeriodicalMasterController::class, 'update'])->name('periodical-masters.update');
     Route::delete('/periodical-masters/destroy/{id}', [PeriodicalMasterController::class, 'destroy'])->name('periodical-masters.destroy');
 
-    Route::get('/go-types', [GovernmentOrderTypeController::class, 'index'])->name('go-types.index');
-    Route::get('/go-types/create', [GovernmentOrderTypeController::class, 'create'])->name('go-types.create');
-    Route::post('go-types/store', [GovernmentOrderTypeController::class, 'store'])->name('go-types.store');
-    Route::get('/go-types/edit/{id}', [GovernmentOrderTypeController::class, 'edit'])->name('go-types.edit');
-    Route::patch('/go-types/update/{id}', [GovernmentOrderTypeController::class, 'update'])->name('go-types.update');
+    // Government Orders CRUD
+    Route::get('/govt-orders', [GovernmentOrderController::class, 'index'])->name('govt-orders.index');
+    Route::get('/govt-orders/create', [GovernmentOrderController::class, 'create'])->name('govt-orders.create');
+    Route::post('/govt-orders/store', [GovernmentOrderController::class, 'store'])->name('govt-orders.store');
 });
 
 
