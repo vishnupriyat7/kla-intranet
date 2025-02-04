@@ -26,6 +26,20 @@
             </a>
         </li>
         <li class="sidebar-item">
+            <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                data-bs-target="#orders" aria-expanded="true" aria-controls="orders">
+                <i class="lni lni-protection"></i>
+                <span>Orders / Circular</span>
+            </a>
+            <ul id="orders" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                <li class="sidebar-item">
+                    <a href="{{ route('govt-orders.index')}}" class="sidebar-link"> <i
+                            class="lni lni-agenda"></i>Government Orders</a>
+                </li>
+            </ul>
+
+        </li>
+        <li class="sidebar-item">
             <a href="#" class="sidebar-link">
                 <i class="lni lni-agenda"></i>
                 <span>Task</span>
@@ -65,15 +79,7 @@
                 </li> --}}
             </ul>
 
-            <ul id="settings" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                <li class="sidebar-item">
-                    <a href="{{ route('go-types.index') }}" class="sidebar-link"> <i
-                            class="lni lni-agenda"></i>GO Type</a>
-                </li>
-                {{-- <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">Register</a>
-                </li> --}}
-            </ul>
+
         </li>
         <li class="sidebar-item">
             <a href="#" class="sidebar-link">
