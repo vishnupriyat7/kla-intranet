@@ -8,7 +8,7 @@
 
 <!-- Navbar start -->
 <div class="container-fluid sticky-top px-0">
-    {{-- <div class="container-fluid topbar bg-dark d-none d-lg-block">
+    <div class="container-fluid topbar bg-dark d-none d-lg-block">
         <div class="container px-0">
             <div class="topbar-top d-flex justify-content-between flex-lg-wrap">
                 <div class="top-info flex-grow-0">
@@ -30,7 +30,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="top-link flex-lg">
+                {{-- <div class="top-link flex-lg">
                     <i class="fas fa-calendar-alt text-white border-end border-secondary pe-2 me-2"> <span
                             class="text-body">Tuesday, Sep 12, 2024</span></i>
                     <div class="d-flex icon">
@@ -43,10 +43,10 @@
                         <a href="" class="me-2"><i class="fab fa-skype text-body link-hover"></i></a>
                         <a href="" class=""><i class="fab fa-pinterest-p text-body link-hover"></i></a>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
-    </div> --}}
+    </div>
     <div class="container-fluid bg-light">
         <div class="container px-0">
             <nav class="navbar navbar-light navbar-expand-xl">
