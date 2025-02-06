@@ -13,7 +13,6 @@
                     <th>#</th>
                     <th>Name</th>
                     <th>Path</th>
-
                     <th>File</th>
                     <th>Date</th>
                     <th>Status</th>
