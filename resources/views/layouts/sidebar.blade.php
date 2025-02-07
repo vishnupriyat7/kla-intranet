@@ -25,7 +25,16 @@
                 <span>News/Upadtes</span>
             </a>
         </li>
+
         <li class="sidebar-item">
+            <a href="{{ route('orders-circular.index') }}" class="sidebar-link">
+                <i class="ri ri-news-line"></i>
+                <span>Orders / Circular</span>
+            </a>
+        </li>
+
+
+        {{-- <li class="sidebar-item">
             <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                 data-bs-target="#orders" aria-expanded="true" aria-controls="orders">
                 <i class="lni lni-protection"></i>
@@ -38,7 +47,7 @@
                 </li>
             </ul>
 
-        </li>
+        </li> --}}
         <li class="sidebar-item">
             <a href="#" class="sidebar-link">
                 <i class="lni lni-agenda"></i>

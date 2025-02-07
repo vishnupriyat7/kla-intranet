@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\GovernmentOrderController;
+
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PeriodicalController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsUpdateController;
 use App\Http\Controllers\PeriodicalMasterController;
-use App\Http\Controllers\GovernmentOrderTypeController;
+
+use App\Http\Controllers\OrderCircularController;
 
 // Route::get('/', function () {
 //     return view('home');
@@ -50,9 +51,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/periodical-masters/destroy/{id}', [PeriodicalMasterController::class, 'destroy'])->name('periodical-masters.destroy');
 
     // Government Orders CRUD
-    Route::get('/govt-orders', [GovernmentOrderController::class, 'index'])->name('govt-orders.index');
-    Route::get('/govt-orders/create', [GovernmentOrderController::class, 'create'])->name('govt-orders.create');
-    Route::post('/govt-orders/store', [GovernmentOrderController::class, 'store'])->name('govt-orders.store');
+    Route::get('/govt-orders', [OrderCircularController::class, 'index'])->name('orders-circular.index');
+    Route::get('/govt-orders/create', [OrderCircularController::class, 'create'])->name('orders-circular.create');
+    Route::post('/govt-orders/store', [OrderCircularController::class, 'store'])->name('orders-circular.store');
 });
 
 
