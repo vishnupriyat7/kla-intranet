@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="container mt-5">
+    <div class="container mt-5 ">
 
 
         {{-- add card here --}}
@@ -8,7 +8,7 @@
                 <h4>Periodicals</h4>
             </div>
             <div class="card-body">
-                <div class="mb-4 d-flex justify-content-end">
+                <div class="d-flex justify-content-end">
                     <a href="{{ route('periodicals.create') }}" class="btn btn-primary">Add New</a>
                 </div>
 
