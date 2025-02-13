@@ -9,6 +9,7 @@ use App\Http\Controllers\NewsUpdateController;
 use App\Http\Controllers\PeriodicalMasterController;
 
 use App\Http\Controllers\OrderCircularController;
+use App\Models\OrderCircular;
 
 // Route::get('/', function () {
 //     return view('home');
@@ -50,10 +51,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/periodical-masters/update/{id}', [PeriodicalMasterController::class, 'update'])->name('periodical-masters.update');
     Route::delete('/periodical-masters/destroy/{id}', [PeriodicalMasterController::class, 'destroy'])->name('periodical-masters.destroy');
 
-    // Government Orders CRUD
-    Route::get('/govt-orders', [OrderCircularController::class, 'index'])->name('orders-circular.index');
-    Route::get('/govt-orders/create', [OrderCircularController::class, 'create'])->name('orders-circular.create');
-    Route::post('/govt-orders/store', [OrderCircularController::class, 'store'])->name('orders-circular.store');
+    // Orders-Circular CRUD
+    Route::get('/orders-circular', [OrderCircularController::class, 'index'])->name('orders-circular.index');
+    Route::get('/orders-circular/create', [OrderCircularController::class, 'create'])->name('orders-circular.create');
+    Route::post('/orders-circular/store', [OrderCircularController::class, 'store'])->name('orders-circular.store');
+    Route::get('/orders-circular/edit/{id}', [OrderCircularController::class, 'edit'])->name('orders-circular.edit');
+    Route::patch('/orders-circular/update/{id}', [OrderCircularController::class, 'update'])->name('orders-circular.update');
+    Route::delete('/orders-circular/destroy/{id}', [OrderCircularController::class, 'delete'])->name('orders-circular.delete');
 });
 
 
