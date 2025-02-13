@@ -4,7 +4,7 @@
         <div class="pb-4 mb-4" style="border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
             <div class="row g-4">
                 <div class="col-lg-6">
-                    <a href="{{route('home.index')}}" class="d-flex flex-column flex-wrap">
+                    <a href="{{ route('home.index') }}" class="d-flex flex-column flex-wrap">
                         <p class="text-white mb-0 display-6">INTRANET</p>
                         <small class="text-light" style="letter-spacing: 5px; line-height: 0;">Kerala Legislature
                             Secretariat</small>
@@ -66,7 +66,8 @@
                         <a href="#">
                             <div class="d-flex align-items-center">
                                 <div class="rounded-circle border border-2 border-primary overflow-hidden">
-                                    <img src="img/footer-2.jpg" class="img-zoominimg-fluid rounded-circle w-100" alt="">
+                                    <img src="img/footer-2.jpg" class="img-zoominimg-fluid rounded-circle w-100"
+                                        alt="">
                                 </div>
                                 <div class="d-flex flex-column ps-4">
                                     <p class="text-uppercase text-white mb-3">Sports</p>
@@ -84,7 +85,8 @@
             <div class="col-lg-6 col-xl-3">
                 <div class="d-flex flex-column text-start footer-item-3">
                     <h4 class="mb-4 text-white">Categories</h4>
-                    <a class="btn-link text-white" href=""><i class="fas fa-angle-right text-white me-2"></i> Sports</a>
+                    <a class="btn-link text-white" href=""><i class="fas fa-angle-right text-white me-2"></i>
+                        Sports</a>
                     <a class="btn-link text-white" href=""><i class="fas fa-angle-right text-white me-2"></i>
                         Magazine</a>
                     <a class="btn-link text-white" href=""><i class="fas fa-angle-right text-white me-2"></i>
@@ -113,22 +115,26 @@
                         </div>
                         <div class="col-4">
                             <div class="rounded overflow-hidden">
-                                <img src="img/footer-3.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
+                                <img src="img/footer-3.jpg" class="img-zoomin img-fluid rounded w-100"
+                                    alt="">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="rounded overflow-hidden">
-                                <img src="img/footer-4.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
+                                <img src="img/footer-4.jpg" class="img-zoomin img-fluid rounded w-100"
+                                    alt="">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="rounded overflow-hidden">
-                                <img src="img/footer-5.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
+                                <img src="img/footer-5.jpg" class="img-zoomin img-fluid rounded w-100"
+                                    alt="">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="rounded overflow-hidden">
-                                <img src="img/footer-6.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
+                                <img src="img/footer-6.jpg" class="img-zoomin img-fluid rounded w-100"
+                                    alt="">
                             </div>
                         </div>
                     </div>
@@ -145,7 +151,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                <span class="text-light"><a href="{{route('home.index')}}"><i
+                <span class="text-light"><a href="{{ route('home.index') }}"><i
                             class="fas fa-copyright text-light me-2"></i>KLA INTRANET</a>, All right reserved.</span>
             </div>
             <div class="col-md-6 my-auto text-center text-md-end text-white">
@@ -161,15 +167,21 @@
 
 
 <!-- Back to Top -->
-<a href="#" class="btn btn-primary border-2 border-white rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
+<a href="#" class="btn btn-primary border-2 border-white rounded-circle back-to-top"><i
+        class="fa fa-arrow-up"></i></a>
 
 
 <!-- JavaScript Libraries -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
 <script src="{{ asset('assets/lib/easing/easing.min.js') }}"></script>
 <script src="{{ asset('assets/lib/waypoints/waypoints.min.js') }}"></script>
 <script src="{{ asset('assets/lib/owlcarousel/owl.carousel.min.js') }}"></script>
+
 
 <!-- Template Javascript -->
 <script src="{{ asset('assets/js/main.js') }}"></script>
