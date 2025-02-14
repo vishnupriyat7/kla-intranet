@@ -4,14 +4,90 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\OrderCircular;
+use Yajra\DataTables\Facades\DataTables;
 
 class OrderCircularController extends Controller
 {
     public function index()
     {
-        $orders = OrderCircular::all();
+        if (request()->ajax()) {
+            $orders = OrderCircular::all()->sortByDesc('created_at');
+            return DataTables::of($orders)
+                ->addIndexColumn()
+                ->addColumn('type', function ($data) {
+                    if ($data->type == 'G') {
+                        return 'Government Order';
+                    } elseif ($data->type == 'O') {
+                        return 'Office Order';
+                    } elseif ($data->type == 'C') {
+                        return 'Circular';
+                    }
+                    // return $data->type;
+                })
+                ->addColumn('go_type', function ($data) {
+                    if ($data->go_type == 'M') {
+                        return 'സർക്കാർ ഉത്തരവുകൾ കയ്യെഴുത്തു (Govt.Order Manuscript)';
+                    } elseif ($data->go_type == 'S') {
+                        return 'സർക്കാർ ഉത്തരവുകൾ സാധാരണ (Govt.Order Special)';
+                    } elseif ($data->go_type == 'R') {
+                        return 'സർക്കാർ ഉത്തരവുകൾ സാധാ (Govt.Order Routine)';
+                    } elseif ($data->go_type == 'P') {
+                        return 'സർക്കാർ ഉത്തരവുകൾ അച്ചടി (Govt. Order Print)';
+                    }
 
-        return view('orders-circular.index', compact('orders'));
+                    // return $data->go_type;
+                })
+                ->addColumn('number', function ($data) {
+                    return $data->number;
+                })
+                ->addColumn('date', function ($data) {
+                    return $data->date;
+                })
+                ->addColumn('title', function ($data) {
+                    return $data->title;
+                })
+                ->addColumn('keywords', function ($data) {
+                    return $data->keywords;
+                })
+                ->addColumn('path', function ($data) {
+                    return $data->path;
+                })
+                ->addColumn('file', function ($data) {
+                    if ($data->path) {
+                        return '<a href="#" class="btn btn-outline-info btn-sm text-black" data-bs-toggle="modal" data-bs-target="#pdfModal' . $data->id . '">
+                                    <i class="ri-eye-fill"></i> PDF
+                                </a>
+                                <div class="modal fade" id="pdfModal' . $data->id . '" tabindex="-1">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">PDF Preview</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <iframe src="' . asset('storage/' . $data->path) . '" width="100%" height="500px" style="border: none;"></iframe>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>';
+                    } else {
+                        return '<span>No file available</span>';
+                    }
+                })
+                ->addColumn('action', function ($data) {
+                    $button = '<a href="' . route('orders-circular.edit', $data->id) . '" class="btn btn-warning btn-sm"><i class="ri-edit-2-fill"></i></a>';
+                    $button .= '&nbsp;&nbsp;';
+                    $button .= '<button type="button" name="delete" id="' . $data->id . '" class="delete btn
+                    btn-danger btn-sm"><i class="ri-delete-bin-6-fill"></i></button>';
+                    return $button;
+                })
+                ->rawColumns(['file', 'action'])
+                ->make(true);
+        }
+
+        // $orders = OrderCircular::all();
+
+        return view('orders-circular.index');
     }
     public function create()
     {

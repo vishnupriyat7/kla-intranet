@@ -1,9 +1,7 @@
 <x-app-layout>
-    <div class="container mt-5 ">
-
-
+    <div class="container mt-3">
         {{-- add card here --}}
-        <div class="card">
+        <div class="card ">
             <div class="card-header">
                 <h4>Periodicals</h4>
             </div>
@@ -73,8 +71,13 @@
                             orderable: false,
                             searchable: false
                         }
-                    ]
+                    ],
+                    createdRow: function(row, data, dataIndex) {
+                        $('td:eq(3)', row).css('white-space', 'nowrap'); // Prevent wrap on index column
+                        $('td:eq(6)', row).css('white-space', 'nowrap'); // Prevent wrap on action column
+                    }
                 });
             });
         </script>
+    </div>
 </x-app-layout>

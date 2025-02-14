@@ -1,10 +1,106 @@
 <x-app-layout>
     <div class="container">
-        <div class="mb-4 d-flex justify-content-end">
-            <a href="{{ route('orders-circular.create') }}" class="btn btn-primary">Add New</a>
-        </div>
 
-        <h2 class="mb-4">Orders / Circulars</h2>
+        {{-- use card here --}}
+        <div class = "card">
+            <div class="card-header">
+                <h4>Orders / Circulars</h4>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-end">
+                    <a href="{{ route('orders-circular.create') }}" class="btn btn-primary">Add New</a>
+
+                </div>
+                <table id="ordersCircularsTable" class="table table-striped table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Type</th>
+                            <th>GO Type</th>
+                            <th>No</th>
+                            <th>Date</th>
+                            <th>Title</th>
+                            <th>Keyword</th>
+                            <th>Path</th>
+                            <th>File</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    $(document).ready(function() {
+
+        $('#ordersCircularsTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('orders-circular.index') }}",
+            columns: [{
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'type',
+                    name: 'type'
+                },
+                {
+                    data: 'go_type',
+                    name: 'go_type'
+                },
+                {
+                    data: 'number',
+                    name: 'number'
+                },
+                {
+                    data: 'date',
+                    name: 'date'
+                },
+                {
+                    data: 'title',
+                    name: 'title'
+                },
+                {
+                    data: 'keywords',
+                    name: 'keywords'
+                },
+                {
+                    data: 'path',
+                    name: 'path'
+                },
+                {
+                    data: 'file',
+                    name: 'file',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
+                }
+            ],
+            createdRow: function(row, data, dataIndex) {
+                $('td:eq(8)', row).css('white-space', 'nowrap'); // Prevent wrap on index column
+                $('td:eq(9)', row).css('white-space', 'nowrap'); // Prevent wrap on action column
+            }
+        });
+    });
+</script>
+
+{{-- <div class="mb-4 d-flex justify-content-end">
+            <a href="{{ route('orders-circular.create') }}" class="btn btn-primary">Add New</a>
+        </div> --}}
+
+{{-- <h2 class="mb-4">Orders / Circulars</h2>
         <table class="table table-striped table-bordered">
             <thead class="table-dark">
                 <tr>
@@ -33,7 +129,7 @@
                                 @elseif ($order->type == 'C')
                                     Circular
                                 @endif
-                                {{-- {{ $order->type }} --}}
+
 
                             </td>
                             <td>
@@ -45,7 +141,7 @@
                                     സർക്കാർ ഉത്തരവുകൾ അച്ചടി (Govt. Order Print)
                                 @endif
 
-                                {{-- {{ $order->go_type }} --}}
+
                             </td>
                             <td>{{ $order->number }}</td>
                             <td>{{ $order->date }}</td>
@@ -55,14 +151,14 @@
                             <td class="
                             text-nowrap">
                                 @if ($order->path)
-                                    <!-- Trigger the modal to view the PDF -->
+
                                     <a href="#" data-bs-toggle="modal"
                                         class="btn btn-outline-info btn-sm text-black"
                                         data-bs-target="#pdfModal{{ $loop->index }}">
                                         <i class="ri-eye-fill"></i> PDF
                                     </a>
 
-                                    <!-- Modal -->
+
                                     <div class="modal fade " id="pdfModal{{ $loop->index }}" tabindex="-1"
                                         aria-labelledby="pdfModalLabel{{ $loop->index }}" aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
@@ -82,7 +178,7 @@
                                         </div>
                                     </div>
                                 @else
-                                    <!-- Default fallback -->
+
                                     <span>No image or PDF available</span>
                                 @endif
                             </td>
@@ -110,4 +206,4 @@
             </tbody>
         </table>
     </div>
-</x-app-layout>
+</x-app-layout> --}}

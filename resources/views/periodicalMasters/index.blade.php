@@ -1,64 +1,63 @@
 <x-app-layout>
 
     <div class="container mt-5">
-        <div class="mb-4 d-flex justify-content-end">
-            <a href="{{ route('periodical-masters.create') }}" class="btn btn-primary">Add New</a>
-        </div>
-        <h2 class="mb-4">Periodical List</h2>
-        <table class="table table-striped table-bordered">
-            <thead class="table-dark">
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Image</th>
+        <div class="card">
+            <div class="card-header">
+                <h4>Periodicals List</h4>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-end">
+                    <a href="{{ route('periodical-masters.create') }}" class="btn btn-primary">Add New</a>
+                </div>
 
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if ($periodicalMasters->count() == 0)
-                    <tr>
-                        <td colspan="3" class="text-center">No Periodical List Found, Please Add</td>
-                    </tr>
-                @else
-                    @foreach ($periodicalMasters as $key => $periodicalMaster)
+                {{-- <h2 class="mb-4">Periodicals List</h2> --}}
+                <table id="periodicalsTable" class="table table-striped table-bordered">
+                    <thead class="table-dark">
                         <tr>
-                            <td>{{ $key + 1 }}</td>
-                            <td>{{ $periodicalMaster->name }}</td>
-                            <td>
-                                @if ($periodicalMaster->img)
-                                    <img src="{{ asset('storage/' . $periodicalMaster->img) }}"
-                                        alt="{{ $periodicalMaster->name }}" style="max-width: 100px;">
-                                @else
-                                    N/A
-                                @endif
-                            </td>
-
-                            <td>
-                                <a href="{{ route('periodical-masters.edit', $periodicalMaster->id) }}"
-                                    class="ri-edit-fill btn btn-warning btn-sm"></a>
-
-                                        {{-- If no foreign key constrains only display delete button else no delete button  --}}
-
-                                        @if ($periodicalMaster->periodicals->count() == 0)
-                                            <form
-                                                action="{{ route('periodical-masters.destroy', $periodicalMaster->id) }}"
-                                                method="POST" class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="ri-delete-bin-2-fill btn btn-danger btn-sm"
-                                                    onclick="return confirm('Are you sure you want to delete?')"></button>
-                                            </form>
-                                        @else
-                                            <button type="button" class="btn btn-danger btn-sm" disabled><i
-                                                    class="ri-delete-bin-2-fill"></i></button>
-                                        @endif
-                            </td>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Image</th>
+                            <th>Action</th>
                         </tr>
-                    @endforeach
-                @endif
-            </tbody>
-        </table>
+                    </thead>
+                </table>
+            </div>
+        </div>
     </div>
-
 </x-app-layout>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#periodicalsTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('periodical-masters.index') }}",
+            columns: [{
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'name',
+                    name: 'name'
+                },
+                {
+                    data: 'img',
+                    name: 'img',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
+                }
+            ]
+        });
+    });
+</script>
