@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\NewsUpdate;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class NewsUpdateController extends Controller
 {
@@ -12,8 +13,69 @@ class NewsUpdateController extends Controller
      */
     public function index()
     {
-        $newsupdates = NewsUpdate::all();
-        return view('newsupdates.index', compact('newsupdates'));
+        // $newsupdates = NewsUpdate::all();
+        // return view('newsupdates.index', compact('newsupdates'));
+        // use yajradatatables to fetch data from database
+        if (request()->ajax()) {
+            $newsupdates = NewsUpdate::orderBy('created_at', 'desc');
+            return DataTables::of($newsupdates)
+                ->addIndexColumn()
+                // ->addColumn('path', function($row) {
+                //     return $row->path;
+                // })
+                // ->addColumn('file', function($row) {
+                //     if($row->path) {
+                //         return '<a href="'.asset('storage/'.$row->path).'" class="btn btn-outline-info btn-sm text-black" target="_blank">
+                //                     <i class="ri-eye-fill"></i> PDF
+                //                 </a>';
+                //     } else {
+                //         return '<span>No file available</span>';
+                //     }
+                // })
+                ->addColumn('title', function ($row) {
+                    return $row->title;
+                })
+
+                ->addColumn('date', function ($row) {
+                    return date('d-m-Y', strtotime($row->date));
+                })
+                ->addColumn('status', function ($row) {
+                    return $row->status == '0' ? '<span class="badge bg-danger">Unpublished</span>' : '<span class="badge bg-success">Published</span>';
+                })
+                // ->addColumn('action', function ($row) {
+                //     return '<a href="' . route('news-updates.edit', $row->id) . '" class="btn btn-warning btn-sm"><i class="ri-edit-2-fill"></i></a>
+                //             <a href="' . route('news-updates.destroy', $row->id) . '" class="btn btn-danger btn-sm delete-confirm"><i class="ri-delete-bin-6-fill"></i></a>';
+                // })
+
+
+                ->addColumn('action', function ($row) {
+                    if ($row->path) {
+                        return '<a href="#" class="btn btn-outline-info btn-sm text-black" data-bs-toggle="modal" data-bs-target="#pdfModal' . $row->id . '">
+                                    <i class="ri-eye-fill"></i> PDF
+                                </a>
+                                <div class="modal fade" id="pdfModal' . $row->id . '" tabindex="-1">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">PDF Preview</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <iframe src="' . asset('storage/' . $row->path) . '" width="100%" height="500px" style="border: none;"></iframe>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>';
+                    } else {
+                        return '<span>No file available</span>';
+                    }
+                    return '<a href="' . route('news-updates.edit', $row->id) . '" class="btn btn-warning btn-sm"><i class="ri-edit-2-fill"></i></a>
+                    <a href="' . route('news-updates.destroy', $row->id) . '" class="btn btn-danger btn-sm delete-confirm"><i class="ri-delete-bin-6-fill"></i></a>';
+                })
+                ->rawColumns(['file', 'status', 'action'])
+                ->make(true);
+        }
+        return view('newsupdates.index');
     }
 
     /**
@@ -51,10 +113,7 @@ class NewsUpdateController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request)
-    {
-
-    }
+    public function show(Request $request) {}
 
     /**
      * Show the form for editing the specified resource.

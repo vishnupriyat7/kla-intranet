@@ -1,5 +1,4 @@
 <x-app-layout>
-
     <div class="container mt-5">
         <div class="card">
             <div class="card-header">
@@ -26,9 +25,6 @@
     </div>
 </x-app-layout>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 <script>
     $(document).ready(function() {
         $('#periodicalsTable').DataTable({

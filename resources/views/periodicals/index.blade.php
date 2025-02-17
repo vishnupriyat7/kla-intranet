@@ -26,58 +26,55 @@
                 </table>
             </div>
         </div>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                $('#periodicalsTable').DataTable({
-                    processing: true,
-                    serverSide: true,
-                    ajax: "{{ route('periodicals.index') }}",
-                    columns: [{
-                            data: 'DT_RowIndex',
-                            name: 'DT_RowIndex',
-                            orderable: false,
-                            searchable: false
-                        },
-                        {
-                            data: 'name',
-                            name: 'periodicalMaster.name'
-                        },
-                        {
-                            data: 'path',
-                            name: 'path'
-                        },
-                        {
-                            data: 'file',
-                            name: 'file',
-                            orderable: false,
-                            searchable: false
-                        },
-                        {
-                            data: 'date',
-                            name: 'date'
-                        },
-                        {
-                            data: 'status',
-                            name: 'status',
-                            orderable: false,
-                            searchable: false
-                        },
-                        {
-                            data: 'action',
-                            name: 'action',
-                            orderable: false,
-                            searchable: false
-                        }
-                    ],
-                    createdRow: function(row, data, dataIndex) {
-                        $('td:eq(3)', row).css('white-space', 'nowrap'); // Prevent wrap on index column
-                        $('td:eq(6)', row).css('white-space', 'nowrap'); // Prevent wrap on action column
-                    }
-                });
-            });
-        </script>
     </div>
 </x-app-layout>
+<script>
+    $(document).ready(function() {
+        $('#periodicalsTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('periodicals.index') }}",
+            columns: [{
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'name',
+                    name: 'periodicalMaster.name'
+                },
+                {
+                    data: 'path',
+                    name: 'path'
+                },
+                {
+                    data: 'file',
+                    name: 'file',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'date',
+                    name: 'date'
+                },
+                {
+                    data: 'status',
+                    name: 'status',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
+                }
+            ],
+            createdRow: function(row, data, dataIndex) {
+                $('td:eq(3)', row).css('white-space', 'nowrap'); // Prevent wrap on index column
+                $('td:eq(6)', row).css('white-space', 'nowrap'); // Prevent wrap on action column
+            }
+        });
+    });
+</script>
