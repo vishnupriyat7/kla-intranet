@@ -62,18 +62,16 @@
                 <div class="collapse navbar-collapse bg-light py-3" id="navbarCollapse">
                     <div class="navbar-nav mx-auto border-top">
                         <a href="{{route('home.index')}}" class="nav-item nav-link active">Home</a>
-                        <a href="detail-page.html" class="nav-item nav-link">Detail Page</a>
-                        <a href="404.html" class="nav-item nav-link">404 Page</a>
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Dropdown</a>
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Government Order</a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                <a href="#" class="dropdown-item">Dropdown 1</a>
-                                <a href="#" class="dropdown-item">Dropdown 2</a>
-                                <a href="#" class="dropdown-item">Dropdown 3</a>
-                                <a href="#" class="dropdown-item">Dropdown 4</a>
+                                <a href="{{route('home.order-circular', 'goms')}}" class="dropdown-item">Manuscript</a>
+                                <a href="{{route('home.order-circular', 'gor')}}" class="dropdown-item">Routine</a>
                             </div>
                         </div>
-                        <a href="contact.html" class="nav-item nav-link">Contact Us</a>
+                        <a href="{{route('home.order-circular', 'oo')}}" class="nav-item nav-link">Office Order</a>
+                        <a href="{{route('home.order-circular', 'cr')}}" class="nav-item nav-link">Circular</a>
+
                     </div>
                     <div class="d-flex flex-nowrap border-top pt-3 pt-xl-0">
                         <div class="d-flex">

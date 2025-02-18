@@ -17,6 +17,9 @@ use App\Http\Controllers\OrderCircularController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/updatesmore', [HomeController::class, 'updatesMore'])->name('updatesmore');
+Route::get('/orderCircular/{type}', [HomeController::class, 'orderCircular'])->name('home.order-circular');
+Route::get('/go-routine', [HomeController::class, 'goRoutine'])->name('home.gor');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
