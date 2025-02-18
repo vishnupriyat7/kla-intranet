@@ -1,9 +1,106 @@
 <x-app-layout>
     <div class="container">
-        <div class="mb-4 d-flex justify-content-end">
-            <a href="{{ route('orders-circular.create') }}" class="btn btn-primary">Add New</a>
+
+        {{-- use card here --}}
+        <div class = "card">
+            <div class="card-header">
+                <h4>Orders / Circulars</h4>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-end">
+                    <a href="{{ route('orders-circular.create') }}" class="btn btn-primary">Add New</a>
+
+                </div>
+                <table id="ordersCircularsTable" class="table table-striped table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Type</th>
+                            <th>GO Type</th>
+                            <th>No</th>
+                            <th>Date</th>
+                            <th>Title</th>
+                            <th>Keyword</th>
+                            <th>Path</th>
+                            <th>File</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
-        <h2 class="mb-4">Orders / Circulars</h2>
+    </div>
+</x-app-layout>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    $(document).ready(function() {
+
+        $('#ordersCircularsTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('orders-circular.index') }}",
+            columns: [{
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'type',
+                    name: 'type'
+                },
+                {
+                    data: 'go_type',
+                    name: 'go_type'
+                },
+                {
+                    data: 'number',
+                    name: 'number'
+                },
+                {
+                    data: 'date',
+                    name: 'date'
+                },
+                {
+                    data: 'title',
+                    name: 'title'
+                },
+                {
+                    data: 'keywords',
+                    name: 'keywords'
+                },
+                {
+                    data: 'path',
+                    name: 'path'
+                },
+                {
+                    data: 'file',
+                    name: 'file',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
+                }
+            ],
+            createdRow: function(row, data, dataIndex) {
+                $('td:eq(8)', row).css('white-space', 'nowrap'); // Prevent wrap on index column
+                $('td:eq(9)', row).css('white-space', 'nowrap'); // Prevent wrap on action column
+            }
+        });
+    });
+</script>
+
+{{-- <div class="mb-4 d-flex justify-content-end">
+            <a href="{{ route('orders-circular.create') }}" class="btn btn-primary">Add New</a>
+        </div> --}}
+
+{{-- <h2 class="mb-4">Orders / Circulars</h2>
         <table class="table table-striped table-bordered">
             <thead class="table-dark">
                 <tr>
@@ -16,28 +113,52 @@
                     <th>Keyword</th>
                     <th>Path</th>
                     <th>File</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                @if ($orders->count()) @foreach ($orders as $order)
+                @if ($orders->count())
+                    @foreach ($orders as $order)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $order->type }}</td>
-                            <td>{{ $order->go_type }}</td>
+                            <td>
+                                @if ($order->type == 'G')
+                                    Govt.Order
+                                @elseif ($order->type == 'O')
+                                    Office Order
+                                @elseif ($order->type == 'C')
+                                    Circular
+                                @endif
+
+
+                            </td>
+                            <td>
+                                @if ($order->go_type == 'M')
+                                    സർക്കാർ ഉത്തരവുകൾ കയ്യെഴുത്തു (Govt.Order Manuscript)
+                                @elseif ($order->go_type == 'R')
+                                    സർക്കാർ ഉത്തരവുകൾ സാധാ (Govt.Order Routine)
+                                @elseif ($order->go_type == 'P')
+                                    സർക്കാർ ഉത്തരവുകൾ അച്ചടി (Govt. Order Print)
+                                @endif
+
+
+                            </td>
                             <td>{{ $order->number }}</td>
                             <td>{{ $order->date }}</td>
                             <td>{{ $order->title }}</td>
                             <td>{{ $order->keywords }}</td>
                             <td>{{ $order->path }}</td>
-                            <td>
+                            <td class="
+                            text-nowrap">
                                 @if ($order->path)
-                                    <!-- Trigger the modal to view the PDF -->
-                                    <a href="#" data-bs-toggle="modal" class="btn btn-outline-info btn-sm text-black"
+
+                                    <a href="#" data-bs-toggle="modal"
+                                        class="btn btn-outline-info btn-sm text-black"
                                         data-bs-target="#pdfModal{{ $loop->index }}">
                                         <i class="ri-eye-fill"></i> PDF
                                     </a>
 
-                                    <!-- Modal -->
+
                                     <div class="modal fade " id="pdfModal{{ $loop->index }}" tabindex="-1"
                                         aria-labelledby="pdfModalLabel{{ $loop->index }}" aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
@@ -57,30 +178,32 @@
                                         </div>
                                     </div>
                                 @else
-                                   <td> N/A </td>
-                                   @endif
-                </td>
-                </tr>
-                {{-- <td>
-                        <a href="{{ route('orders-circular.edit', $order->id) }}" class="btn btn-primary">Edit</a>
-                        <form action="{{ route('orders-circular.destroy', $order->id) }}" method="POST"
-                            class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-                    </td> --}}
-                </tr>
-                @endforeach
-            @else
-                <tr>
-                    <td colspan="8" class="text-center">No Data Found</td>
-                </tr>
+
+                                    <span>No image or PDF available</span>
+                                @endif
+                            </td>
+
+                            <td class="text-nowrap">
+                                <a href="{{ route('orders-circular.edit', $order->id) }}"
+                                    class="btn btn-warning btn-sm"> <i class="ri-edit-2-fill"></i></a>
+                                <form action="{{ route('orders-circular.delete', $order->id) }}" method="POST"
+                                    class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Are you sure you want to delete?')"><i
+                                            class="ri-delete-bin-2-fill"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="8" class="text-center">No Data Found</td>
+                    </tr>
 
                 @endif
-
-
             </tbody>
         </table>
     </div>
-</x-app-layout>
+</x-app-layout> --}}

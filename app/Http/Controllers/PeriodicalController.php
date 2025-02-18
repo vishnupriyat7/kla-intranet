@@ -6,22 +6,63 @@ use App\Models\Periodical;
 
 use App\Models\PeriodicalMaster;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class PeriodicalController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        // dd('Hii');
+        if ($request->ajax()) {
+            $periodicals = Periodical::with('periodicalMaster')->orderBy('created_at', 'desc');
 
-        $periodicals = Periodical::with('periodicalMaster')
-        ->orderBy('created_at', 'desc')
-        ->paginate(25);
+            return DataTables::of($periodicals)
+                ->addIndexColumn()
+                ->addColumn('name', function ($row) {
+                    return $row->periodicalMaster->name ?? 'N/A';
+                })
+                ->addColumn('path', function ($row) {
+                    return $row->path;
+                })
+                ->addColumn('file', function ($row) {
+                    if ($row->path) {
+                        return '<a href="#" class="btn btn-outline-info btn-sm text-black" data-bs-toggle="modal" data-bs-target="#pdfModal' . $row->id . '">
+                                    <i class="ri-eye-fill"></i> PDF
+                                </a>
+                                <div class="modal fade" id="pdfModal' . $row->id . '" tabindex="-1">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">PDF Preview</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <iframe src="' . asset('storage/' . $row->path) . '" width="100%" height="500px" style="border: none;"></iframe>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>';
+                    } else {
+                        return '<span>No file available</span>';
+                    }
+                })
+                ->addColumn('date', function ($row) {
+                    return date('d-m-Y', strtotime($row->date));
+                })
+                ->addColumn('status', function ($row) {
+                    return $row->status == '0' ? '<span class="badge bg-danger">Unpublished</span>' : '<span class="badge bg-success">Published</span>';
+                })
+                ->addColumn('action', function ($row) {
+                    return '<a href="' . route('periodicals.show', $row->id) . '" class="btn btn-info btn-sm"><i class="ri-eye-fill"></i></a>
+                            <a href="' . route('periodicals.edit', $row->id) . '" class="btn btn-warning btn-sm"><i class="ri-edit-2-fill"></i></a>';
+                })
+                ->rawColumns(['file', 'status', 'action'])
+                ->make(true);
+        }
 
-        return view('periodicals.index', compact('periodicals'));
+        return view('periodicals.index');
     }
+
+
 
     /**
      * Show the form for creating a new resource.

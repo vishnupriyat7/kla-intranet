@@ -44,42 +44,42 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="go_no" class="form-label">Number</label>
-                            <input type="text" class="form-control" id="go_no" name="go_no"
+                            <label for="no" class="form-label">Number</label>
+                            <input type="text" class="form-control" id="no" name="no"
                                 placeholder="Enter No" required>
-                            @error('go_no')
+                            @error('no')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="go_date" class="form-label">Date</label>
-                            <input type="date" class="form-control" id="go_date" name="go_date"
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="date" name="date"
                                 placeholder="Enter Date" required>
-                            @error('go_date')
+                            @error('date')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="go_title" class="form-label">Title</label>
-                            <input type="text" class="form-control" id="go_title" name="go_title"
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="title" name="title"
                                 placeholder="Enter Title" required>
-                            @error('go_title')
+                            @error('title')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="go_keyword" class="form-label">Keyword</label>
-                            <input type="text" class="form-control" id="go_keyword" name="go_keyword"
+                            <label for="keywords" class="form-label">Keyword</label>
+                            <input type="text" class="form-control" id="keywords" name="keywords"
                                 placeholder="Enter Keyword" required>
-                            @error('go_keyword')
+                            @error('keywords')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label for="go_path" class="form-label">Choose File</label>
-                            <input type="file" class="form-control" id="go_path" name="go_path" required>
-                            @error('go_path')
+                            <label for="path" class="form-label">Choose File</label>
+                            <input type="file" class="form-control" id="path" name="path" required>
+                            @error('path')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>

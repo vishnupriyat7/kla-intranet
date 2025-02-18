@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PeriodicalMaster;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class PeriodicalMasterController extends Controller
 {
@@ -12,8 +13,33 @@ class PeriodicalMasterController extends Controller
      */
     public function index()
     {
-        $periodicalMasters = PeriodicalMaster::all();
-        return view('periodicalMasters.index', compact('periodicalMasters'));
+        // $periodicalMasters = PeriodicalMaster::all();
+        // return view('periodicalMasters.index', compact('periodicalMasters'));
+
+        // Use Yajra tables to display the Periodical Masters in a table format
+
+        if (request()->ajax()) {
+            $periodicalMasters = PeriodicalMaster::latest()->get();
+
+            return DataTables::of($periodicalMasters)
+                ->addIndexColumn()
+                ->addColumn('name', function ($data) {
+                    return $data->name;
+                })
+
+                ->addColumn('img', function ($data) {
+                    return '<img src="' . asset('storage/' . $data->img) . '" width="100px" height="100px">';
+                })
+                ->addColumn('action', function ($data) {
+                    $button = '<a href="' . route('periodical-masters.edit', $data->id) . '" class="btn btn-warning btn-sm"><i class="ri-edit-2-fill"></i></a>';
+                    $button .= '&nbsp;&nbsp;';
+                    $button .= '<button type="button" name="delete" id="' . $data->id . '" class="delete btn btn-danger btn-sm"><i class="ri-delete-bin-6-fill"></i></button>';
+                    return $button;
+                })
+                ->rawColumns(['action', 'img'])
+                ->make(true);
+        }
+        return view('periodicalMasters.index');
     }
 
     /**
