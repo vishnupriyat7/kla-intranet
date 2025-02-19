@@ -7,8 +7,8 @@
 
     <div class="container py-12">
         <div class="card">
-            <div class="card-header">
-                <label for="name_eng" class="form-label">Periodical Master</label>
+            <div class="card-header p-3">
+                <h2 class="fw-bold">Add New Periodicals</label>
             </div>
             <div class="card-body">
 

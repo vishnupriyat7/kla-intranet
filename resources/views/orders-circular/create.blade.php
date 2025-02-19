@@ -7,9 +7,9 @@
 
     <div class="container py-12">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header p-3">
 
-                <h2 class="mb-4 fw-bold">Add New Govt Order</h2>
+                <h2 class="fw-bold">Add New Order / Circular</h2>
             </div>
             <div class="card-body">
 

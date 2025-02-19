@@ -1,9 +1,15 @@
 <x-app-layout>
-    <div class="container mt-3">
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Dashboard') }}
+        </h2>
+    </x-slot>
+
+    <div class="container py-10">
         {{-- add card here --}}
-        <div class="card ">
+        <div class="card">
             <div class="card-header">
-                <h4>News List</h4>
+                <h4 class="fw-bold">News List</h4>
             </div>
             <div class="card-body">
                 <div class="d-flex justify-content-end">
