@@ -24,7 +24,6 @@
                             <th>#</th>
                             <th>Name</th>
                             <th>Path</th>
-
                             <th>Date</th>
                             <th>Status</th>
                             <th>File</th>
