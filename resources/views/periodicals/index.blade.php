@@ -41,6 +41,7 @@
             processing: true,
             serverSide: true,
             ajax: "{{ route('periodicals.index') }}",
+            order: [[3, 'desc']],
             columns: [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex',
@@ -49,7 +50,8 @@
                 },
                 {
                     data: 'name',
-                    name: 'periodicalMaster.name'
+                    name: 'periodical_name',
+                    orderable: true,
                 },
                 {
                     data: 'path',

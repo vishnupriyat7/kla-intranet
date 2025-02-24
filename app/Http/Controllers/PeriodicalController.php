@@ -13,7 +13,9 @@ class PeriodicalController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $periodicals = Periodical::with('periodicalMaster')->orderBy('created_at', 'desc');
+            // $periodicals = Periodical::with('periodicalMaster')->orderBy('created_at', 'desc');
+            $periodicals = Periodical::leftJoin('periodical_masters', 'periodicals.periodical_master_id', '=', 'periodical_masters.id')
+                ->select('periodicals.*', 'periodical_masters.name as periodical_name');
 
             return DataTables::of($periodicals)
                 ->addIndexColumn()
