@@ -1,10 +1,15 @@
 <x-app-layout>
-    <div class="container">
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Dashboard') }}
+        </h2>
+    </x-slot>
+    <div class="container py-10">
 
         {{-- use card here --}}
         <div class = "card">
             <div class="card-header">
-                <h4>Orders / Circulars</h4>
+                <h4 class="fw-bold">Orders / Circulars</h4>
             </div>
             <div class="card-body">
                 <div class="d-flex justify-content-end">
@@ -31,9 +36,7 @@
         </div>
     </div>
 </x-app-layout>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+
 <script>
     $(document).ready(function() {
 

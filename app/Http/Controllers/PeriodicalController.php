@@ -23,6 +23,13 @@ class PeriodicalController extends Controller
                 ->addColumn('path', function ($row) {
                     return $row->path;
                 })
+
+                ->addColumn('date', function ($row) {
+                    return date('d-m-Y', strtotime($row->date));
+                })
+                ->addColumn('status', function ($row) {
+                    return $row->status == '0' ? '<span class="badge bg-danger">Unpublished</span>' : '<span class="badge bg-success">Published</span>';
+                })
                 ->addColumn('file', function ($row) {
                     if ($row->path) {
                         return '<a href="#" class="btn btn-outline-info btn-sm text-black" data-bs-toggle="modal" data-bs-target="#pdfModal' . $row->id . '">
@@ -44,12 +51,6 @@ class PeriodicalController extends Controller
                     } else {
                         return '<span>No file available</span>';
                     }
-                })
-                ->addColumn('date', function ($row) {
-                    return date('d-m-Y', strtotime($row->date));
-                })
-                ->addColumn('status', function ($row) {
-                    return $row->status == '0' ? '<span class="badge bg-danger">Unpublished</span>' : '<span class="badge bg-success">Published</span>';
                 })
                 ->addColumn('action', function ($row) {
                     return '<a href="' . route('periodicals.show', $row->id) . '" class="btn btn-info btn-sm"><i class="ri-eye-fill"></i></a>

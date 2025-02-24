@@ -1,77 +1,72 @@
 <x-app-layout>
-    <div class="container mt-5">
-        <h2 class="mb-4">News List</h2>
-        <div class="d-flex justify-content-end mb-4">
-            <a href="{{ route('news-updates.create') }}" class="btn btn-primary">Add News</a>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Dashboard') }}
+        </h2>
+    </x-slot>
+
+    <div class="container py-10">
+        {{-- add card here --}}
+        <div class="card">
+            <div class="card-header">
+                <h4 class="fw-bold">News List</h4>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-end">
+                    <a href="{{ route('news-updates.create') }}" class="btn btn-primary">Add New</a>
+                </div>
+
+                {{-- <h2 class="mb-4">Periodicals List</h2> --}}
+                <table id="periodicalsTable" class="table table-striped table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Title</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
-        <table class="table table-striped table-bordered">
-            <thead class="table-dark">
-                <tr>
-                    <th>#</th>
-                    <th>Title</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($newsupdates as $news)
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $news->title }}</td>
-                        <td>{{ $news->date }}</td>
-                        <td>
-
-                            @if ($news->status)
-                                <span class="badge bg-success text-white"> Published </span>
-                            @else
-                                <span class="badge bg-secondary text-white"> Unpublished</span>
-                            @endif
-                            </span>
-                        </td>
-                        <td class="text-nowrap">
-                            @if ($news->path)
-                                <button class="ri ri-eye-fill btn btn-info btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#newsModal{{ $loop->iteration }}"></button>
-                            @endif
-                            <div class="modal fade" id="newsModal{{ $loop->iteration }}" tabindex="-1" role="dialog"
-                                aria-labelledby="newsModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="newsModalLabel">{{ $news->title }}</h5>
-                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <iframe src="{{ asset('storage/' . $news->path) }}" width="100%"
-                                                height="500px"></iframe>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="{{ route('news-updates.edit', $news->id) }}" class="ri-edit-fill btn btn-warning btn-sm"></a>
-                            <form action="{{ route('news-updates.destroy', $news->id) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="ri-delete-bin-2-fill btn btn-danger btn-sm"></button>
-                            </form>
-                        </td>
-                    </tr>
-
-                @endforeach
-            </tbody>
-
-        </table>
-
     </div>
 
-
-
-
 </x-app-layout>
+<script>
+    $(document).ready(function() {
+        $('#periodicalsTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('news-updates.index') }}",
+            columns: [{
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'title',
+                    name: 'title'
+                },
+                {
+                    data: 'date',
+                    name: 'date'
+                },
+                {
+                    data: 'status',
+                    name: 'status'
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
+                }
+            ],
+            createdRow: function(row, data, dataIndex) {
+                $('td:eq(4)', row).css('white-space', 'nowrap'); // Prevent wrap on action column
+            }
+        });
+    });
+</script>
