@@ -16,7 +16,7 @@ class OrderCircularController extends Controller
                 ->addIndexColumn()
                 ->addColumn('type', function ($data) {
                     if ($data->type == 'G') {
-                        return 'Government Order';
+                        return 'Govt.Order';
                     } elseif ($data->type == 'O') {
                         return 'Office Order';
                     } elseif ($data->type == 'C') {
@@ -26,17 +26,27 @@ class OrderCircularController extends Controller
                 })
                 ->addColumn('go_type', function ($data) {
                     if ($data->go_type == 'M') {
-                        return 'സർക്കാർ ഉത്തരവുകൾ കയ്യെഴുത്തു (Govt.Order Manuscript)';
-                    } elseif ($data->go_type == 'S') {
-                        return 'സർക്കാർ ഉത്തരവുകൾ സാധാരണ (Govt.Order Special)';
+                        return 'സ.ഉ.കയ്യെഴുത്തു (GO.Manuscript)';
                     } elseif ($data->go_type == 'R') {
-                        return 'സർക്കാർ ഉത്തരവുകൾ സാധാ (Govt.Order Routine)';
+                        return 'സ.ഉ.സാധാ (GO.Routine)';
                     } elseif ($data->go_type == 'P') {
-                        return 'സർക്കാർ ഉത്തരവുകൾ അച്ചടി (Govt. Order Print)';
+                        return 'സ.ഉ.അച്ചടി (GO.Print)';
                     }
 
                     // return $data->go_type;
                 })
+                ->addColumn('serviceMember', function ($data) {
+                    if ($data->sub_type == 'Service') {
+                        return 'Service';
+                    } elseif ($data->sub_type == 'Member') {
+                        return 'Member';
+                    }
+                    // return $data->sub_type;
+                })
+                ->addColumn('sub_sub_type', function ($data) {
+                    return $data->sub_sub_type;
+                })
+
                 ->addColumn('number', function ($data) {
                     return $data->number;
                 })
@@ -99,6 +109,10 @@ class OrderCircularController extends Controller
         $request->validate([
             'type' => 'required',
             'go_type' => 'nullable',
+            'serviceMember' => 'nullable',
+            'servc' => 'nullable',
+            'memb' => 'nullable',
+            'offc_order' => 'nullable',
             'no' => 'required',
             'date' => 'required|date',
             'title' => 'required',
@@ -119,10 +133,23 @@ class OrderCircularController extends Controller
         $filePath = $request->file('path')->store("uploads/orders-circlular/{$year}/{$categoryFolder}", 'public');
 
         // $filePath = $request->file('go_path')->store('uploads/orders-circular/', 'public');
+        if ($request->serviceMember == 'Service') {
+            $sub_sub_type = $request->servc;
+        } elseif ($request->serviceMember == 'Member') {
+            $sub_sub_type = $request->memb;
+        } else {
+            $sub_sub_type = null;
+        }
+
+        if($request->type == 'O'){
+            $sub_sub_type = $request->offc_order;
+        }
 
         OrderCircular::create([
             'type' => $request->type,
-            'go_type' => $request->type ?? null,
+            'go_type' => $request->go_type ?? null,
+            'sub_type' => $request->serviceMember ?? null,
+            'sub_sub_type' => $sub_sub_type ?? null,
             'number' => $request->no,
             'date' => $request->date,
             'title' => $request->title,
@@ -146,6 +173,8 @@ class OrderCircularController extends Controller
         $request->validate([
             'type' => 'required',
             'go_type' => 'nullable',
+            'sub_type' => 'nullable',
+            'sub_sub_type' => 'nullable',
             'no' => 'required',
             'date' => 'required|date',
             'title' => 'required',
@@ -156,6 +185,8 @@ class OrderCircularController extends Controller
 
         $order->type = $request->type;
         $order->go_type = $request->go_type;
+        $order->sub_type = $request->sub_type;
+        $order->sub_sub_type = $request->sub_sub_type;
         $order->number = $request->no;
         $order->date = $request->date;
         $order->title = $request->title;

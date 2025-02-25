@@ -17,21 +17,11 @@ class NewsUpdateController extends Controller
         // return view('newsupdates.index', compact('newsupdates'));
         // use yajradatatables to fetch data from database
         if (request()->ajax()) {
-            $newsupdates = NewsUpdate::orderBy('created_at', 'desc');
+            $newsupdates = NewsUpdate::all();
+
             return DataTables::of($newsupdates)
                 ->addIndexColumn()
-                // ->addColumn('path', function($row) {
-                //     return $row->path;
-                // })
-                // ->addColumn('file', function($row) {
-                //     if($row->path) {
-                //         return '<a href="'.asset('storage/'.$row->path).'" class="btn btn-outline-info btn-sm text-black" target="_blank">
-                //                     <i class="ri-eye-fill"></i> PDF
-                //                 </a>';
-                //     } else {
-                //         return '<span>No file available</span>';
-                //     }
-                // })
+
                 ->addColumn('title', function ($row) {
                     return $row->title;
                 })
@@ -42,10 +32,6 @@ class NewsUpdateController extends Controller
                 ->addColumn('status', function ($row) {
                     return $row->status == '0' ? '<span class="badge bg-danger">Unpublished</span>' : '<span class="badge bg-success">Published</span>';
                 })
-                // ->addColumn('action', function ($row) {
-                //     return '<a href="' . route('news-updates.edit', $row->id) . '" class="btn btn-warning btn-sm"><i class="ri-edit-2-fill"></i></a>
-                //             <a href="' . route('news-updates.destroy', $row->id) . '" class="btn btn-danger btn-sm delete-confirm"><i class="ri-delete-bin-6-fill"></i></a>';
-                // })
 
 
                 ->addColumn('action', function ($row) {

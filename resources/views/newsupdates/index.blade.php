@@ -31,7 +31,6 @@
             </div>
         </div>
     </div>
-
 </x-app-layout>
 <script>
     $(document).ready(function() {
@@ -39,6 +38,7 @@
             processing: true,
             serverSide: true,
             ajax: "{{ route('news-updates.index') }}",
+            order: [[2, 'desc']],
             columns: [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex',

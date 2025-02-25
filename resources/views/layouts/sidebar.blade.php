@@ -48,12 +48,12 @@
             </ul>
 
         </li> --}}
-        <li class="sidebar-item">
+        {{-- <li class="sidebar-item">
             <a href="#" class="sidebar-link">
                 <i class="lni lni-agenda"></i>
                 <span>Task</span>
             </a>
-        </li>
+        </li> --}}
         {{-- <li class="sidebar-header">
             Pages
         </li> --}}
@@ -90,12 +90,12 @@
 
 
         </li>
-        <li class="sidebar-item">
+        {{-- <li class="sidebar-item">
             <a href="#" class="sidebar-link">
                 <i class="lni lni-popup"></i>
                 <span>Notification</span>
             </a>
-        </li>
+        </li> --}}
         <li class="sidebar-item">
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
