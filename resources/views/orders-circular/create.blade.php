@@ -51,7 +51,7 @@
                             <option value="">Select Service / Member Related</option>
                             <option value="Service">Service Related</option>
                             <option value="Member">Members Related</option>
-                            <option value="Accounts">Accounts Related</option>
+
                         </select>
                         @error('service_member')
                             <div class="text-danger">{{ $message }}</div>
@@ -62,8 +62,9 @@
                         <label for="service" class="form-label">Select Service</label>
                         <select class="form-select" id="servc" name="servc" required>
                             <option value="">Select Service Related</option>
-                            <option value="TP">Transfer & Posting</option>
-                            <option value="CRS">Claim / Reimbursements</option>
+                            <option value="STP">Transfer & Posting</option>
+                            <option value="SCR">Claim / Reimbursements</option>
+                            <option value="SAR">Accounts Related</option>
                             <option value="G">General</option>
                         </select>
                         @error('service')
@@ -75,28 +76,16 @@
                         <label for="member" class="form-label">Select Member</label>
                         <select class="form-select" id="memb" name="memb" required>
                             <option value="">Select Member Related</option>
-                            <option value="CRM">Claim / Reimbursements</option>
+                            <option value="MCR">Claim / Reimbursements</option>
                             <option value="PA">PA Postings</option>
+                            <option value="MAR">Accounts Related</option>
 
                         </select>
                         @error('member')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    {{-- I want to display office order types --}}
-                    {{-- <div class="mb-3" id="offcOrder" style="display: none">
-                        <label for="offc_order" class="form-label">Select Office Order Type</label>
-                        <select class="form-select" id="offc_order" name="offc_order" required>
-                            <option value="">Select Office Order Type</option>
-                            <option value="SR">Service Related</option>
-                            <option value="AR">Accounts Related</option>
-                            <option value="O">Other</option>
 
-                        </select>
-                        @error('offc_order')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div> --}}
                     <div class="mb-3">
                         <label for="no" class="form-label">Number</label>
                         <input type="text" class="form-control" id="no" name="no" placeholder="Enter No"
@@ -146,16 +135,11 @@
 
 </x-app-layout>
 <script>
-    function toggleGoType() {
-        var type = document.getElementById('type').value;
-        if (type == 'G') {
-            document.getElementById('goType').style.display = 'block';
-            document.getElementById('go_type').setAttribute('required', 'required');
-        } else {
-            document.getElementById('goType').style.display = 'none';
-            document.getElementById('go_type').removeAttribute('required');
-        }
-    }
+      document.addEventListener('DOMContentLoaded', function() {
+        toggleGoType();
+        toggleServiceorMember();
+        toggleServiceMember();
+    });
 
     function toggleGoType() {
         var type = document.getElementById('type').value;
@@ -163,46 +147,56 @@
             document.getElementById('goType').style.display = 'block';
             document.getElementById('go_type').setAttribute('required', 'required');
         } else if (type == 'O') {
-            document.getElementById('offcOrder').style.display = 'block';
-            document.getElementById('offc_order').setAttribute('required', 'required');
-        } else {
+            document.getElementById('service_member').style.display = 'block';
+            document.getElementById('serviceMember').setAttribute('required', 'required');
             document.getElementById('goType').style.display = 'none';
             document.getElementById('go_type').removeAttribute('required');
-            document.getElementById('offcOrder').style.display = 'none';
-            document.getElementById('offc_order').removeAttribute('required');
+            document.getElementById('go_type').value = '';
+        } else {
+            document.getElementById('service').style.display = 'block';
+            document.getElementById('servc').setAttribute('required', 'required');
+            document.getElementById('goType').style.display = 'none';
+            document.getElementById('go_type').removeAttribute('required');
+            document.getElementById('go_type').value = '';
+            document.getElementById('service_member').style.display = 'none';
+            document.getElementById('serviceMember').removeAttribute('required');
+            document.getElementById('serviceMember').value = 'Service';
+            document.getElementById('member').style.display = 'none';
+            document.getElementById('memb').removeAttribute('required');
         }
 
     }
 
-    // function toggleServiceorMember() {
-    //     var go_type = document.getElementById('go_type').value;
-    //     if (go_type == 'M') {
-    //         document.getElementById('service_member').style.display = 'block';
-    //         document.getElementById('service_member').setAttribute('required', 'required');
-    //     } else {
-    //         document.getElementById('service_member').style.display = 'none';
-    //         document.getElementById('service_member').removeAttribute('required');
-    //     }
-    // }
+    function toggleServiceorMember() {
+        var go_type = document.getElementById('go_type').value;
+        if (go_type == 'M' || go_type == 'R' || go_type == 'P') {
+            document.getElementById('service_member').style.display = 'block';
+            document.getElementById('service_member').setAttribute('required', 'required');
+        }
+        // else {
+        //     document.getElementById('service_member').style.display = 'none';
+        //     document.getElementById('service_member').removeAttribute('required');
+        // }
+    }
 
-    // function toggleServiceMember() {
-    //     var serviceMember = document.getElementById('serviceMember').value;
+    function toggleServiceMember() {
+        var serviceMember = document.getElementById('serviceMember').value;
 
-    //     if (serviceMember === 'Service') {
-    //         document.getElementById('service').style.display = 'block';
-    //         document.getElementById('servc').setAttribute('required', 'required');
-    //         document.getElementById('member').style.display = 'none';
-    //         document.getElementById('memb').removeAttribute('required');
-    //     } else if (serviceMember === 'Member') {
-    //         document.getElementById('member').style.display = 'block';
-    //         document.getElementById('memb').setAttribute('required', 'required');
-    //         document.getElementById('service').style.display = 'none';
-    //         document.getElementById('servc').removeAttribute('required');
-    //     } else {
-    //         document.getElementById('service').style.display = 'none';
-    //         document.getElementById('servc').removeAttribute('required');
-    //         document.getElementById('member').style.display = 'none';
-    //         document.getElementById('memb').removeAttribute('required');
-    //     }
-    // }
+        if (serviceMember === 'Service') {
+            document.getElementById('service').style.display = 'block';
+            document.getElementById('servc').setAttribute('required', 'required');
+            document.getElementById('member').style.display = 'none';
+            document.getElementById('memb').removeAttribute('required');
+        } else if (serviceMember === 'Member') {
+            document.getElementById('member').style.display = 'block';
+            document.getElementById('memb').setAttribute('required', 'required');
+            document.getElementById('service').style.display = 'none';
+            document.getElementById('servc').removeAttribute('required');
+        } else {
+            document.getElementById('service').style.display = 'none';
+            document.getElementById('servc').removeAttribute('required');
+            document.getElementById('member').style.display = 'none';
+            document.getElementById('memb').removeAttribute('required');
+        }
+    }
 </script>

@@ -1,4 +1,4 @@
-<aside id="sidebar" class="sidebar-toggle">
+<aside id="sidebar" class="collapse show">
     <div class="sidebar-logo">
         <a href="#">KLA INTRANET</a>
     </div>

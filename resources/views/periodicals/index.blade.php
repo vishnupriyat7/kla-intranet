@@ -25,6 +25,7 @@
                             <th>Name</th>
                             <th>Path</th>
                             <th>Date</th>
+                            <th>Keywords</th>
                             <th>Status</th>
                             <th>File</th>
                             <th>Action</th>
@@ -63,6 +64,10 @@
                     name: 'date'
                 },
                 {
+                    data: 'keywords',
+                    name: 'keywords'
+                },
+                {
                     data: 'status',
                     name: 'status',
                     orderable: false,
@@ -82,8 +87,8 @@
                 }
             ],
             createdRow: function(row, data, dataIndex) {
-                $('td:eq(5)', row).css('white-space', 'nowrap'); // Prevent wrap on index column
-                $('td:eq(6)', row).css('white-space', 'nowrap'); // Prevent wrap on action column
+                $('td:eq(6)', row).css('white-space', 'nowrap'); // Prevent wrap on index column
+                $('td:eq(7)', row).css('white-space', 'nowrap'); // Prevent wrap on action column
             }
         });
     });

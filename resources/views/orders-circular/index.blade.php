@@ -8,7 +8,7 @@
 
         {{-- use card here --}}
         <div class = "card">
-            <div class="card-header">
+            <div class="card-header p-3">
                 <h4 class="fw-bold">Orders / Circulars</h4>
             </div>
             <div class="card-body">
@@ -16,24 +16,26 @@
                     <a href="{{ route('orders-circular.create') }}" class="btn btn-primary">Add New</a>
 
                 </div>
-                <table id="ordersCircularsTable" class="table table-striped table-bordered table-responsive overflow-auto">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>#</th>
-                            <th>Type</th>
-                            <th>GO Type</th>
-                            <th>Sub Type</th>
-                            <th>Service / Member Type</th>
-                            <th>No</th>
-                            <th>Date</th>
-                            <th>Title</th>
-                            <th>Keyword</th>
-                            <th>Path</th>
-                            <th>File</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                </table>
+                <div class="table-responsive" style="overflow-x: auto;">
+                    <table id="ordersCircularsTable" class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Type</th>
+                                <th>GO Type</th>
+                                <th>Sub Type</th>
+                                <th>Service / Member Type</th>
+                                <th>No</th>
+                                <th>Date</th>
+                                <th>Title</th>
+                                <th>Keyword</th>
+                                <th>Path</th>
+                                <th>File</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -108,4 +110,3 @@
         });
     });
 </script>
-

@@ -8,7 +8,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class OrderCircularController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         if (request()->ajax()) {
             $orders = OrderCircular::all()->sortByDesc('created_at');
@@ -87,8 +87,13 @@ class OrderCircularController extends Controller
                 ->addColumn('action', function ($data) {
                     $button = '<a href="' . route('orders-circular.edit', $data->id) . '" class="btn btn-warning btn-sm"><i class="ri-edit-2-fill"></i></a>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<button type="button" name="delete" id="' . $data->id . '" class="delete btn
-                    btn-danger btn-sm"><i class="ri-delete-bin-6-fill"></i></button>';
+                    $button .= '<form method="POST" action="' . route('orders-circular.delete', $data->id) . '" style="display:inline;">
+                    ' . csrf_field() . '
+                    ' . method_field('DELETE') . '
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure?\')">
+                        <i class="ri-delete-bin-6-fill"></i>
+                    </button>
+                </form>';
                     return $button;
                 })
                 ->rawColumns(['file', 'action'])
@@ -112,7 +117,6 @@ class OrderCircularController extends Controller
             'serviceMember' => 'nullable',
             'servc' => 'nullable',
             'memb' => 'nullable',
-            'offc_order' => 'nullable',
             'no' => 'required',
             'date' => 'required|date',
             'title' => 'required',
@@ -133,17 +137,11 @@ class OrderCircularController extends Controller
         $filePath = $request->file('path')->store("uploads/orders-circlular/{$year}/{$categoryFolder}", 'public');
 
         // $filePath = $request->file('go_path')->store('uploads/orders-circular/', 'public');
-        if ($request->serviceMember == 'Service') {
-            $sub_sub_type = $request->servc;
-        } elseif ($request->serviceMember == 'Member') {
-            $sub_sub_type = $request->memb;
-        } else {
-            $sub_sub_type = null;
-        }
-
-        if($request->type == 'O'){
-            $sub_sub_type = $request->offc_order;
-        }
+        $sub_sub_type = match ($request->serviceMember) {
+            'Service' => $request->servc,
+            'Member' => $request->memb,
+            default => null,
+        };
 
         OrderCircular::create([
             'type' => $request->type,
@@ -173,34 +171,58 @@ class OrderCircularController extends Controller
         $request->validate([
             'type' => 'required',
             'go_type' => 'nullable',
-            'sub_type' => 'nullable',
-            'sub_sub_type' => 'nullable',
+            'serviceMember' => 'nullable',
+            'servc' => 'nullable',
+            'memb' => 'nullable',
             'no' => 'required',
             'date' => 'required|date',
             'title' => 'required',
             'keywords' => 'required',
             'path' => 'nullable|file|mimes:pdf|max:1048576',
         ]);
+
+
         $order = OrderCircular::find($request->id);
+        $year = date('Y', strtotime($request->date));
 
-        $order->type = $request->type;
-        $order->go_type = $request->go_type;
-        $order->sub_type = $request->sub_type;
-        $order->sub_sub_type = $request->sub_sub_type;
-        $order->number = $request->no;
-        $order->date = $request->date;
-        $order->title = $request->title;
-        $order->keywords = $request->keywords;
+        $categoryFolder = match ($request->type) {
+            'G' => 'GovtOrders',
+            'O' => 'OfficeOrders',
+            'C' => 'Circulars',
+        };
+
+
+        // Initialize $filePath with the existing value
+        $filePath = $order->path;
+
         if ($request->hasFile('path')) {
-
-            if ($order->path) {
+            // Delete old file if exists
+            if ($order->path && file_exists(storage_path('app/public/' . $order->path))) {
                 unlink(storage_path('app/public/' . $order->path));
             }
 
-            $filePath = $request->file('path')->store('uploads/orders-circular/', 'public');
-            $order->path = $filePath;
+            // Store new file and update $filePath
+            $filePath = $request->file('path')->store("uploads/orders-circlular/{$year}/{$categoryFolder}", 'public');
         }
-        $order->save();
+
+        $sub_sub_type = match ($request->serviceMember) {
+            'Service' => $request->servc,
+            'Member' => $request->memb,
+            default => null,
+        };
+
+        $order->update([
+            'type' => $request->type,
+            'go_type' => $request->go_type ?? null,
+            'sub_type' => $request->serviceMember ?? null,
+            'sub_sub_type' => $sub_sub_type ?? null,
+            'number' => $request->no,
+            'date' => $request->date,
+            'title' => $request->title,
+            'keywords' => $request->keywords,
+            'path' => $filePath,
+        ]);
+
         return redirect()->route('orders-circular.index')->with('success', 'Order / Circular updated successfully');
     }
     public function delete(Request $request)

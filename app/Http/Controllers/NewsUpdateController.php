@@ -13,9 +13,7 @@ class NewsUpdateController extends Controller
      */
     public function index()
     {
-        // $newsupdates = NewsUpdate::all();
-        // return view('newsupdates.index', compact('newsupdates'));
-        // use yajradatatables to fetch data from database
+
         if (request()->ajax()) {
             $newsupdates = NewsUpdate::all();
 
@@ -35,8 +33,9 @@ class NewsUpdateController extends Controller
 
 
                 ->addColumn('action', function ($row) {
+                    $action = '';
                     if ($row->path) {
-                        return '<a href="#" class="btn btn-outline-info btn-sm text-black" data-bs-toggle="modal" data-bs-target="#pdfModal' . $row->id . '">
+                        $action .= '<a href="#" class="btn btn-outline-info btn-sm text-black" data-bs-toggle="modal" data-bs-target="#pdfModal' . $row->id . '">
                                     <i class="ri-eye-fill"></i> PDF
                                 </a>
                                 <div class="modal fade" id="pdfModal' . $row->id . '" tabindex="-1">
@@ -53,10 +52,18 @@ class NewsUpdateController extends Controller
                                     </div>
                                 </div>';
                     } else {
-                        return '<span>No file available</span>';
+                        $action .= '<span>No file available</span>';
                     }
-                    return '<a href="' . route('news-updates.edit', $row->id) . '" class="btn btn-warning btn-sm"><i class="ri-edit-2-fill"></i></a>
-                    <a href="' . route('news-updates.destroy', $row->id) . '" class="btn btn-danger btn-sm delete-confirm"><i class="ri-delete-bin-6-fill"></i></a>';
+                    $action .= '<a href="' . route('news-updates.edit', $row->id) . '" class="btn btn-warning btn-sm"><i class="ri-edit-2-fill"></i></a>
+
+                    <form method="POST" action="' . route('news-updates.destroy', $row->id) . '" style="display:inline;">
+                    ' . csrf_field() . '
+                    ' . method_field('DELETE') . '
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure?\')">
+                        <i class="ri-delete-bin-6-fill"></i>
+                    </button>
+                </form>';
+                    return $action;
                 })
                 ->rawColumns(['file', 'status', 'action'])
                 ->make(true);
@@ -150,9 +157,9 @@ class NewsUpdateController extends Controller
     public function destroy(Request $request)
     {
         $newsupdate = NewsUpdate::findOrFail($request->id);
-        $oldFile = $newsupdate->path;
-        if ($oldFile) {
-            unlink(storage_path('app/public/' . $oldFile));
+
+        if ($newsupdate->path) {
+            unlink(storage_path('app/public/' . $newsupdate->path));
         }
         $newsupdate->delete();
         return redirect()->route('news-updates.index')->with('success', 'News deleted successfully!');

@@ -39,7 +39,8 @@
                     </div>
                     <div class="form-group mb-3" id="goType" style="display: none">
                         <label for="go_type" class="form-label">Select GO Type</label>
-                        <select class="form-select" id="go_type" name="go_type" required>
+                        <select class="form-select" id="go_type" name="go_type" required
+                            onchange="toggleServiceorMember()">
                             <option value="">Select GO Type</option>
                             <option value="M" {{ $order->go_type == 'M' ? 'selected' : '' }}>സർക്കാർ ഉത്തരവുകൾ
                                 കയ്യെഴുത്തു (Govt.Order Manuscript)</option>
@@ -49,8 +50,53 @@
                                 അച്ചടി
                                 (Govt. Order Print) </option>
                         </select>
-
                     </div>
+                    <div class="mb-3" id="service_member" style="display: none">
+                        <label for="service_member" class="form-label">Select Service / Member Related</label>
+                        <select class="form-select" id="serviceMember" name="serviceMember"
+                            onchange="toggleServiceMember()">
+                            <option value="">Select Service / Member Related</option>
+                            <option value="Service" {{ $order->sub_type == 'Service' ? 'selected' : '' }}>Service
+                                Related</option>
+                            <option value="Member" {{ $order->sub_type == 'Member' ? 'selected' : '' }}>Members
+                                Related</option>
+                        </select>
+                        @error('service_member')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="mb-3" id="service" style="display: none">
+                        <label for="service" class="form-label">Select Service</label>
+                        <select class="form-select" id="servc" name="servc">
+                            <option value="">Select Service Related</option>
+                            <option value="STP" {{ $order->sub_sub_type == 'STP' ? 'selected' : '' }}>Transfer & Posting
+                            </option>
+                            <option value="SCR" {{ $order->sub_sub_type == 'SCR' ? 'selected' : '' }}>Claim /
+                                Reimbursements</option>
+                            <option value="SAR" {{ $order->sub_sub_type == 'SAR' ? 'selected' : '' }}>Accounts Related
+                            </option>
+                            <option value="G" {{ $order->sub_sub_type == 'G' ? 'selected' : '' }}>General</option>
+                        </select>
+                        @error('service')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3" id="member" style="display: none">
+                        <label for="member" class="form-label">Select Member</label>
+                        <select class="form-select" id="memb" name="memb">
+                            <option value="">Select Member Related</option>
+                            <option value="MCR" {{ $order->sub_sub_type == 'MCR' ? 'selected' : '' }}>Claim / Reimbursements
+                            </option>
+                            <option value="PA" {{ $order->sub_sub_type == 'PA' ? 'selected' : '' }}>PA Postings</option>
+                            <option value="MAR" {{ $order->sub_sub_type == 'MAR' ? 'selected' : '' }}>Accounts Related
+                            </option>
+                        </select>
+                        @error('member')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     <div class="form-group mb-3">
                         <label for="no" class="form-label">Number</label>
                         <input type="text" class="form-control" id="no" name="no"
@@ -84,8 +130,6 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-
-
                     <div class="row">
                         <div class="col-6">
                             @if ($order->path)
@@ -93,8 +137,8 @@
                                     data-bs-target="#pdfModal">
                                     View PDF
                                 </a>
-                                <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel"
-                                    aria-hidden="true">
+                                <div class="modal fade" id="pdfModal" tabindex="-1"
+                                    aria-labelledby="pdfModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -133,6 +177,8 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         toggleGoType();
+        toggleServiceorMember();
+        toggleServiceMember();
     });
 
     function toggleGoType() {
@@ -140,9 +186,54 @@
         if (type == 'G') {
             document.getElementById('goType').style.display = 'block';
             document.getElementById('go_type').setAttribute('required', 'required');
-        } else {
+        } else if (type == 'O') {
+            document.getElementById('service_member').style.display = 'block';
+            document.getElementById('serviceMember').setAttribute('required', 'required');
             document.getElementById('goType').style.display = 'none';
             document.getElementById('go_type').removeAttribute('required');
+
+        } else {
+            document.getElementById('service').style.display = 'block';
+            document.getElementById('servc').setAttribute('required', 'required');
+            document.getElementById('goType').style.display = 'none';
+            document.getElementById('go_type').removeAttribute('required');
+            document.getElementById('service_member').style.display = 'none';
+            document.getElementById('serviceMember').removeAttribute('required');
+            document.getElementById('member').style.display = 'none';
+            document.getElementById('memb').removeAttribute('required');
+        }
+    }
+
+    function toggleServiceorMember() {
+        var go_type = document.getElementById('go_type').value;
+        if (go_type == 'M' || go_type == 'R' || go_type == 'P') {
+            document.getElementById('service_member').style.display = 'block';
+            document.getElementById('service_member').setAttribute('required', 'required');
+        }
+        // else {
+        //     document.getElementById('service_member').style.display = 'none';
+        //     document.getElementById('service_member').removeAttribute('required');
+        // }
+    }
+
+    function toggleServiceMember() {
+        var serviceMember = document.getElementById('serviceMember').value;
+
+        if (serviceMember === 'Service') {
+            document.getElementById('service').style.display = 'block';
+            document.getElementById('servc').setAttribute('required', 'required');
+            document.getElementById('member').style.display = 'none';
+            document.getElementById('memb').removeAttribute('required');
+        } else if (serviceMember === 'Member') {
+            document.getElementById('member').style.display = 'block';
+            document.getElementById('memb').setAttribute('required', 'required');
+            document.getElementById('service').style.display = 'none';
+            document.getElementById('servc').removeAttribute('required');
+        } else {
+            document.getElementById('service').style.display = 'none';
+            document.getElementById('servc').removeAttribute('required');
+            document.getElementById('member').style.display = 'none';
+            document.getElementById('memb').removeAttribute('required');
         }
     }
 </script>

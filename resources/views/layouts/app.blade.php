@@ -40,9 +40,18 @@
 
             <!-- Navbar -->
             <nav class="navbar navbar-expand">
-                <button class="toggler-btn" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar">
+                <button class="toggler-btn" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar"
+                    aria-expanded="true" aria-controls="sidebar">
                     <i class="lni lni-text-align-left"></i>
                 </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href=""><span class="fw-bold fs-4">Super Admin</span></a>
+                        </li>
+
+                    </ul>
+                </div>
             </nav>
             <main>
                 @if (session('error'))
