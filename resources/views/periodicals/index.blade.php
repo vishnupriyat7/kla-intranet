@@ -6,7 +6,7 @@
         </h2>
     </x-slot>
 
-    <div class="container py-10">
+    <div class="container-fluid py-10">
         {{-- add card here --}}
         <div class="card">
             <div class="card-header p-3">
@@ -16,8 +16,6 @@
                 <div class="d-flex justify-content-end">
                     <a href="{{ route('periodicals.create') }}" class="btn btn-primary">Add New</a>
                 </div>
-
-
                 <table id="periodicalsTable" class="table table-striped table-bordered">
                     <thead class="table-dark">
                         <tr>
@@ -25,6 +23,7 @@
                             <th>Name</th>
                             <th>Path</th>
                             <th>Date</th>
+                            <th>Keywords</th>
                             <th>Status</th>
                             <th>File</th>
                             <th>Action</th>
@@ -41,6 +40,9 @@
             processing: true,
             serverSide: true,
             ajax: "{{ route('periodicals.index') }}",
+            order: [
+                [3, 'desc']
+            ],
             columns: [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex',
@@ -49,7 +51,8 @@
                 },
                 {
                     data: 'name',
-                    name: 'periodicalMaster.name'
+                    name: 'periodical_name',
+                    orderable: true,
                 },
                 {
                     data: 'path',
@@ -59,6 +62,10 @@
                 {
                     data: 'date',
                     name: 'date'
+                },
+                {
+                    data: 'keywords',
+                    name: 'keywords'
                 },
                 {
                     data: 'status',
@@ -80,8 +87,8 @@
                 }
             ],
             createdRow: function(row, data, dataIndex) {
-                $('td:eq(5)', row).css('white-space', 'nowrap'); // Prevent wrap on index column
-                $('td:eq(6)', row).css('white-space', 'nowrap'); // Prevent wrap on action column
+                $('td:eq(6)', row).css('white-space', 'nowrap'); // Prevent wrap on index column
+                $('td:eq(7)', row).css('white-space', 'nowrap'); // Prevent wrap on action column
             }
         });
     });

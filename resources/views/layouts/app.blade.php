@@ -24,18 +24,33 @@
 
 <body class="font-sans antialiased">
 
-
-
     <div class="d-flex">
         <!-- Sidebar -->
-        @include('layouts.sidebar');
+        @include('layouts.sidebar')
         <!-- Sidebar Ends -->
         <!-- Main Component -->
         <div class="main">
-            <nav class="navbar navbar-expand">
+            {{-- <nav class="navbar navbar-expand">
                 <button class="toggler-btn" type="button">
                     <i class="lni lni-text-align-left"></i>
                 </button>
+            </nav> --}}
+
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand">
+                <button class="toggler-btn" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar"
+                    aria-expanded="true" aria-controls="sidebar">
+                    <i class="lni lni-text-align-left"></i>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href=""><span class="fw-bold fs-4">Super Admin</span></a>
+                        </li>
+
+                    </ul>
+                </div>
             </nav>
             <main>
                 @if (session('error'))
@@ -53,18 +68,26 @@
             </main>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
-
-    <script src="{{ asset('assets/js/script.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
-
-
-
-
 </body>
 
 </html>
+<!-- jQuery should be first -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap JS (Move this above your script.js) -->
+{{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> --}}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+
+<!-- Custom script (Last) -->
+<script src="{{ asset('assets/js/script.js') }}"></script>
+<script>
+    document.querySelector(".toggler-btn").addEventListener("click", function() {
+        document.getElementById("sidebar").classList.toggle("collapsed");
+    });
+</script>

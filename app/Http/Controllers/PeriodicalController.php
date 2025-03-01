@@ -13,7 +13,9 @@ class PeriodicalController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $periodicals = Periodical::with('periodicalMaster')->orderBy('created_at', 'desc');
+            // $periodicals = Periodical::with('periodicalMaster')->orderBy('created_at', 'desc');
+            $periodicals = Periodical::leftJoin('periodical_masters', 'periodicals.periodical_master_id', '=', 'periodical_masters.id')
+                ->select('periodicals.*', 'periodical_masters.name as periodical_name');
 
             return DataTables::of($periodicals)
                 ->addIndexColumn()
@@ -26,6 +28,9 @@ class PeriodicalController extends Controller
 
                 ->addColumn('date', function ($row) {
                     return date('d-m-Y', strtotime($row->date));
+                })
+                ->addColumn('keywords', function ($row) {
+                    return $row->keywords;
                 })
                 ->addColumn('status', function ($row) {
                     return $row->status == '0' ? '<span class="badge bg-danger">Unpublished</span>' : '<span class="badge bg-success">Published</span>';
@@ -63,8 +68,6 @@ class PeriodicalController extends Controller
         return view('periodicals.index');
     }
 
-
-
     /**
      * Show the form for creating a new resource.
      */
@@ -85,6 +88,7 @@ class PeriodicalController extends Controller
             'name_eng' => 'required|exists:periodical_masters,id',
             'path' => 'required|file|mimes:pdf|max:1048576',
             'date' => 'required|date',
+            'keywords' => 'nullable',
             'status' => 'required',
 
         ]);
@@ -100,6 +104,7 @@ class PeriodicalController extends Controller
         Periodical::create([
             'periodical_master_id' => $request->name_eng,
             'date' => $request->date,
+            'keywords' => $request->keywords,
             'path' => $filePath,
             'status' => $request->status,
 
@@ -135,50 +140,38 @@ class PeriodicalController extends Controller
     public function update(Request $request)
     {
 
-        $periodical = Periodical::findOrFail($request->id);
-        // dd($request->all());
-
         $request->validate([
             'name_eng' => 'required|exists:periodical_masters,id',
             'date' => 'required|date',
             'path' => 'nullable|file|mimes:pdf|max:2000000',
+            'keywords' => 'nullable',
             'status' => 'required',
 
         ]);
+        $periodical = Periodical::findOrFail($request->id);
 
-        // dd($request->all());
+        $filePath = $periodical->path;
 
 
         if ($request->hasFile('path')) {
             //Delete existing File from storage
-            // dd($periodical->path);
-            // dd(storage_path());
 
-            if ($periodical->path) {
+            if ($periodical->path && file_exists(storage_path('app/public/' . $periodical->path))) {
                 unlink(storage_path('app/public/' . $periodical->path));
             }
-
             $filePath = $request->file('path')->store('uploads/periodicals/pdf', 'public');
-
-            $periodical->update([
-                'periodical_master_id' => $request->name_eng,
-                'date' => $request->date,
-                'path' => $filePath,
-                'status' => $request->status,
-            ]);
-
-            return redirect()->route('periodicals.index')->with('success', 'Periodical updated successfully!');
-        } else {
-            $periodical->update([
-                'periodical_master_id' => $request->name_eng,
-                'date' => $request->date,
-                'status' => $request->status,
-            ]);
-
-            return redirect()->route('periodicals.index')->with('success', 'Periodical updated successfully!');
         }
-    }
 
+        $periodical->update([
+            'periodical_master_id' => $request->name_eng,
+            'date' => $request->date,
+            'keywords' => $request->keywords,
+            'path' => $filePath,
+            'status' => $request->status,
+        ]);
+
+        return redirect()->route('periodicals.index')->with('success', 'Periodical updated successfully!');
+    }
 
     /**
      * Remove the specified resource from storage.

@@ -42,7 +42,18 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+
+{{-- input field for keywords --}}
+                    <div class="mb-3">
+                        <label for="keywords" class="form-label">Keywords</label>
+                        <input type="text" class="form-control" id="keywords" name="keywords" required>
+                        @error('keywords')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     {{-- Add Select Box for Periodical List Published(1) /Unpublished(0) --}}
+
                     <div class="mb-3">
                         <label for="status" class="form-label">Published / Unpublished</label>
                         <select class="form-select" id="status" name="status" required>

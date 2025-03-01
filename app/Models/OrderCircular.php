@@ -18,6 +18,8 @@ class OrderCircular extends Model
     protected $fillable = [
         'type',
         'go_type',
+        'sub_type',
+        'sub_sub_type',
         'number',
         'date',
         'title',
@@ -25,5 +27,4 @@ class OrderCircular extends Model
         'path',
         'status',
     ];
-
 }

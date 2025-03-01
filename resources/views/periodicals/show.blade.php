@@ -20,9 +20,18 @@
                             <td>{{ $periodical->periodicalMaster->name }}</td>
                         </tr>
                         <tr>
+                            <th>Date</th>
+                            <td>{{ $periodical->date }}</td>
+                        </tr>
+                        <tr>
+                            <th>Keywords</th>
+                            <td>{{ $periodical->keywords }}</td>
+                        </tr>
+                        <tr>
                             <th>Path</th>
                             <td>{{ $periodical->path }}</td>
                         </tr>
+
                         <tr>
                             <th>File</th>
                             <td>
