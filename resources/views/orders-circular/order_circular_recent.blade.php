@@ -4,6 +4,13 @@
     <!-- Single Product Start -->
     <div class="container-fluid populer-news py-5">
         <div class="container py-5">
+            <h1>{{$orderType}}</h1>
+            </br>
+            {{-- <ol class="breadcrumb justify-content-start mb-4">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                <li class="breadcrumb-item active text-dark">Single Page</li>
+            </ol> --}}
             <div class="tab-class">
                 <div class="d-flex justify-content-between border-bottom mb-4">
                     <ul class="nav nav-pills d-inline-flex text-center">

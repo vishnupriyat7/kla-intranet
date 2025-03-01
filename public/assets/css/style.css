@@ -121,7 +121,7 @@
     .sticky-top .top-link {
         display: none;
     }
-    
+
 }
 
 .topbar .top-link a {
@@ -142,7 +142,7 @@
 
 #note {
     position: relative;
-    animation: noteAnimate 10s infinite;
+    animation: noteAnimate 20s infinite;
     animation-timing-function: ease-in-out;
     display: flex;
     align-items: center;
@@ -150,7 +150,7 @@
 
 @keyframes noteAnimate {
     from {left: -735px;}
-    to {left: 735px;}
+    to {left: 900px;}
 }
 
 /*** Topbar End ***/
@@ -182,7 +182,7 @@
 
 @media (min-width: 1200px) {
     .navbar .nav-item .dropdown-menu {
-        display: block;
+        display: list-item;
         visibility: hidden;
         top: 100%;
         font-weight: 400;
@@ -217,6 +217,28 @@
 
 #searchModal .modal-content {
     background: rgba(255, 255, 255, .8);
+}
+
+.dropdown-menu li {
+    position: relative;
+}
+
+.dropdown-menu .dropdown-submenu {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: -7px;
+    background: var(--bs-light) !important;
+    border-radius: 10px !important;
+}
+
+.dropdown-menu .dropdown-submenu-left {
+    right: 100%;
+    left: auto;
+}
+
+.dropdown-menu>li:hover>.dropdown-submenu {
+    display: block;
 }
 /*** Navbar End ***/
 
@@ -349,13 +371,13 @@
 
 .lifestyle .lifestyle-item .lifestyle-content {
     position: absolute;
-    width: 100%; 
-    height: 100%; 
-    top: 0; 
-    left: 0; 
-    padding: 20px; 
-    display: flex; 
-    flex-direction: column; 
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
     background: rgba(0, 0, 0, 0.3);
     border-radius: 10px;
 }

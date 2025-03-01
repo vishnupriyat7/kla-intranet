@@ -20,8 +20,8 @@
             $('.sticky-top').removeClass('shadow-sm').css('top', '-200px');
         }
     });
-    
-    
+
+
    // Back to top button
    $(window).scroll(function () {
     if ($(this).scrollTop() > 300) {

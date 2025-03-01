@@ -5,7 +5,6 @@
 </div>
 <!-- Spinner End -->
 
-
 <!-- Navbar start -->
 <div class="container-fluid sticky-top px-0">
     <div class="container-fluid topbar bg-dark d-none d-lg-block">
@@ -18,22 +17,22 @@
                     <div class="pe-2 me-3 border-end border-white d-flex align-items-center">
                         <p class="mb-0 text-white fs-6 fw-normal">Trending</p>
                     </div>
-                    <div class="overflow-hidden" style="width: 735px;">
+                    <div class="overflow-hidden" style="width: 900px;">
                         <div id="note" class="ps-2">
                             <img src="img/features-fashion.jpg"
                                 class="img-fluid rounded-circle border border-3 border-primary me-2"
                                 style="width: 30px; height: 30px;" alt="">
-                            <a href="#">
+                            <a href="{{route('home.index')}}">
                                 <p class="text-white mb-0 link-hover">Welcome to INTRANET Service of KERALA LEGISLATURE
                                     SECRETARIAT</p>
                             </a>
                         </div>
                     </div>
                 </div>
-                {{-- <div class="top-link flex-lg">
-                    <i class="fas fa-calendar-alt text-white border-end border-secondary pe-2 me-2"> <span
-                            class="text-body">Tuesday, Sep 12, 2024</span></i>
-                    <div class="d-flex icon">
+                <div class="top-link flex-lg">
+                    <i class="fas fa-calendar-alt text-white pe-2 me-2"> <span class="text-body">{{ date('D') }}
+                            {{ date('d') }} {{ date('F') }} {{ date('Y') }}</span></i>
+                    {{-- <div class="d-flex icon">
                         <p class="mb-0 text-white me-2">Follow Us:</p>
                         <a href="" class="me-2"><i class="fab fa-facebook-f text-body link-hover"></i></a>
                         <a href="" class="me-2"><i class="fab fa-twitter text-body link-hover"></i></a>
@@ -42,15 +41,15 @@
                         <a href="" class="me-2"><i class="fab fa-linkedin-in text-body link-hover"></i></a>
                         <a href="" class="me-2"><i class="fab fa-skype text-body link-hover"></i></a>
                         <a href="" class=""><i class="fab fa-pinterest-p text-body link-hover"></i></a>
-                    </div>
-                </div> --}}
+                    </div> --}}
+                </div>
             </div>
         </div>
     </div>
     <div class="container-fluid bg-light">
         <div class="container px-0">
-            <nav class="navbar navbar-light navbar-expand-xl">
-                <a href="index.html" class="navbar-brand mt-3">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <a href="{{route('home.index')}}" class="navbar-brand mt-3">
                     <p class="text-primary display-6 mb-2" style="line-height: 0;">INTRANET</p>
                     <small class="text-body fw-normal" style="letter-spacing: 5px;">Kerala Legislature
                         Secretariat</small>
@@ -59,37 +58,57 @@
                     data-bs-target="#navbarCollapse">
                     <span class="fa fa-bars text-primary"></span>
                 </button>
-                <div class="collapse navbar-collapse bg-light py-3" id="navbarCollapse">
-                    <div class="navbar-nav mx-auto border-top">
-                        <a href="{{route('home.index')}}" class="nav-item nav-link active">Home</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Government Order</a>
-                            <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                <a href="{{route('home.order-circular', 'goms')}}" class="dropdown-item">Manuscript</a>
-                                <a href="{{route('home.order-circular', 'gor')}}" class="dropdown-item">Routine</a>
-                            </div>
-                        </div>
-                        <a href="{{route('home.order-circular', 'oo')}}" class="nav-item nav-link">Office Order</a>
-                        <a href="{{route('home.order-circular', 'cr')}}" class="nav-item nav-link">Circular</a>
-
-                    </div>
-                    <div class="d-flex flex-nowrap border-top pt-3 pt-xl-0">
-                        <div class="d-flex">
-                            <img src="img/weather-icon.png" class="img-fluid w-100 me-2" alt="">
-                            <div class="d-flex align-items-center">
-                                <strong class="fs-4 text-secondary"></strong>
-                                <div class="d-flex flex-column ms-2" style="width: 160px;">
-                                    <span class="text-body">Thiruvananthapuram</span>
-                                    <small>{{ date('D') }} {{ date('d') }} {{ date('M') }} {{ date('Y') }}</small>
-                                </div>
-                            </div>
-                        </div>
-                        <button
-                            class="btn-search btn border border-primary btn-md-square rounded-circle bg-white my-auto"
-                            data-bs-toggle="modal" data-bs-target="#searchModal"><i
-                                class="fas fa-search text-primary"></i></button>
-                    </div>
+                <div class="container-fluid">
+                    <ul class="navbar-nav ms-auto">
+                        <!-- Dropdown -->
+                        <li>
+                            <a href="{{route('home.index')}}" class="nav-item nav-link active">Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a data-mdb-dropdown-init class="nav-link dropdown-toggle" href="{{route('home.index')}}"
+                                id="navbarDropdownMenuLinkRight" role="button" data-mdb-toggle="dropdown"
+                                aria-expanded="false">
+                                Orders/Circulars
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkRight">
+                                <li>
+                                    <a class="dropdown-item" href="#"> Government Order &raquo; </a>
+                                    <div class="dropdown-submenu">
+                                        <a class="dropdown-item"
+                                            href="{{route('home.order-circular', 'goms')}}">Manuscript</a>
+                                        <a class="dropdown-item"
+                                            href="{{route('home.order-circular', 'gor')}}">Routine</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{route('home.order-circular', 'oo')}}">Office
+                                        Order</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{route('home.order-circular', 'cr')}}">Circular</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="{{route('home.search')}}" class="nav-item nav-link active">Search</a>
+                        </li>
+                    </ul>
                 </div>
+                {{-- <div class="d-flex flex-nowrap border-top pt-3 pt-xl-0">
+                    <div class="d-flex">
+                        <img src="img/weather-icon.png" class="img-fluid w-100 me-2" alt="">
+                        <div class="d-flex align-items-center">
+                            <strong class="fs-4 text-secondary"></strong>
+                            <div class="d-flex flex-column ms-2" style="width: 160px;">
+                                <span class="text-body">Thiruvananthapuram</span>
+                                <small>{{ date('D') }} {{ date('d') }} {{ date('M') }} {{ date('Y') }}</small>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn-search btn border border-primary btn-md-square rounded-circle bg-white my-auto"
+                        data-bs-toggle="modal" data-bs-target="#searchModal"><i
+                            class="fas fa-search text-primary"></i></button>
+                </div> --}}
             </nav>
         </div>
     </div>

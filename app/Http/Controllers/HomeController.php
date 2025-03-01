@@ -13,7 +13,6 @@ class HomeController extends Controller
     public function index()
     {
         //want to show all distinct periodicals with latest periodical by status published(1) on home page in alphabetical order of periodical name
-
         $periodicals = Periodical::with('periodicalMaster')
             ->where('status', 1)
             ->join('periodical_masters', 'periodicals.periodical_master_id', '=', 'periodical_masters.id')
@@ -24,7 +23,37 @@ class HomeController extends Controller
             ->orderBy('date', 'desc')
             ->limit(5)
             ->get();
-        return view('home', compact('periodicals', 'newsupdates'));
+        $gos = OrderCircular::where('type', 'G')
+            ->where('status', '1') // Fetch records in range
+            ->orderBy('date', 'desc')
+            ->limit(2)
+            ->get();
+        $oos = OrderCircular::where('type', 'O')
+            ->where('status', '1')
+            ->orderBy('date', 'desc')
+            ->limit(2)
+            ->get();
+        $crcls = OrderCircular::where('type', 'C')
+            ->where('status', '1')
+            ->orderBy('date', 'desc')
+            ->limit(2)
+            ->get();
+        $goCount = OrderCircular::where('type', 'G')
+            ->whereMonth('date', Carbon::now()->month)
+            ->whereYear('date', Carbon::now()->year)
+            ->where('status', '1')
+            ->count();
+        $ooCount = OrderCircular::where('type', 'O')
+            ->whereMonth('date', Carbon::now()->month)
+            ->whereYear('date', Carbon::now()->year)
+            ->where('status', '1')
+            ->count();
+        $clrCount = OrderCircular::where('type', 'C')
+            ->whereMonth('date', Carbon::now()->month)
+            ->whereYear('date', Carbon::now()->year)
+            ->where('status', '1')
+            ->count();
+        return view('home', compact('periodicals', 'newsupdates', 'gos', 'oos', 'crcls', 'goCount', 'ooCount', 'clrCount'));
     }
 
     public function updatesMore()
@@ -48,6 +77,7 @@ class HomeController extends Controller
                 ->whereBetween('date', [$startDate, $endDate]) // Fetch records in range
                 ->orderBy('date', 'desc')
                 ->get();
+            $orderType = 'GO Manuscript';
         } elseif ($request->type == 'gor') {
             $orders = OrderCircular::where('type', 'G')
                 ->where('go_type', 'R')
@@ -55,18 +85,21 @@ class HomeController extends Controller
                 ->whereBetween('date', [$startDate, $endDate]) // Fetch records in range
                 ->orderBy('date', 'desc')
                 ->get();
+            $orderType = 'GO Routine';
         } elseif ($request->type == 'oo') {
             $orders = OrderCircular::where('type', 'O')
                 ->where('status', '1')
                 ->whereBetween('date', [$startDate, $endDate]) // Fetch records in range
                 ->orderBy('date', 'desc')
                 ->get();
+            $orderType = 'Office Order';
         } elseif ($request->type == 'cr') {
             $orders = OrderCircular::where('type', 'C')
                 ->where('status', '1')
                 ->whereBetween('date', [$startDate, $endDate]) // Fetch records in range
                 ->orderBy('date', 'desc')
                 ->get();
+            $orderType = 'Circular';
         }
         $months = collect(range(0, 5))->map(function ($i) {
             return [
@@ -74,6 +107,23 @@ class HomeController extends Controller
                 'name' => now()->subMonths(5 - $i)->format('F') . ' ' . now()->subMonths(5 - $i)->format('Y'),   // Full month name (January, February, etc.)
             ];
         });
-        return view('orders-circular.order_circular_recent', compact('orders', 'months'));
+        return view('orders-circular.order_circular_recent', compact('orders', 'months', 'orderType'));
+    }
+
+    public function search(Request $request)
+    {
+        $query = OrderCircular::query();
+
+        if ($request->has('anysearch')) {
+            $search = $request->anysearch;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'LIKE', "%{$search}%")
+                    ->orWhere('keywords', 'LIKE', "%{$search}%"); // Add more columns as needed
+            });
+
+        }
+        $orders = $query->paginate(20); // Paginate results
+
+        return view('partials.search', compact('orders'));
     }
 }
