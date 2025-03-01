@@ -7,7 +7,7 @@
     </x-slot>
     <div class="container py-10">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header p-3">
                 <h4 class="fw-bold">Periodicals List</h4>
             </div>
             <div class="card-body">
@@ -16,16 +16,18 @@
                 </div>
 
                 {{-- <h2 class="mb-4">Periodicals List</h2> --}}
-                <table id="periodicalsTable" class="table table-striped table-bordered">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>#</th>
-                            <th>Name</th>
-                            <th>Image</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                </table>
+                <div class="table-responsive" style="overflow-x: auto;">
+                    <table id="periodicalsTable" class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Image</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

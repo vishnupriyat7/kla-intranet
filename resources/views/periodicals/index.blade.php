@@ -6,7 +6,7 @@
         </h2>
     </x-slot>
 
-    <div class="container py-10">
+    <div class="container-fluid py-10">
         {{-- add card here --}}
         <div class="card">
             <div class="card-header p-3">
@@ -16,8 +16,6 @@
                 <div class="d-flex justify-content-end">
                     <a href="{{ route('periodicals.create') }}" class="btn btn-primary">Add New</a>
                 </div>
-
-
                 <table id="periodicalsTable" class="table table-striped table-bordered">
                     <thead class="table-dark">
                         <tr>
@@ -42,7 +40,9 @@
             processing: true,
             serverSide: true,
             ajax: "{{ route('periodicals.index') }}",
-            order: [[3, 'desc']],
+            order: [
+                [3, 'desc']
+            ],
             columns: [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex',
