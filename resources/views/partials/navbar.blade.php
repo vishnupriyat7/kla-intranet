@@ -136,12 +136,10 @@
                 </div> --}}
                 <div class="w-75 mx-auto">
                     <form method="GET" action="{{ route('home.search') }}" class="d-flex">
-                        {{-- <div class="input-group w-100 mx-auto d-flex mb-4"> --}}
                         <input type="search" name="anysearch" class="form-control p-3 me-2" placeholder="keywords"
                             aria-describedby="search-icon-1" value="{{ request('any-search') }}">
                         <button type="submit" class="btn btn-primary p-3"><i
                                 class="fa fa-search text-white"></i></button>
-                        {{-- </div> --}}
                     </form>
                 </div>
 
