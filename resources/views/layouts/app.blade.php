@@ -30,11 +30,6 @@
         <!-- Sidebar Ends -->
         <!-- Main Component -->
         <div class="main">
-            {{-- <nav class="navbar navbar-expand">
-                <button class="toggler-btn" type="button">
-                    <i class="lni lni-text-align-left"></i>
-                </button>
-            </nav> --}}
 
             <!-- Navbar -->
             <nav class="navbar navbar-expand">

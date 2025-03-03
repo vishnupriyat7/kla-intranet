@@ -24,7 +24,6 @@ a {
 }
 
 #sidebar {
-
     max-width: 264px;
     min-width: 264px;
     height: 100vh; /* Ensures full height */
@@ -32,7 +31,7 @@ a {
     display: flex;
     flex-direction: column;
     transition: all 0.7s ease-in-out;
-    overflow: hidden; /* Prevents content from showing while collapsing */
+    overflow: hidden;
 }
 
 #sidebar.collapsed {

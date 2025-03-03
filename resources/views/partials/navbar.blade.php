@@ -22,7 +22,7 @@
                             <img src="img/features-fashion.jpg"
                                 class="img-fluid rounded-circle border border-3 border-primary me-2"
                                 style="width: 30px; height: 30px;" alt="">
-                            <a href="{{route('home.index')}}">
+                            <a href="{{ route('home.index') }}">
                                 <p class="text-white mb-0 link-hover">Welcome to INTRANET Service of KERALA LEGISLATURE
                                     SECRETARIAT</p>
                             </a>
@@ -49,7 +49,7 @@
     <div class="container-fluid bg-light">
         <div class="container px-0">
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
-                <a href="{{route('home.index')}}" class="navbar-brand mt-3">
+                <a href="{{ route('home.index') }}" class="navbar-brand mt-3">
                     <p class="text-primary display-6 mb-2" style="line-height: 0;">INTRANET</p>
                     <small class="text-body fw-normal" style="letter-spacing: 5px;">Kerala Legislature
                         Secretariat</small>
@@ -62,10 +62,10 @@
                     <ul class="navbar-nav ms-auto">
                         <!-- Dropdown -->
                         <li>
-                            <a href="{{route('home.index')}}" class="nav-item nav-link active">Home</a>
+                            <a href="{{ route('home.index') }}" class="nav-item nav-link active">Home</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a data-mdb-dropdown-init class="nav-link dropdown-toggle" href="{{route('home.index')}}"
+                            <a data-mdb-dropdown-init class="nav-link dropdown-toggle" href="{{ route('home.index') }}"
                                 id="navbarDropdownMenuLinkRight" role="button" data-mdb-toggle="dropdown"
                                 aria-expanded="false">
                                 Orders/Circulars
@@ -75,23 +75,29 @@
                                     <a class="dropdown-item" href="#"> Government Order &raquo; </a>
                                     <div class="dropdown-submenu">
                                         <a class="dropdown-item"
-                                            href="{{route('home.order-circular', 'goms')}}">Manuscript</a>
+                                            href="{{ route('home.order-circular', 'goms') }}">Manuscript</a>
                                         <a class="dropdown-item"
-                                            href="{{route('home.order-circular', 'gor')}}">Routine</a>
+                                            href="{{ route('home.order-circular', 'gor') }}">Routine</a>
                                     </div>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{route('home.order-circular', 'oo')}}">Office
+                                    <a class="dropdown-item" href="{{ route('home.order-circular', 'oo') }}">Office
                                         Order</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{route('home.order-circular', 'cr')}}">Circular</a>
+                                    <a class="dropdown-item"
+                                        href="{{ route('home.order-circular', 'cr') }}">Circular</a>
                                 </li>
                             </ul>
                         </li>
-                        <li>
+                        {{-- <li>
                             <a href="{{route('home.search')}}" class="nav-item nav-link active">Search</a>
-                        </li>
+                        </li> --}}
+                        <button
+                            class="btn-search btn border border-primary btn-md-square rounded-circle bg-white my-auto"
+                            data-bs-toggle="modal" data-bs-target="#searchModal"><i
+                                class="fas fa-search text-primary"></i>
+                        </button>
                     </ul>
                 </div>
                 {{-- <div class="d-flex flex-nowrap border-top pt-3 pt-xl-0">
@@ -113,4 +119,35 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Search Start -->
+<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content rounded-0">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex align-items-center">
+                {{-- <div class="input-group w-75 mx-auto d-flex">
+                    <input type="search" class="form-control p-3" placeholder="keywords"
+                        aria-describedby="search-icon-1">
+                    <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                </div> --}}
+                <div class="w-75 mx-auto">
+                    <form method="GET" action="{{ route('home.search') }}" class="d-flex">
+                        {{-- <div class="input-group w-100 mx-auto d-flex mb-4"> --}}
+                        <input type="search" name="anysearch" class="form-control p-3 me-2" placeholder="keywords"
+                            aria-describedby="search-icon-1" value="{{ request('any-search') }}">
+                        <button type="submit" class="btn btn-primary p-3"><i
+                                class="fa fa-search text-white"></i></button>
+                        {{-- </div> --}}
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Search End -->
 <!-- Navbar End -->
