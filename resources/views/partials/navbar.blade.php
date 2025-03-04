@@ -15,7 +15,7 @@
                         <i class="fas fa-bolt text-white"></i>
                     </span>
                     <div class="pe-2 me-3 border-end border-white d-flex align-items-center">
-                        <p class="mb-0 text-white fs-6 fw-normal">Trending</p>
+                        <p class="mb-0 text-white fs-6 fw-normal">KLA</p>
                     </div>
                     <div class="overflow-hidden" style="width: 900px;">
                         <div id="note" class="ps-2">
@@ -29,10 +29,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="top-link flex-lg">
-                    <i class="fas fa-calendar-alt text-white pe-2 me-2"> <span class="text-body">{{ date('D') }}
-                            {{ date('d') }} {{ date('F') }} {{ date('Y') }}</span></i>
-                    {{-- <div class="d-flex icon">
+                {{-- <div class="top-link flex-lg"> --}}
+                {{-- <i class="fas fa-calendar-alt text-white pe-2 me-2"> <span class="text-body">{{ date('D') }}
+                            {{ date('d') }} {{ date('F') }} {{ date('Y') }}</span></i> --}}
+                {{-- <div class="ms-2" style="width: 160px;">
+                        <i class="fas fa-calendar-alt text-white pe-2 me-2"></i>
+                            <span class="text-body">Thiruvananthapuram</span>
+                            <small>{{ date('D') }} {{ date('d') }} {{ date('M') }}
+                                {{ date('Y') }}</small>
+                    </div> --}}
+                {{-- <div class="d-flex icon">
                         <p class="mb-0 text-white me-2">Follow Us:</p>
                         <a href="" class="me-2"><i class="fab fa-facebook-f text-body link-hover"></i></a>
                         <a href="" class="me-2"><i class="fab fa-twitter text-body link-hover"></i></a>
@@ -42,6 +48,24 @@
                         <a href="" class="me-2"><i class="fab fa-skype text-body link-hover"></i></a>
                         <a href="" class=""><i class="fab fa-pinterest-p text-body link-hover"></i></a>
                     </div> --}}
+                {{-- </div> --}}
+                <div class="d-flex flex-nowrap pt-3 pt-xl-0">
+                    <div class="d-flex">
+                        {{-- <img src="img/weather-icon.png" class="img-fluid w-100 me-2" alt=""> --}}
+
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-calendar-alt text-white w-100 me-2"></i>
+                            {{-- <strong class="fs-4 text-secondary">31°C</strong> --}}
+                            <div class="d-flex flex-column ms-2" style="width: 150px;">
+                                {{-- <span class="text-body">NEW YORK,</span>
+                                <small>Mon. 10 jun 2024</small> --}}
+
+                                <small>{{ date('D') }} {{ date('d') }} {{ date('M') }}
+                                    {{ date('Y') }}</small>
+                                <span class="text-body">Thiruvananthapuram</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -104,7 +128,7 @@
                     <div class="d-flex">
                         <img src="img/weather-icon.png" class="img-fluid w-100 me-2" alt="">
                         <div class="d-flex align-items-center">
-                            <strong class="fs-4 text-secondary"></strong>
+                            <strong class="fs-4 text-secondary">31°C</strong>
                             <div class="d-flex flex-column ms-2" style="width: 160px;">
                                 <span class="text-body">Thiruvananthapuram</span>
                                 <small>{{ date('D') }} {{ date('d') }} {{ date('M') }} {{ date('Y') }}</small>

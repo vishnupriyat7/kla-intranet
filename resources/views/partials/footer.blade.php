@@ -25,7 +25,8 @@
             <div class="col-lg-6 col-xl-3">
                 <div class="footer-item-1">
                     <h4 class="mb-4 text-white">Get In Touch</h4>
-                    <p class="text-secondary line-h">Address: <span class="text-white">123 Streat, New York</span>
+                    <p class="text-secondary line-h">Address: <span class="text-white" style="font-size: 14px;">Kerala
+                            Legislature Secretariat, Vikas Bhavan PO, TVM-33, Kerala</span>
                     </p>
                     <p class="text-secondary line-h">Email: <span class="text-white">Example@gmail.com</span></p>
                     <p class="text-secondary line-h">Phone: <span class="text-white">+0123 4567 8910</span></p>
@@ -41,6 +42,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-lg-6 col-xl-3">
                 <div class="footer-item-2">
                     <div class="d-flex flex-column mb-4">
@@ -84,19 +86,33 @@
             </div>
             <div class="col-lg-6 col-xl-3">
                 <div class="d-flex flex-column text-start footer-item-3">
-                    <h4 class="mb-4 text-white">Categories</h4>
-                    <a class="btn-link text-white" href=""><i class="fas fa-angle-right text-white me-2"></i>
-                        Sports</a>
-                    <a class="btn-link text-white" href=""><i class="fas fa-angle-right text-white me-2"></i>
-                        Magazine</a>
-                    <a class="btn-link text-white" href=""><i class="fas fa-angle-right text-white me-2"></i>
-                        Lifestyle</a>
-                    <a class="btn-link text-white" href=""><i class="fas fa-angle-right text-white me-2"></i>
-                        Politician</a>
-                    <a class="btn-link text-white" href=""><i class="fas fa-angle-right text-white me-2"></i>
-                        Technology</a>
-                    <a class="btn-link text-white" href=""><i class="fas fa-angle-right text-white me-2"></i>
-                        Intertainment</a>
+                    <h4 class="mb-4 text-white">Useful Links</h4>
+                    <a class="btn-link text-white" href="http://www.niyamasabha.org/"><i
+                            class="fas fa-angle-right text-white me-2"></i>
+                        Kerala Niyamasabha</a>
+                    <a class="btn-link text-white" href="https://kerala.gov.in/"><i
+                            class="fas fa-angle-right text-white me-2"></i>
+                        Government of Kerala</a>
+                    <a class="btn-link text-white" href="https://www.agker.cag.gov.in/"><i
+                            class="fas fa-angle-right text-white me-2"></i>
+                        Accountant General Kerala</a>
+                    <span>
+                        <i class="fas fa-angle-right text-white me-2"></i>
+                        <a class="btn-link text-white" href="https://sansad.in/ls">Lok Sabha</a> /
+                        <a class="btn-link text-white" href="https://sansad.in/rs">Rajya Sabha</a>
+                    </span>
+                    <span>
+                        <i class="fas fa-angle-right text-white me-2"></i>
+                        <a class="btn-link text-white" href="https://www.keralapsc.gov.in/">K.P.S.C</a> /
+                            <a class ="btn-link text-white" href="https://upsc.gov.in/">U.P.S.C</a>
+                    </span>
+                    <span>
+                        <i class="fas fa-angle-right text-white me-2"></i>
+                        <a class="btn-link text-white" href="https://onlineksrtcswift.com/">KSRTC</a> /
+                            <a class ="btn-link text-white" href="https://www.irctc.co.in/nget/train-search">IRCTC Online Booking</a>
+                    </span>
+                    <a class="btn-link text-white" href="https://gem.gov.in/"><i class="fas fa-angle-right text-white me-2"></i>
+                        GeM</a>
                 </div>
             </div>
             <div class="col-lg-6 col-xl-3">
