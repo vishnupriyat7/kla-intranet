@@ -104,15 +104,20 @@
                     <span>
                         <i class="fas fa-angle-right text-white me-2"></i>
                         <a class="btn-link text-white" href="https://www.keralapsc.gov.in/">K.P.S.C</a> /
-                            <a class ="btn-link text-white" href="https://upsc.gov.in/">U.P.S.C</a>
+                        <a class ="btn-link text-white" href="https://upsc.gov.in/">U.P.S.C</a>
                     </span>
                     <span>
                         <i class="fas fa-angle-right text-white me-2"></i>
                         <a class="btn-link text-white" href="https://onlineksrtcswift.com/">KSRTC</a> /
-                            <a class ="btn-link text-white" href="https://www.irctc.co.in/nget/train-search">IRCTC Online Booking</a>
+                        <a class ="btn-link text-white" href="https://www.irctc.co.in/nget/train-search">IRCTC Online
+                            Booking</a>
                     </span>
-                    <a class="btn-link text-white" href="https://gem.gov.in/"><i class="fas fa-angle-right text-white me-2"></i>
+                    <a class="btn-link text-white" href="https://gem.gov.in/"><i
+                            class="fas fa-angle-right text-white me-2"></i>
                         GeM</a>
+                    <a class="btn-link text-white" href="https://www.keralapost.gov.in/"><i
+                            class="fas fa-angle-right text-white me-2"></i>
+                        Kerala Postal</a>
                 </div>
             </div>
             <div class="col-lg-6 col-xl-3">
@@ -121,12 +126,14 @@
                     <div class="row g-2">
                         <div class="col-4">
                             <div class="rounded overflow-hidden">
-                                <img src="img/footer-1.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
+                                <img src="img/footer-1.jpg" class="img-zoomin img-fluid rounded w-100"
+                                    alt="">
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="rounded overflow-hidden">
-                                <img src="img/footer-2.jpg" class="img-zoomin img-fluid rounded w-100" alt="">
+                                <img src="img/footer-2.jpg" class="img-zoomin img-fluid rounded w-100"
+                                    alt="">
                             </div>
                         </div>
                         <div class="col-4">
