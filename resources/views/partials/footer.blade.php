@@ -115,9 +115,7 @@
                     <a class="btn-link text-white" href="https://gem.gov.in/"><i
                             class="fas fa-angle-right text-white me-2"></i>
                         GeM</a>
-                    <a class="btn-link text-white" href="https://www.keralapost.gov.in/"><i
-                            class="fas fa-angle-right text-white me-2"></i>
-                        Kerala Postal</a>
+
                 </div>
             </div>
             <div class="col-lg-6 col-xl-3">

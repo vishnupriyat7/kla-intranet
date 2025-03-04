@@ -114,6 +114,40 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a data-mdb-dropdown-init class="nav-link dropdown-toggle" href="{{ route('home.index') }}"
+                                id="navbarDropdownMenuLinkRight" role="button" data-mdb-toggle="dropdown"
+                                aria-expanded="false">
+                                Tools/Applications
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkRight">
+                                <li>
+                                    <a class="dropdown-item" href="http://172.24.18.28/attendance-app/"
+                                        target="_blank">Attendance</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="https://email.gov.in/" target="_blank">Official
+                                        eMail</a>
+                                    <a class="dropdown-item" href="#"> Mail ID &raquo; </a>
+                                    <div class="dropdown-submenu">
+                                        <a class="dropdown-item"
+                                            href="">Employees</a>
+                                        <a class="dropdown-item"
+                                            href="">Section</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#"> Government Order &raquo; </a>
+                                    <div class="dropdown-submenu">
+                                        <a class="dropdown-item"
+                                            href="{{ route('home.order-circular', 'goms') }}">Manuscript</a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('home.order-circular', 'gor') }}">Routine</a>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </li>
                         {{-- <li>
                             <a href="{{route('home.search')}}" class="nav-item nav-link active">Search</a>
                         </li> --}}
