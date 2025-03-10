@@ -30,15 +30,15 @@
                     </div>
                 </div>
                 {{-- <div class="top-link flex-lg"> --}}
-                    {{-- <i class="fas fa-calendar-alt text-white pe-2 me-2"> <span class="text-body">{{ date('D') }}
+                {{-- <i class="fas fa-calendar-alt text-white pe-2 me-2"> <span class="text-body">{{ date('D') }}
                             {{ date('d') }} {{ date('F') }} {{ date('Y') }}</span></i> --}}
-                    {{-- <div class="ms-2" style="width: 160px;">
+                {{-- <div class="ms-2" style="width: 160px;">
                         <i class="fas fa-calendar-alt text-white pe-2 me-2"></i>
                         <span class="text-body">Thiruvananthapuram</span>
                         <small>{{ date('D') }} {{ date('d') }} {{ date('M') }}
                             {{ date('Y') }}</small>
                     </div> --}}
-                    {{-- <div class="d-flex icon">
+                {{-- <div class="d-flex icon">
                         <p class="mb-0 text-white me-2">Follow Us:</p>
                         <a href="" class="me-2"><i class="fab fa-facebook-f text-body link-hover"></i></a>
                         <a href="" class="me-2"><i class="fab fa-twitter text-body link-hover"></i></a>
@@ -48,7 +48,7 @@
                         <a href="" class="me-2"><i class="fab fa-skype text-body link-hover"></i></a>
                         <a href="" class=""><i class="fab fa-pinterest-p text-body link-hover"></i></a>
                     </div> --}}
-                    {{-- </div> --}}
+                {{-- </div> --}}
                 <div class="d-flex flex-nowrap pt-3 pt-xl-0">
                     <div class="d-flex">
                         {{-- <img src="img/weather-icon.png" class="img-fluid w-100 me-2" alt=""> --}}
@@ -125,49 +125,66 @@
                                     <a class="dropdown-item" href="http://172.24.18.28/attendance-app/"
                                         target="_blank">Attendance</a>
                                 </li>
+
                                 <li>
                                     <a class="dropdown-item" href="https://email.gov.in/" target="_blank">Official
                                         eMail</a>
                                 </li>
                                 <li>
-
                                     <a class="dropdown-item" href="#"> Mail ID &raquo; </a>
                                     <div class="dropdown-submenu">
                                         <a class="dropdown-item" href="">Employees</a>
                                         <a class="dropdown-item" href="">Section</a>
                                     </div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="https://eniyamasabha.in/auth/login"
+                                        target="_blank">e-Niyamasabha</a>
+                                </li>
+                                {{-- <li>
+                                    <a class="dropdown-item" href="" target="_blank">ERP Module</a>
+                                </li> --}}
+                                <li>
+                                    <a class="dropdown-item" href="http://192.168.11.12/idcard/index.php"
+                                        target="_blank">ID Card Proforma</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="http://192.168.11.12/hallbooking/index.php"
+                                        target="_blank">Conference Hall Booking</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="http://172.24.18.21:8080/share/page"
+                                        target="_blank">Centralised Storage</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="http://172.24.18.18/" target="_blank">LIS</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="http://klaproceedings.niyamasabha.org/"
+                                        target="_blank">Digital Archives of Assembly Documents</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="http://172.24.18.16/login"
+                                        target="_blank">Overtime Allowance Portal</a>
                                 </li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
-                            <a data-mdb-dropdown-init class="nav-link dropdown-toggle" href="{{ route('home.index') }}"
-                                id="navbarDropdownMenuLinkRight" role="button" data-mdb-toggle="dropdown"
-                                aria-expanded="false">
-                                Peridicals
+                            <a data-mdb-dropdown-init class="nav-link dropdown-toggle"
+                                href="{{ route('home.index') }}" id="navbarDropdownMenuLinkRight" role="button"
+                                data-mdb-toggle="dropdown" aria-expanded="false">
+                                Periodicals
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkRight">
-                                <li>
-                                    <a class="dropdown-item" href="http://172.24.18.28/attendance-app/"
-                                        target="_blank">Attendance</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="https://email.gov.in/" target="_blank">Official
-                                        eMail</a>
-                                    <a class="dropdown-item" href="#"> Mail ID &raquo; </a>
-                                    <div class="dropdown-submenu">
-                                        <a class="dropdown-item" href="">Employees</a>
-                                        <a class="dropdown-item" href="">Section</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#"> Government Order &raquo; </a>
-                                    <div class="dropdown-submenu">
-                                        <a class="dropdown-item"
-                                            href="{{ route('home.order-circular', 'goms') }}">Manuscript</a>
-                                        <a class="dropdown-item"
-                                            href="{{ route('home.order-circular', 'gor') }}">Routine</a>
-                                    </div>
-                                </li>
+
+                                {{-- I want to display the periodicals here as list of menu items in modal pop up --}}
+                                @foreach ($periodicals as $periodical)
+                                    <li>
+                                        <a class="dropdown-item" href="{{ asset('storage/' . $periodical->path) }}"
+                                            target="_blank">{{ $periodical->periodicalMaster->name ?? 'N/A' }}</a>
+                                    </li>
+                                @endforeach
+
 
                             </ul>
                         </li>
@@ -181,21 +198,6 @@
                         </button>
                     </ul>
                 </div>
-                {{-- <div class="d-flex flex-nowrap border-top pt-3 pt-xl-0">
-                    <div class="d-flex">
-                        <img src="img/weather-icon.png" class="img-fluid w-100 me-2" alt="">
-                        <div class="d-flex align-items-center">
-                            <strong class="fs-4 text-secondary">31°C</strong>
-                            <div class="d-flex flex-column ms-2" style="width: 160px;">
-                                <span class="text-body">Thiruvananthapuram</span>
-                                <small>{{ date('D') }} {{ date('d') }} {{ date('M') }} {{ date('Y') }}</small>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="btn-search btn border border-primary btn-md-square rounded-circle bg-white my-auto"
-                        data-bs-toggle="modal" data-bs-target="#searchModal"><i
-                            class="fas fa-search text-primary"></i></button>
-                </div> --}}
             </nav>
         </div>
     </div>
