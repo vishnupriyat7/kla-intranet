@@ -30,15 +30,15 @@
                     </div>
                 </div>
                 {{-- <div class="top-link flex-lg"> --}}
-                {{-- <i class="fas fa-calendar-alt text-white pe-2 me-2"> <span class="text-body">{{ date('D') }}
+                    {{-- <i class="fas fa-calendar-alt text-white pe-2 me-2"> <span class="text-body">{{ date('D') }}
                             {{ date('d') }} {{ date('F') }} {{ date('Y') }}</span></i> --}}
-                {{-- <div class="ms-2" style="width: 160px;">
+                    {{-- <div class="ms-2" style="width: 160px;">
                         <i class="fas fa-calendar-alt text-white pe-2 me-2"></i>
-                            <span class="text-body">Thiruvananthapuram</span>
-                            <small>{{ date('D') }} {{ date('d') }} {{ date('M') }}
-                                {{ date('Y') }}</small>
+                        <span class="text-body">Thiruvananthapuram</span>
+                        <small>{{ date('D') }} {{ date('d') }} {{ date('M') }}
+                            {{ date('Y') }}</small>
                     </div> --}}
-                {{-- <div class="d-flex icon">
+                    {{-- <div class="d-flex icon">
                         <p class="mb-0 text-white me-2">Follow Us:</p>
                         <a href="" class="me-2"><i class="fab fa-facebook-f text-body link-hover"></i></a>
                         <a href="" class="me-2"><i class="fab fa-twitter text-body link-hover"></i></a>
@@ -48,7 +48,7 @@
                         <a href="" class="me-2"><i class="fab fa-skype text-body link-hover"></i></a>
                         <a href="" class=""><i class="fab fa-pinterest-p text-body link-hover"></i></a>
                     </div> --}}
-                {{-- </div> --}}
+                    {{-- </div> --}}
                 <div class="d-flex flex-nowrap pt-3 pt-xl-0">
                     <div class="d-flex">
                         {{-- <img src="img/weather-icon.png" class="img-fluid w-100 me-2" alt=""> --}}
@@ -115,7 +115,7 @@
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
-                            <a data-mdb-dropdown-init class="nav-link dropdown-toggle" href="{{ route('home.index') }}"
+                            <a data-mdb-dropdown-init class="nav-link dropdown-toggle" href="#"
                                 id="navbarDropdownMenuLinkRight" role="button" data-mdb-toggle="dropdown"
                                 aria-expanded="false">
                                 Tools/Applications
@@ -130,10 +130,30 @@
                                         eMail</a>
                                     <a class="dropdown-item" href="#"> Mail ID &raquo; </a>
                                     <div class="dropdown-submenu">
-                                        <a class="dropdown-item"
-                                            href="">Employees</a>
-                                        <a class="dropdown-item"
-                                            href="">Section</a>
+                                        <a class="dropdown-item" href="">Employees</a>
+                                        <a class="dropdown-item" href="">Section</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a data-mdb-dropdown-init class="nav-link dropdown-toggle" href="{{ route('home.index') }}"
+                                id="navbarDropdownMenuLinkRight" role="button" data-mdb-toggle="dropdown"
+                                aria-expanded="false">
+                                Peridicals
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkRight">
+                                <li>
+                                    <a class="dropdown-item" href="http://172.24.18.28/attendance-app/"
+                                        target="_blank">Attendance</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="https://email.gov.in/" target="_blank">Official
+                                        eMail</a>
+                                    <a class="dropdown-item" href="#"> Mail ID &raquo; </a>
+                                    <div class="dropdown-submenu">
+                                        <a class="dropdown-item" href="">Employees</a>
+                                        <a class="dropdown-item" href="">Section</a>
                                     </div>
                                 </li>
                                 <li>
