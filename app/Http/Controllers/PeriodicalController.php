@@ -90,26 +90,20 @@ class PeriodicalController extends Controller
             'date' => 'required|date',
             'keywords' => 'nullable',
             'status' => 'required',
-
         ]);
 
         $filePath = $request->file('path')->store('uploads/periodicals/pdf', 'public');
 
         if ($request->status == 1) {
-
             $periodical = Periodical::where('periodical_master_id', $request->name_eng)->update(['status' => '0']);
         }
-
-
         Periodical::create([
             'periodical_master_id' => $request->name_eng,
             'date' => $request->date,
             'keywords' => $request->keywords,
             'path' => $filePath,
             'status' => $request->status,
-
         ]);
-
         return redirect()->route('periodicals.index')->with('success', 'Periodical created successfully!');
     }
 
