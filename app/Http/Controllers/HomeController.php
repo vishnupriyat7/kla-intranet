@@ -26,17 +26,17 @@ class HomeController extends Controller
         $gos = OrderCircular::where('type', 'G')
             ->where('status', '1') // Fetch records in range
             ->orderBy('date', 'desc')
-            ->limit(2)
+            ->limit(5)
             ->get();
         $oos = OrderCircular::where('type', 'O')
             ->where('status', '1')
             ->orderBy('date', 'desc')
-            ->limit(2)
+            ->limit(5)
             ->get();
         $crcls = OrderCircular::where('type', 'C')
             ->where('status', '1')
             ->orderBy('date', 'desc')
-            ->limit(2)
+            ->limit(5)
             ->get();
         $goCount = OrderCircular::where('type', 'G')
             ->whereMonth('date', Carbon::now()->month)
@@ -126,7 +126,6 @@ class HomeController extends Controller
                 $q->where('title', 'LIKE', "%{$search}%")
                     ->orWhere('keywords', 'LIKE', "%{$search}%"); // Add more columns as needed
             });
-
         }
         $orders = $query->paginate(20); // Paginate results
 
