@@ -107,7 +107,13 @@ class HomeController extends Controller
                 'name' => now()->subMonths(5 - $i)->format('F') . ' ' . now()->subMonths(5 - $i)->format('Y'),   // Full month name (January, February, etc.)
             ];
         });
-        return view('orders-circular.order_circular_recent', compact('orders', 'months', 'orderType'));
+        $periodicals = Periodical::with('periodicalMaster')
+            ->where('status', 1)
+            ->join('periodical_masters', 'periodicals.periodical_master_id', '=', 'periodical_masters.id')
+            ->select('periodicals.*')
+            ->orderBy('periodical_masters.name', 'asc')
+            ->get();
+        return view('orders-circular.order_circular_recent', compact('orders', 'months', 'orderType', 'periodicals'));
     }
 
     public function search(Request $request)

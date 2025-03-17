@@ -133,15 +133,11 @@
                         </div>
                     </div>
 
-
                 </div>
                 <div class="col-lg-4">
-                    <div class="row mb-4">
-                        <div class="p-3 rounded border">
+
+                    <div class="p-3 rounded border mb-4">
                             <div id="calendar"></div>
-
-
-                        </div>
                     </div>
                     <div class="row g-4">
                         <div class="col-12">
