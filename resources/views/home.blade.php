@@ -13,17 +13,22 @@
                                 <li class="nav-item mb-3">
                                     <a class="d-flex py-2 bg-light rounded-pill active me-2" data-bs-toggle="pill"
                                         href="#tab-1">
-                                        <span class="text-dark" style="width: 100px;">Govt. Order</span>
+                                        <span class="text-dark" style="width: 100px;">Gov.Order</span>
                                     </a>
                                 </li>
                                 <li class="nav-item mb-3">
                                     <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-2">
-                                        <span class="text-dark" style="width: 100px;">Office Order</span>
+                                        <span class="text-dark" style="width: 100px;">Off.Order</span>
                                     </a>
                                 </li>
                                 <li class="nav-item mb-3">
                                     <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-3">
                                         <span class="text-dark" style="width: 100px;">Circular</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item mb-3">
+                                    <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-4">
+                                        <span class="text-dark" style="width: 100px;">News</span>
                                     </a>
                                 </li>
 
@@ -32,9 +37,9 @@
                         <div class="tab-content mb-4">
                             <div id="tab-1" class="tab-pane fade show p-0 active">
                                 <div class="row g-4">
-                                    <div class="col-lg-10">
-                                        <div class="features-content d-flex flex-column">
-                                            <h4 class="text-uppercase mb-3">Government Orders</h4>
+                                    <div class="col-lg-12">
+                                        <div class="features-content d-flex flex-column mt-4">
+                                            {{-- <h4 class="text-uppercase mb-3">Government Orders</h4> --}}
                                             {{-- <a href="#" class="h6">Get the best speak market,
                                                     news.</a>
                                                 <small class="text-body d-block"><i
@@ -55,6 +60,12 @@
                                                     </small>
                                                 </div>
                                             @endforeach
+                                            <div class="col-lg-12 mt-4">
+                                                <a href=""
+                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                                hover-bg-primary text-hover-white border-primary">View
+                                                    More</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -63,8 +74,8 @@
                                 <div class="row g-4">
                                     <div class="col-lg-12">
 
-                                        <div class="features-content d-flex flex-column">
-                                            <h4 class="text-uppercase mb-2">Office Orders</h4>
+                                        <div class="features-content d-flex flex-column mt-4">
+                                            {{-- <h4 class="text-uppercase mb-2">Office Orders</h4> --}}
                                             {{-- <a href="#" class="h6">Get the best speak market,
                                                     news.</a>
                                                 <small class="text-body d-block"><i
@@ -84,6 +95,16 @@
                                                     </small>
                                                 </div>
                                             @endforeach
+                                            <div class="col-lg-12 mt-4">
+                                                {{-- <a href="{{ route('home.order-circular', 'oo') }}"
+                                                    class="link-hover btn border border-primary rounded-pill text-dark w-100 py-3 mb-4">View
+                                                    More</a> --}}
+                                                <a href="{{ route('home.order-circular', 'oo') }}"
+                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+          hover-bg-primary text-hover-white border-primary">
+                                                    View More
+                                                </a>
+                                            </div>
                                         </div>
 
                                     </div>
@@ -92,9 +113,10 @@
                             </div>
                             <div id="tab-3" class="tab-pane fade show p-0">
                                 <div class="row g-4">
-                                    <div class="col-12">
-                                        <div class="features-content d-flex flex-column">
-                                            <h4 class="text-uppercase mb-2">Circulars</h4>
+                                    <div class="col-lg-12">
+
+                                        <div class="features-content d-flex flex-column mt-4">
+                                            {{-- <h4 class="text-uppercase mb-2">Circulars</h4> --}}
                                             {{-- <a href="#" class="h6">Get the best speak market,
                                                 news.</a>
                                             <small class="text-body d-block"><i
@@ -115,13 +137,50 @@
                                                     </small>
                                                 </div>
                                             @endforeach
+                                            <div class="col-lg-12 mt-4">
+                                                <a href="{{ route('home.order-circular', 'cr') }}"
+                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                                hover-bg-primary text-hover-white border-primary">View
+                                                    More</a>
+                                            </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
+
+
+                            <div id="tab-4" class="tab-pane fade show p-0">
+                                <div class="row g-4">
+                                    <div class="col-lg-12">
+
+                                        <div class="features-content d-flex flex-column mt-4">
+                                            @foreach ($newsupdates as $news)
+                                                <div class="mb-4">
+                                                    <a href="{{ asset('storage/' . $news->path) }}" class="h6"
+                                                        target="_blank"><i class="fas fa-comment-dots me-1"></i>
+                                                        {{ $news->title }}
+                                                    </a>
+                                                    <small class="text-body d-block"><i
+                                                            class="fas fa-calendar-alt me-1"></i>
+                                                        {{ \Carbon\Carbon::parse($news->date)->format('M d Y') }}</small>
+                                                </div>
+                                            @endforeach
+                                            <div class="col-lg-4 mt-5">
+                                                <a href="{{ route('updatesmore') }}"
+                                                    class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
+                                                hover-bg-primary text-hover-white border-primary">View
+                                                    More</a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
 
-                        <div class="d-flex flex-column flex-md-row justify-content-md-between border-bottom mb-4">
+                        {{-- <div class="d-flex flex-column flex-md-row justify-content-md-between border-bottom mb-4">
                             <h1 class="mb-4">Rescent News</h1>
 
                         </div>
@@ -152,7 +211,7 @@
                                 </div>
                             </div>
 
-                        </div>
+                        </div> --}}
                         {{-- <div class="border-bottom mb-4">
                             <h2 class="my-4">Most Views News</h2>
                         </div> --}}
