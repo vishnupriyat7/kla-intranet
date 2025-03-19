@@ -11,6 +11,7 @@
                 <li class="breadcrumb-item"><a href="#">Pages</a></li>
                 <li class="breadcrumb-item active text-dark">Single Page</li>
             </ol> --}}
+            {{-- @include('orders-circular.order_circular_list'); --}}
             <div class="tab-class">
                 <div class="d-flex justify-content-between border-bottom mb-4">
                     <ul class="nav nav-pills d-inline-flex text-center">

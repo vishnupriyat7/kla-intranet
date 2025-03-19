@@ -7,6 +7,8 @@ use App\Models\NewsUpdate;
 use App\Models\OrderCircular;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+// use DB;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -66,6 +68,16 @@ class HomeController extends Controller
         return view('newsupdates.viewmore', compact('newsupdates'));
     }
 
+    public function goTypeList() {
+        $periodicals = Periodical::with('periodicalMaster')
+            ->where('status', 1)
+            ->join('periodical_masters', 'periodicals.periodical_master_id', '=', 'periodical_masters.id')
+            ->select('periodicals.*')
+            ->orderBy('periodical_masters.name', 'asc')
+            ->get();
+        return view('orders-circular.go_type', compact('periodicals'));
+    }
+
     public function orderCircular(Request $request)
     {
         $startDate = Carbon::now()->subMonths(5)->startOfMonth(); // 5 months ago (1st day)
@@ -118,18 +130,59 @@ class HomeController extends Controller
 
     public function search(Request $request)
     {
-        $query = OrderCircular::query();
-
+        $results = collect();
         if ($request->has('anysearch')) {
             $search = $request->anysearch;
-            $query->where(function ($q) use ($search) {
-                $q->where('title', 'LIKE', "%{$search}%")
-                    ->orWhere('keywords', 'LIKE', "%{$search}%"); // Add more columns as needed
-            });
 
+            // Get all table names from the database, excluding system tables
+            $tables = DB::select("SHOW TABLES");
+            $excludedTables = [
+                'cache',
+                'cache_locks',
+                'failed_jobs',
+                'job_batches',
+                'jobs',
+                'migrations',
+                'password_reset_tokens',
+                'sessions',
+                'users',
+                'periodical_masters',
+                'periodicals'
+            ];
+
+            foreach ($tables as $table) {
+                $tableName = array_values((array) $table)[0];
+
+                // Skip system tables
+                if (in_array($tableName, $excludedTables)) {
+                    continue;
+                }
+
+                // Get all column names from the current table
+                $columns = DB::getSchemaBuilder()->getColumnListing($tableName);
+
+                // Build the query for the current table
+                $query = DB::table($tableName);
+                foreach ($columns as $column) {
+                    $query->orWhere($column, 'LIKE', "%{$search}%");
+                }
+
+                // Merge the results with the previous ones
+                $tableResults = $query->get();
+                $results = $results->merge($tableResults);
+            }
         }
-        $orders = $query->paginate(20); // Paginate results
 
-        return view('partials.search', compact('orders'));
+        // return response()->json($results);
+
+        // $orders = $query->paginate(20);
+
+        $periodicals = Periodical::with('periodicalMaster')
+            ->where('status', 1)
+            ->join('periodical_masters', 'periodicals.periodical_master_id', '=', 'periodical_masters.id')
+            ->select('periodicals.*')
+            ->orderBy('periodical_masters.name', 'asc')
+            ->get();
+        return view('partials.search', compact('results', 'periodicals'));
     }
 }

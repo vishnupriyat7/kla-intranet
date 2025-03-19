@@ -6,14 +6,14 @@
             <h1>Search</h1>
             <div class="row g-4">
                 <div class="col-12">
-                    @foreach ($orders as $order)
+                    @foreach ($results as $result)
                         <div class="features-content d-flex flex-column">
-                            <a href="{{ asset('storage/' . $order->path)}}" class="h6" target="_blank"><i
+                            <a href="{{ asset('storage/' . $result->path)}}" class="h6" target="_blank"><i
                                     class="fas fa-solid fa-paperclip me-1"></i>
-                                {{ $order->title }}
+                                {{ $result->title }}
                             </a>
                             <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i>
-                                {{ \Carbon\Carbon::parse($order->date)->format('M d Y') }}</small>
+                                {{ \Carbon\Carbon::parse($result->date)->format('M d Y') }}</small>
                             </br>
                         </div>
                     @endforeach

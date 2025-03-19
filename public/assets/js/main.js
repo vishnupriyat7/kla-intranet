@@ -132,5 +132,35 @@
 
 
 
+    // $(document).ready(function() {
+
+    //     $.ajax({
+    //         url: "{{ route('home.order-circular', 'gort') }}",
+    //         method: "GET",
+    //         success: function(data) {
+    //             console.log("Success:", data);
+    //             $('#tab-rt').html(data);
+    //         },
+    //         error: function(xhr, status, error) {
+    //             console.error("Error:", status, error);
+    //             $('#tab-rt').html("Failed to load content routine.");
+    //         }
+    //     });
+    // });
 })(jQuery);
+
+function getGOMS() {
+    $.ajax({
+        url: gomsUrl,
+        method: "GET",
+        success: function(data) {
+            console.log("Success:", data);
+            $('#tab-ms').html(data);
+        },
+        error: function(xhr, status, error) {
+            console.error("Error:", status, error);
+            $('#tab-ms').html("Failed to load content manuscript.");
+        }
+    });
+}
 
