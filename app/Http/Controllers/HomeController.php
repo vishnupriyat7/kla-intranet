@@ -65,7 +65,13 @@ class HomeController extends Controller
             ->skip(3)
             ->take(PHP_INT_MAX)
             ->get();
-        return view('newsupdates.viewmore', compact('newsupdates'));
+            $periodicals = Periodical::with('periodicalMaster')
+            ->where('status', 1)
+            ->join('periodical_masters', 'periodicals.periodical_master_id', '=', 'periodical_masters.id')
+            ->select('periodicals.*')
+            ->orderBy('periodical_masters.name', 'asc')
+            ->get();
+        return view('newsupdates.viewmore', compact('newsupdates', 'periodicals'));
     }
 
     public function orderCircular(Request $request)
