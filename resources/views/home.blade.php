@@ -61,7 +61,7 @@
                                             @endforeach
                                             <div class="mt-3 d-flex justify-content-center">
                                                 <div class="col-4">
-                                                    <a href=""
+                                                    <a href="{{ route('home.order-circular', 'go') }}"
                                                         class="btn btn-outline-primary w-100 py-3 mb-4 rounded-pill text-dark
                                                 hover-bg-primary text-hover-white border-primary">View
                                                         All >></a>
