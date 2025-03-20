@@ -96,13 +96,20 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkRight">
                                 <li>
-                                    <a class="dropdown-item" href="#"> Government Order &raquo; </a>
+                                    {{-- <a class="dropdown-item" href="#"> Government Order &raquo; </a>
                                     <div class="dropdown-submenu">
                                         <a class="dropdown-item"
                                             href="{{ route('home.order-circular', 'goms') }}">Manuscript</a>
                                         <a class="dropdown-item"
                                             href="{{ route('home.order-circular', 'gor') }}">Routine</a>
-                                    </div>
+                                    </div> --}}
+                                    <a class="dropdown-item" href="{{ route('home.order-circular', 'go') }}"> Government Order </a>
+                                    {{-- <div class="dropdown-submenu">
+                                        <a class="dropdown-item"
+                                            href="{{ route('home.order-circular', 'goms') }}">Manuscript</a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('home.order-circular', 'gor') }}">Routine</a>
+                                    </div> --}}
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="{{ route('home.order-circular', 'oo') }}">Office
