@@ -131,7 +131,7 @@ class HomeController extends Controller
             ->select('periodicals.*')
             ->orderBy('periodical_masters.name', 'asc')
             ->get();
-        return view('orders-circular.order_circular_recent', compact('orders', 'months', 'orderType', 'periodicals'));
+        return view('orders-circular.order_circular_recent', compact('orders', 'months', 'orderType', 'periodicals'))->with('orderTypeKey', $request->type);
     }
 
     public function search(Request $request)
