@@ -20,7 +20,6 @@ Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/updatesmore', [HomeController::class, 'updatesMore'])->name('updatesmore');
 Route::get('/order-circular/{type}', [HomeController::class, 'orderCircular'])->name('home.order-circular');
 Route::get('/search', [HomeController::class, 'search'])->name('home.search');
-Route::get('/go-type', [HomeController::class, 'goTypeList'])->name('home.go-type');
 
 
 Route::get('/dashboard', function () {

@@ -68,16 +68,6 @@ class HomeController extends Controller
         return view('newsupdates.viewmore', compact('newsupdates'));
     }
 
-    public function goTypeList() {
-        $periodicals = Periodical::with('periodicalMaster')
-            ->where('status', 1)
-            ->join('periodical_masters', 'periodicals.periodical_master_id', '=', 'periodical_masters.id')
-            ->select('periodicals.*')
-            ->orderBy('periodical_masters.name', 'asc')
-            ->get();
-        return view('orders-circular.go_type', compact('periodicals'));
-    }
-
     public function orderCircular(Request $request)
     {
         $startDate = Carbon::now()->subMonths(5)->startOfMonth(); // 5 months ago (1st day)
