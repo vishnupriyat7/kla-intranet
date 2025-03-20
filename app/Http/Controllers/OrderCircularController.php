@@ -124,7 +124,7 @@ class OrderCircularController extends Controller
             'path' => 'required|file|mimes:pdf|max:1048576',
         ]);
         // Extract Year from provided date
-        $year = date('Y', strtotime($request->go_date));
+        $year = date('Y', strtotime($request->date));
         // dd($year);
 
         //determine the category folder based on the type

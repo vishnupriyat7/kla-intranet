@@ -23,22 +23,22 @@ class HomeController extends Controller
             ->get();
         $newsupdates = NewsUpdate::where('status', '1')
             ->orderBy('date', 'desc')
-            ->limit(5)
+            ->limit(6)
             ->get();
         $gos = OrderCircular::where('type', 'G')
             ->where('status', '1') // Fetch records in range
             ->orderBy('date', 'desc')
-            ->limit(2)
+            ->limit(6)
             ->get();
         $oos = OrderCircular::where('type', 'O')
             ->where('status', '1')
             ->orderBy('date', 'desc')
-            ->limit(2)
+            ->limit(6)
             ->get();
         $crcls = OrderCircular::where('type', 'C')
             ->where('status', '1')
             ->orderBy('date', 'desc')
-            ->limit(2)
+            ->limit(6)
             ->get();
         $goCount = OrderCircular::where('type', 'G')
             ->whereMonth('date', Carbon::now()->month)
@@ -72,7 +72,16 @@ class HomeController extends Controller
     {
         $startDate = Carbon::now()->subMonths(5)->startOfMonth(); // 5 months ago (1st day)
         $endDate = Carbon::now()->endOfMonth(); // Last day of the current month
-        if ($request->type == 'goms') {
+
+        if ($request->type == 'go') {
+            $orders = OrderCircular::where('type', 'G')
+                ->where('status', '1')
+                ->whereBetween('date', [$startDate, $endDate]) // Fetch records in range
+                ->orderBy('date', 'desc')
+                ->get();
+            $orderType = 'Government Order';
+        }
+        elseif ($request->type == 'goms') {
             $orders = OrderCircular::where('type', 'G')
                 ->where('go_type', 'M')
                 ->where('status', '1')
@@ -88,7 +97,8 @@ class HomeController extends Controller
                 ->orderBy('date', 'desc')
                 ->get();
             $orderType = 'GO Routine';
-        } elseif ($request->type == 'oo') {
+        }
+        elseif ($request->type == 'oo') {
             $orders = OrderCircular::where('type', 'O')
                 ->where('status', '1')
                 ->whereBetween('date', [$startDate, $endDate]) // Fetch records in range
