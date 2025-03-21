@@ -183,9 +183,9 @@
 
                             </ul>
                         </li>
-                        {{-- <li>
-                            <a href="{{route('home.search')}}" class="nav-item nav-link active">Search</a>
-                        </li> --}}
+                        <li>
+                            <a href="{{ route('home.upload-request') }}" class="nav-item nav-link active">Upload Request</a>
+                        </li>
                         <button
                             class="btn-search btn border border-primary btn-md-square rounded-circle bg-white my-auto"
                             data-bs-toggle="modal" data-bs-target="#searchModal"><i

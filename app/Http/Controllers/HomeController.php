@@ -65,7 +65,7 @@ class HomeController extends Controller
             ->skip(3)
             ->take(PHP_INT_MAX)
             ->get();
-            $periodicals = Periodical::with('periodicalMaster')
+        $periodicals = Periodical::with('periodicalMaster')
             ->where('status', 1)
             ->join('periodical_masters', 'periodicals.periodical_master_id', '=', 'periodical_masters.id')
             ->select('periodicals.*')
@@ -86,8 +86,7 @@ class HomeController extends Controller
                 ->orderBy('date', 'desc')
                 ->get();
             $orderType = 'Government Order';
-        }
-        elseif ($request->type == 'goms') {
+        } elseif ($request->type == 'goms') {
             $orders = OrderCircular::where('type', 'G')
                 ->where('go_type', 'M')
                 ->where('status', '1')
@@ -103,8 +102,7 @@ class HomeController extends Controller
                 ->orderBy('date', 'desc')
                 ->get();
             $orderType = 'GO Routine';
-        }
-        elseif ($request->type == 'oo') {
+        } elseif ($request->type == 'oo') {
             $orders = OrderCircular::where('type', 'O')
                 ->where('status', '1')
                 ->whereBetween('date', [$startDate, $endDate]) // Fetch records in range
@@ -191,4 +189,74 @@ class HomeController extends Controller
             ->get();
         return view('partials.search', compact('results', 'periodicals'));
     }
+
+    public function uploadRequest(Request $request)
+    {
+        $periodicals = Periodical::with('periodicalMaster')
+            ->where('status', 1)
+            ->join('periodical_masters', 'periodicals.periodical_master_id', '=', 'periodical_masters.id')
+            ->select('periodicals.*')
+            ->orderBy('periodical_masters.name', 'asc')
+            ->get();
+        $save_request = '';
+        return view('orders-circular.upload_request', compact('periodicals', 'save_request'));
+    }
+
+    public function storeUploadRequest(Request $request)
+    {
+        $request->validate([
+            'type' => 'required',
+            'go_type' => 'nullable',
+            'serviceMember' => 'nullable',
+            'servc' => 'nullable',
+            'memb' => 'nullable',
+            'no' => 'required',
+            'date' => 'required|date',
+            'title' => 'required',
+            'keywords' => 'nullable',
+            // 'path' => 'required|file|mimes:pdf|max:1048576',
+        ]);
+        // Extract Year from provided date
+        $year = date('Y', strtotime($request->date));
+        // dd($year);
+
+        //determine the category folder based on the type
+        $categoryFolder = match ($request->type) {
+            'G' => 'GovtOrders',
+            'O' => 'OfficeOrders',
+            'C' => 'Circulars',
+        };
+
+        // $filePath = $request->file('path')->store("uploads/orders-circlular/{$year}/{$categoryFolder}", 'public');
+
+        // $filePath = $request->file('go_path')->store('uploads/orders-circular/', 'public');
+        $sub_sub_type = match ($request->serviceMember) {
+            'Service' => $request->servc,
+            'Member' => $request->memb,
+            default => null,
+        };
+
+        $save_request = OrderCircular::create([
+            'type' => $request->type,
+            'go_type' => $request->go_type ?? null,
+            'sub_type' => $request->serviceMember ?? null,
+            'sub_sub_type' => $sub_sub_type ?? null,
+            'number' => $request->no,
+            'date' => $request->date,
+            'title' => $request->title,
+            'keywords' => $request->keywords,
+            // 'path' => $filePath,
+            'status' => 0,
+        ]);
+        // dd($save_request);
+        $periodicals = Periodical::with('periodicalMaster')
+            ->where('status', 1)
+            ->join('periodical_masters', 'periodicals.periodical_master_id', '=', 'periodical_masters.id')
+            ->select('periodicals.*')
+            ->orderBy('periodical_masters.name', 'asc')
+            ->get();
+        $success_message = "Successfully Created";
+        return view('orders-circular.upload_request', compact('periodicals', 'save_request'));
+    }
 }
+
