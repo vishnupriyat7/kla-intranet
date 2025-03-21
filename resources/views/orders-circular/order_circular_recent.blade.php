@@ -2,8 +2,9 @@
 
 @section('content')
     <!-- Single Product Start -->
-    <div class="container-fluid populer-news py-5">
+    <div class="container-fluid py-5" id="order-circular">
         <div class="container py-5">
+            <!-- Title -->
             <h1>{{ $orderType }}</h1>
             </br>
             @if ($orderTypeKey == 'go')
@@ -80,7 +81,7 @@
                             <div id="tab-{{ $month['no'] }}"
                                 class="tab-pane fade show {{ $month['no'] == date('m') ? 'active' : '' }}">
                                 <div class="row g-4">
-                                    <div class="col-12">
+                                    <div class="col-12 p-4">
                                         @foreach ($orders as $order)
                                             @if (\Carbon\Carbon::parse($order->date)->format('m') == $month['no'])
                                                 <div class="features-content d-flex flex-column">

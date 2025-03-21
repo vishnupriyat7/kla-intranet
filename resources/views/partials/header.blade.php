@@ -1,4 +1,3 @@
-
 <head>
     <meta charset="utf-8">
     <title>Newsers - Free HTML Magazine Template</title>
@@ -12,6 +11,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@100;600;800&display=swap"
         rel="stylesheet">
+    <!-- Malayalam Font -->
+    <link href=" https://cdn.jsdelivr.net/npm/malayalam-fonts@1.0.7/fonts.min.css " rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
