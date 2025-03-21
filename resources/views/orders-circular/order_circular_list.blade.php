@@ -13,6 +13,7 @@
             @endforeach
         </ul>
     </div>
+
     <div class="tab-content">
         <div class="tab-content">
             @foreach ($months as $month)

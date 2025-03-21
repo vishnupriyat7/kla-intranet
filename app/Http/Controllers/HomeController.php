@@ -23,22 +23,22 @@ class HomeController extends Controller
             ->get();
         $newsupdates = NewsUpdate::where('status', '1')
             ->orderBy('date', 'desc')
-            ->limit(6)
+            ->limit(5)
             ->get();
         $gos = OrderCircular::where('type', 'G')
             ->where('status', '1') // Fetch records in range
             ->orderBy('date', 'desc')
-            ->limit(6)
+            ->limit(5)
             ->get();
         $oos = OrderCircular::where('type', 'O')
             ->where('status', '1')
             ->orderBy('date', 'desc')
-            ->limit(6)
+            ->limit(5)
             ->get();
         $crcls = OrderCircular::where('type', 'C')
             ->where('status', '1')
             ->orderBy('date', 'desc')
-            ->limit(6)
+            ->limit(5)
             ->get();
         $goCount = OrderCircular::where('type', 'G')
             ->whereMonth('date', Carbon::now()->month)
@@ -129,7 +129,7 @@ class HomeController extends Controller
             ->select('periodicals.*')
             ->orderBy('periodical_masters.name', 'asc')
             ->get();
-        return view('orders-circular.order_circular_recent', compact('orders', 'months', 'orderType', 'periodicals'));
+        return view('orders-circular.order_circular_recent', compact('orders', 'months', 'orderType', 'periodicals'))->with('orderTypeKey', $request->type);
     }
 
     public function search(Request $request)
