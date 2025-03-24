@@ -117,6 +117,7 @@ class HomeController extends Controller
                 ->get();
             $orderType = 'Circular';
         }
+
         $months = collect(range(0, 5))->map(function ($i) {
             return [
                 'no' => now()->subMonths(5 - $i)->format('n'),  // Month number (1-12)

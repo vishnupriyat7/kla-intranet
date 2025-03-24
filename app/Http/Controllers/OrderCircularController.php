@@ -84,6 +84,13 @@ class OrderCircularController extends Controller
                         return '<span>No file available</span>';
                     }
                 })
+                ->addColumn('status', function ($data) {
+                    if ($data->status == 0) {
+                        return '<span class="badge bg-danger">Unpublished</span>';
+                    } elseif ($data->status == 1) {
+                        return '<span class="badge bg-success">Published</span>';
+                    }
+                })
                 ->addColumn('action', function ($data) {
                     $button = '<a href="' . route('orders-circular.edit', $data->id) . '" class="btn btn-warning btn-sm"><i class="ri-edit-2-fill"></i></a>';
                     $button .= '&nbsp;&nbsp;';
@@ -96,7 +103,7 @@ class OrderCircularController extends Controller
                 </form>';
                     return $button;
                 })
-                ->rawColumns(['file', 'action'])
+                ->rawColumns(['file', 'status','action'])
                 ->make(true);
         }
 
@@ -122,6 +129,7 @@ class OrderCircularController extends Controller
             'title' => 'required',
             'keywords' => 'required',
             'path' => 'required|file|mimes:pdf|max:1048576',
+            'status' => 'required',
         ]);
         // Extract Year from provided date
         $year = date('Y', strtotime($request->date));
@@ -153,7 +161,7 @@ class OrderCircularController extends Controller
             'title' => $request->title,
             'keywords' => $request->keywords,
             'path' => $filePath,
-            'status' => 1,
+            'status' => 0,
         ]);
         return redirect()->route('orders-circular.index')->with('success', 'Order / Circular added successfully');
     }
@@ -179,6 +187,7 @@ class OrderCircularController extends Controller
             'title' => 'required',
             'keywords' => 'required',
             'path' => 'nullable|file|mimes:pdf|max:1048576',
+            'status' => 'required',
         ]);
 
 
@@ -221,6 +230,7 @@ class OrderCircularController extends Controller
             'title' => $request->title,
             'keywords' => $request->keywords,
             'path' => $filePath,
+            'status' => 0,
         ]);
 
         return redirect()->route('orders-circular.index')->with('success', 'Order / Circular updated successfully');

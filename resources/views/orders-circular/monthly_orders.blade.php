@@ -1,6 +1,6 @@
 <div class="tab-class">
     <!-- Month Tabs for the selected Order Type -->
-    <div class="d-flex justify-content-between border-bottom mb-4">
+    <div class="d-flex justify-content-between border-bottom mb-1">
         <ul class="nav nav-pills d-inline-flex text-center">
             @foreach ($months as $month)
                 <li class="nav-item mb-3">
@@ -13,18 +13,7 @@
                 </li>
             @endforeach
         </ul>
-        <!-- Records Per Page Dropdown -->
-        <div>
-            <label for="recordsPerPage" class="me-2">Show</label>
-            <select id="recordsPerPage" class="form-select form-select-sm" style="width: auto; display: inline-block;">
-                <option value="20">20</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-                <option value="200">200</option>
-                <option value="500">500</option>
-            </select>
-            <span>records</span>
-        </div>
+
     </div>
 
     <!-- Month-wise Order Listings -->
@@ -47,7 +36,6 @@
 
                                         <i class="fas fa-solid fa-paperclip me-1" style="color:rgb(60, 93, 240)"></i>
                                         {{ $order->title }}
-                                        {{ $order->title }}
                                     </a>
                                     <small class="text-body d-block"><i class="fas fa-calendar-alt me-1"></i>
                                         {{ \Carbon\Carbon::parse($order->date)->format('M d Y') }}
@@ -58,6 +46,11 @@
                         @endforeach
                     </div>
                 </div>
+
+                {{-- <!-- 🔹 Pagination Controls -->
+                <div class="d-flex justify-content-center mt-3">
+                    {{ $orders->links('pagination::bootstrap-5') }}
+                </div> --}}
             </div>
         @endforeach
     </div>

@@ -126,6 +126,19 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+                      {{-- Add Select Box for Orders/Circulars List Published(1) /Unpublished(0) --}}
+
+                      <div class="mb-3">
+                        <label for="status" class="form-label">Published / Unpublished</label>
+                        <select class="form-select" id="status" name="status" required>
+                            <option value="">Select Published / Unpublished</option>
+                            <option value="1">Published</option>
+                            <option value="0">Unpublished</option>
+                        </select>
+                        @error('status')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                     <button type="submit" class="btn btn-success">Submit</button>
                     <a href="{{ route('orders-circular.index') }}" class="btn btn-secondary">Back</a>
                 </form>

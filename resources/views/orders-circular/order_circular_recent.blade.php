@@ -9,7 +9,7 @@
             </br>
             @if ($orderTypeKey == 'go')
                 <!-- Tabs for Manuscript, Routine, Print -->
-                <div class="border mb-4 rounded mb-5">
+                <div class="border mb-4 rounded mb-4">
                     <ul class="nav nav-pills d-flex text-center">
                         <li class="nav-item flex-fill">
                             <a class="nav-link active py-3 border-end" data-bs-toggle="pill" href="#manuscript">
@@ -82,6 +82,7 @@
                                 class="tab-pane fade show {{ $month['no'] == date('m') ? 'active' : '' }}">
                                 <div class="row g-4">
                                     <div class="col-12 p-4">
+
                                         @foreach ($orders as $order)
                                             @if (\Carbon\Carbon::parse($order->date)->format('m') == $month['no'])
                                                 <div class="features-content d-flex flex-column mt-3">
@@ -94,8 +95,8 @@
                                                         data-pdf="{{ asset('storage/' . $order->path) }}"
                                                         data-title="{{ $order->title }}">
                                                         {{-- <i class="fas fa-comment-dots me-1"></i> --}}
-                                                        <i class="fas fa-solid fa-paperclip me-1" style="color: rgb(60, 93, 240)"></i> {{ $order->title }}
-                                                        {{ $order->title }}
+                                                        <i class="fas fa-solid fa-paperclip me-1"
+                                                            style="color: rgb(60, 93, 240)"></i> {{ $order->title }}
                                                     </a>
                                                     <small class="text-body d-block">
                                                         <i class="fas fa-calendar-alt me-1"></i>
@@ -117,8 +118,8 @@
     <!-- Single Product End -->
 @endsection
 
- <!-- 🔹 Single PDF Modal -->
- <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
+<!-- 🔹 Single PDF Modal -->
+<div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -126,8 +127,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <iframe id="pdfViewer" src="" width="100%" height="700px"
-                    style="border: none;"></iframe>
+                <iframe id="pdfViewer" src="" width="100%" height="700px" style="border: none;"></iframe>
             </div>
         </div>
     </div>
@@ -154,4 +154,3 @@
         });
     });
 </script>
-

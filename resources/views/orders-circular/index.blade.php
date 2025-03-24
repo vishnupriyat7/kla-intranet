@@ -31,6 +31,7 @@
                                 <th>Keyword</th>
                                 <th>Path</th>
                                 <th>File</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -95,6 +96,10 @@
                     name: 'file',
                     orderable: false,
                     searchable: false
+                },
+                {
+                    data: 'status',
+                    name: 'status'
                 },
                 {
                     data: 'action',

@@ -69,11 +69,13 @@
                         <label for="service" class="form-label">Select Service</label>
                         <select class="form-select" id="servc" name="servc">
                             <option value="">Select Service Related</option>
-                            <option value="STP" {{ $order->sub_sub_type == 'STP' ? 'selected' : '' }}>Transfer & Posting
+                            <option value="STP" {{ $order->sub_sub_type == 'STP' ? 'selected' : '' }}>Transfer &
+                                Posting
                             </option>
                             <option value="SCR" {{ $order->sub_sub_type == 'SCR' ? 'selected' : '' }}>Claim /
                                 Reimbursements</option>
-                            <option value="SAR" {{ $order->sub_sub_type == 'SAR' ? 'selected' : '' }}>Accounts Related
+                            <option value="SAR" {{ $order->sub_sub_type == 'SAR' ? 'selected' : '' }}>Accounts
+                                Related
                             </option>
                             <option value="G" {{ $order->sub_sub_type == 'G' ? 'selected' : '' }}>General</option>
                         </select>
@@ -86,10 +88,13 @@
                         <label for="member" class="form-label">Select Member</label>
                         <select class="form-select" id="memb" name="memb">
                             <option value="">Select Member Related</option>
-                            <option value="MCR" {{ $order->sub_sub_type == 'MCR' ? 'selected' : '' }}>Claim / Reimbursements
+                            <option value="MCR" {{ $order->sub_sub_type == 'MCR' ? 'selected' : '' }}>Claim /
+                                Reimbursements
                             </option>
-                            <option value="PA" {{ $order->sub_sub_type == 'PA' ? 'selected' : '' }}>PA Postings</option>
-                            <option value="MAR" {{ $order->sub_sub_type == 'MAR' ? 'selected' : '' }}>Accounts Related
+                            <option value="PA" {{ $order->sub_sub_type == 'PA' ? 'selected' : '' }}>PA Postings
+                            </option>
+                            <option value="MAR" {{ $order->sub_sub_type == 'MAR' ? 'selected' : '' }}>Accounts
+                                Related
                             </option>
                         </select>
                         @error('member')
@@ -137,22 +142,6 @@
                                     data-bs-target="#pdfModal">
                                     View PDF
                                 </a>
-                                <div class="modal fade" id="pdfModal" tabindex="-1"
-                                    aria-labelledby="pdfModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="pdfModalLabel">PDF Preview</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <iframe src="{{ asset('storage/' . $order->path) }}" width="100%"
-                                                    height="500px" style="border: none;"></iframe>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             @else
                                 <p>No PDF available</p>
                             @endif
@@ -164,7 +153,13 @@
 
                             </div>
                         </div>
-
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="status" class="form-label">Status</label>
+                        <select class="form-select" id="status" name="status">
+                            <option value="1" {{ $order->status == 1 ? 'selected' : '' }}>Published</option>
+                            <option value="0" {{ $order->status == 0 ? 'selected' : '' }}>Unpublished</option>
+                        </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Update</button>
                     <a href="{{ route('orders-circular.index') }}" class="btn btn-secondary">Back</a>
@@ -174,6 +169,24 @@
     </div>
 </x-app-layout>
 {{-- Script to toggle GO Type --}}
+{{-- PDF MODAL  --}}
+
+<div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pdfModalLabel">PDF Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <iframe src="{{ asset('storage/' . $order->path) }}" width="100%" height="500px"
+                    style="border: none;"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         toggleGoType();
