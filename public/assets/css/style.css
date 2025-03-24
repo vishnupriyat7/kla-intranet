@@ -1,15 +1,15 @@
 @font-face {
     font-family: "Meera Malayalam";
-    src: url('/assets/fonts/Meera.ttf') format("truetype");
+    src: url("/assets/fonts/Meera.ttf") format("truetype");
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@100..900&display=swap");
 
 body {
     font-family: "Noto Sans Malayalam", sans-serif;
 }
-.hero .h6{
-    font-family: "Noto Sans Malayalam","Montserrat", sans-serif;
+.hero .h6 {
+    font-family: "Noto Sans Malayalam", "Montserrat", sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 1.25rem;
@@ -17,11 +17,19 @@ body {
 .hero .tab-class .nav-item a.active {
     background: var(--bs-primary) !important;
 }
-#order-circular .h6{
-    font-family: "Noto Sans Malayalam","Montserrat", sans-serif;
+#order-circular .h6 {
+    font-family: "Noto Sans Malayalam", "Montserrat", sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 1.20rem;
+    font-size: 1.2rem;
+    /* line-height: 1.5; */
+}
+#search .h6 {
+    font-family: "Noto Sans Malayalam", "Montserrat", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.2rem;
+    /* line-height: 1.5; */
 }
 #order-circular .tab-class .nav-item a.active {
     background: var(--bs-primary) !important;
@@ -248,27 +256,6 @@ body {
     background: rgba(255, 255, 255, 0.8);
 }
 
-.dropdown-menu li {
-    position: relative;
-}
-
-.dropdown-menu .dropdown-submenu {
-    display: none;
-    position: absolute;
-    left: 100%;
-    top: -7px;
-    background: var(--bs-light) !important;
-    border-radius: 10px !important;
-}
-
-.dropdown-menu .dropdown-submenu-left {
-    right: 100%;
-    left: auto;
-}
-
-.dropdown-menu > li:hover > .dropdown-submenu {
-    display: block;
-}
 /*** Navbar End ***/
 
 /*** Features Start ***/

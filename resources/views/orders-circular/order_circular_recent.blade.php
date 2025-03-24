@@ -21,11 +21,11 @@
                                 <span class="text-dark">Routine</span>
                             </a>
                         </li>
-                        <li class="nav-item flex-fill">
+                        {{-- <li class="nav-item flex-fill">
                             <a class="nav-link py-3" data-bs-toggle="pill" href="#print">
                                 <span class="text-dark">Print</span>
                             </a>
-                        </li>
+                        </li> --}}
                     </ul>
                 </div>
 
@@ -50,13 +50,13 @@
                     </div>
 
                     <!-- Print Tab -->
-                    <div id="print" class="tab-pane fade">
+                    {{-- <div id="print" class="tab-pane fade">
                         @include('orders-circular.monthly_orders', [
                             'orders' => $orders,
                             'months' => $months,
                             'type' => 'P',
                         ])
-                    </div>
+                    </div> --}}
                 </div>
             @endif
             @if ($orderTypeKey == 'oo' || $orderTypeKey == 'cr')
@@ -84,10 +84,18 @@
                                     <div class="col-12 p-4">
                                         @foreach ($orders as $order)
                                             @if (\Carbon\Carbon::parse($order->date)->format('m') == $month['no'])
-                                                <div class="features-content d-flex flex-column">
-                                                    <a href="{{ asset('storage/' . $order->path) }}" class="h6"
+                                                <div class="features-content d-flex flex-column mt-3">
+                                                    {{-- <a href="{{ asset('storage/' . $order->path) }}" class="h6"
                                                         target="_blank">
                                                         <i class="fas fa-solid fa-paperclip me-1"></i> {{ $order->title }}
+                                                    </a> --}}
+                                                    <a href="{{ asset('storage/' . $order->path) }}" class="h6"
+                                                        data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                        data-pdf="{{ asset('storage/' . $order->path) }}"
+                                                        data-title="{{ $order->title }}">
+                                                        {{-- <i class="fas fa-comment-dots me-1"></i> --}}
+                                                        <i class="fas fa-solid fa-paperclip me-1" style="color: rgb(60, 93, 240)"></i> {{ $order->title }}
+                                                        {{ $order->title }}
                                                     </a>
                                                     <small class="text-body d-block">
                                                         <i class="fas fa-calendar-alt me-1"></i>
@@ -108,3 +116,42 @@
     </div>
     <!-- Single Product End -->
 @endsection
+
+ <!-- 🔹 Single PDF Modal -->
+ <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pdfModalLabel">PDF Viewer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <iframe id="pdfViewer" src="" width="100%" height="700px"
+                    style="border: none;"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var pdfModal = document.getElementById("pdfModal");
+
+        pdfModal.addEventListener("show.bs.modal", function(event) {
+            var link = event.relatedTarget; // Link that triggered the modal
+            var pdfUrl = link.getAttribute("data-pdf");
+            var pdfTitle = link.getAttribute("data-title");
+
+            // Set modal title and PDF source
+            document.getElementById("pdfModalLabel").textContent = pdfTitle;
+            document.getElementById("pdfViewer").src = pdfUrl;
+        });
+
+        pdfModal.addEventListener("hidden.bs.modal", function() {
+            document.getElementById("pdfViewer").src = ""; // Reset iframe when modal is closed
+        });
+    });
+</script>
+
