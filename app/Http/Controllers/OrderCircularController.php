@@ -59,8 +59,11 @@ class OrderCircularController extends Controller
                 ->addColumn('keywords', function ($data) {
                     return $data->keywords;
                 })
-                ->addColumn('path', function ($data) {
-                    return $data->path;
+                // ->addColumn('path', function ($data) {
+                //     return $data->path;
+                // })
+                ->addColumn('created_at', function ($data) {
+                    return $data->created_at ? $data->created_at->format('d-m-Y') : '-';
                 })
                 ->addColumn('file', function ($data) {
                     if ($data->path) {
@@ -91,6 +94,7 @@ class OrderCircularController extends Controller
                         return '<span class="badge bg-success">Published</span>';
                     }
                 })
+
                 ->addColumn('action', function ($data) {
                     $button = '<a href="' . route('orders-circular.edit', $data->id) . '" class="btn btn-warning btn-sm"><i class="ri-edit-2-fill"></i></a>';
                     $button .= '&nbsp;&nbsp;';
@@ -103,7 +107,7 @@ class OrderCircularController extends Controller
                 </form>';
                     return $button;
                 })
-                ->rawColumns(['file', 'status','action'])
+                ->rawColumns(['file', 'status', 'action'])
                 ->make(true);
         }
 
@@ -123,7 +127,7 @@ class OrderCircularController extends Controller
             'go_type' => 'nullable',
             'serviceMember' => 'nullable',
             'servc' => 'nullable',
-            'memb' => 'nullable',
+            'servc_memb_catgry' => 'nullable',
             'no' => 'required',
             'date' => 'required|date',
             'title' => 'required',
@@ -145,23 +149,24 @@ class OrderCircularController extends Controller
         $filePath = $request->file('path')->store("uploads/orders-circlular/{$year}/{$categoryFolder}", 'public');
 
         // $filePath = $request->file('go_path')->store('uploads/orders-circular/', 'public');
-        $sub_sub_type = match ($request->serviceMember) {
-            'Service' => $request->servc,
-            'Member' => $request->memb,
-            default => null,
-        };
+        // $sub_sub_type = match ($request->serviceMember) {
+        //     'Service' => $request->servc,
+        //     'Member' => $request->memb,
+        //     default => null,
+        // };
 
         OrderCircular::create([
             'type' => $request->type,
             'go_type' => $request->go_type ?? null,
             'sub_type' => $request->serviceMember ?? null,
-            'sub_sub_type' => $sub_sub_type ?? null,
+            'sub_sub_type' => $request->servc_memb_catgry ?? null,
             'number' => $request->no,
             'date' => $request->date,
             'title' => $request->title,
             'keywords' => $request->keywords,
             'path' => $filePath,
             'status' => 0,
+
         ]);
         return redirect()->route('orders-circular.index')->with('success', 'Order / Circular added successfully');
     }
@@ -180,8 +185,7 @@ class OrderCircularController extends Controller
             'type' => 'required',
             'go_type' => 'nullable',
             'serviceMember' => 'nullable',
-            'servc' => 'nullable',
-            'memb' => 'nullable',
+            'servc_memb_cat' => 'nullable',
             'no' => 'required',
             'date' => 'required|date',
             'title' => 'required',
@@ -214,17 +218,17 @@ class OrderCircularController extends Controller
             $filePath = $request->file('path')->store("uploads/orders-circlular/{$year}/{$categoryFolder}", 'public');
         }
 
-        $sub_sub_type = match ($request->serviceMember) {
-            'Service' => $request->servc,
-            'Member' => $request->memb,
-            default => null,
-        };
+        // $sub_sub_type = match ($request->serviceMember) {
+        //     'Service' => $request->servc,
+        //     'Member' => $request->memb,
+        //     default => null,
+        // };
 
         $order->update([
             'type' => $request->type,
             'go_type' => $request->go_type ?? null,
             'sub_type' => $request->serviceMember ?? null,
-            'sub_sub_type' => $sub_sub_type ?? null,
+            'sub_sub_type' => $request->servc_memb_cat ?? null,
             'number' => $request->no,
             'date' => $request->date,
             'title' => $request->title,

@@ -65,16 +65,18 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="mb-3" id="service" style="display: none">
-                        <label for="service" class="form-label">Select Service</label>
-                        <select class="form-select" id="servc" name="servc">
-                            <option value="">Select Service Related</option>
-                            <option value="STP" {{ $order->sub_sub_type == 'STP' ? 'selected' : '' }}>Transfer &
+                    <div class="mb-3" id="service_member_category" style="display: none">
+                        <label for="Category" class="form-label">Category</label>
+                        <select class="form-select" id="servc_memb_cat" name="servc_memb_cat">
+                            <option value="">Select Category</option>
+                            <option value="TP" {{ $order->sub_sub_type == 'TP' ? 'selected' : '' }}>Transfer &
                                 Posting
                             </option>
-                            <option value="SCR" {{ $order->sub_sub_type == 'SCR' ? 'selected' : '' }}>Claim /
+                            <option value="PA" {{ $order->sub_sub_type == 'PA' ? 'selected' : '' }}>PA Postings
+                            </option>
+                            <option value="CR" {{ $order->sub_sub_type == 'CR' ? 'selected' : '' }}>Claim /
                                 Reimbursements</option>
-                            <option value="SAR" {{ $order->sub_sub_type == 'SAR' ? 'selected' : '' }}>Accounts
+                            <option value="AR" {{ $order->sub_sub_type == 'AR' ? 'selected' : '' }}>Accounts
                                 Related
                             </option>
                             <option value="G" {{ $order->sub_sub_type == 'G' ? 'selected' : '' }}>General</option>
@@ -84,7 +86,7 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3" id="member" style="display: none">
+                    {{-- <div class="mb-3" id="member" style="display: none">
                         <label for="member" class="form-label">Select Member</label>
                         <select class="form-select" id="memb" name="memb">
                             <option value="">Select Member Related</option>
@@ -100,7 +102,7 @@
                         @error('member')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
-                    </div>
+                    </div> --}}
 
                     <div class="form-group mb-3">
                         <label for="no" class="form-label">Number</label>
@@ -206,14 +208,14 @@
             document.getElementById('go_type').removeAttribute('required');
 
         } else {
-            document.getElementById('service').style.display = 'block';
-            document.getElementById('servc').setAttribute('required', 'required');
+            document.getElementById('service_member_category').style.display = 'block';
+            document.getElementById('servc_memb_cat').setAttribute('required', 'required');
             document.getElementById('goType').style.display = 'none';
             document.getElementById('go_type').removeAttribute('required');
             document.getElementById('service_member').style.display = 'none';
             document.getElementById('serviceMember').removeAttribute('required');
-            document.getElementById('member').style.display = 'none';
-            document.getElementById('memb').removeAttribute('required');
+            // document.getElementById('member').style.display = 'none';
+            // document.getElementById('memb').removeAttribute('required');
         }
     }
 
@@ -230,23 +232,24 @@
     }
 
     function toggleServiceMember() {
-        var serviceMember = document.getElementById('serviceMember').value;
+        var serviceMemberCategory = document.getElementById('serviceMember').value;
 
-        if (serviceMember === 'Service') {
-            document.getElementById('service').style.display = 'block';
-            document.getElementById('servc').setAttribute('required', 'required');
-            document.getElementById('member').style.display = 'none';
-            document.getElementById('memb').removeAttribute('required');
-        } else if (serviceMember === 'Member') {
-            document.getElementById('member').style.display = 'block';
-            document.getElementById('memb').setAttribute('required', 'required');
-            document.getElementById('service').style.display = 'none';
-            document.getElementById('servc').removeAttribute('required');
-        } else {
-            document.getElementById('service').style.display = 'none';
-            document.getElementById('servc').removeAttribute('required');
-            document.getElementById('member').style.display = 'none';
-            document.getElementById('memb').removeAttribute('required');
+        if (serviceMemberCategory === "Service" || serviceMemberCategory === "Member") {
+            document.getElementById('service_member_category').style.display = 'block';
+            document.getElementById('servc_memb_cat').setAttribute('required', 'required');
+            // document.getElementById('member').style.display = 'none';
+            // document.getElementById('memb').removeAttribute('required');
         }
+        // else if (serviceMember === 'Member') {
+        //     document.getElementById('member').style.display = 'block';
+        //     document.getElementById('memb').setAttribute('required', 'required');
+        //     document.getElementById('service').style.display = 'none';
+        //     document.getElementById('servc').removeAttribute('required');
+        // } else {
+        //     document.getElementById('service').style.display = 'none';
+        //     document.getElementById('servc').removeAttribute('required');
+        //     document.getElementById('member').style.display = 'none';
+        //     document.getElementById('memb').removeAttribute('required');
+        // }
     }
 </script>

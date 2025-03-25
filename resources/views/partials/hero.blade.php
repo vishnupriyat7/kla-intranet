@@ -138,7 +138,6 @@
                          <div id="tab-4" class="tab-pane fade show p-0">
                              <div class="row g-4">
                                  <div class="col-lg-12">
-
                                      <div class="features-content d-flex flex-column mt-3">
                                          @foreach ($newsupdates as $news)
                                              <div class="mb-4">

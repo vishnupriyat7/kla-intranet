@@ -58,13 +58,14 @@
                         @enderror
                     </div>
                     {{-- I want to display select Service only if Service / Member Related is Service Related --}}
-                    <div class="mb-3" id="service" style="display: none">
-                        <label for="service" class="form-label">Select Service</label>
-                        <select class="form-select" id="servc" name="servc" required>
-                            <option value="">Select Service Related</option>
-                            <option value="STP">Transfer & Posting</option>
-                            <option value="SCR">Claim / Reimbursements</option>
-                            <option value="SAR">Accounts Related</option>
+                    <div class="mb-3" id="service_member_category" style="display: none">
+                        <label for="service_member_category" class="form-label">Select Category</label>
+                        <select class="form-select" id="servc_memb_catgry" name="servc_memb_catgry" required>
+                            <option value="">Select Category</option>
+                            <option value="CR">Claim / Reimbursements</option>
+                            <option value="TP">Transfer & Posting</option>
+                            <option value="PA">PA Postings</option>
+                            <option value="AR">Accounts Related</option>
                             <option value="G">General</option>
                         </select>
                         @error('service')
@@ -72,7 +73,7 @@
                         @enderror
                     </div>
                     {{-- I want to display select Member only if Service / Member Related is Members Related --}}
-                    <div class="mb-3" id="member" style="display: none">
+                    {{-- <div class="mb-3" id="member" style="display: none">
                         <label for="member" class="form-label">Select Member</label>
                         <select class="form-select" id="memb" name="memb" required>
                             <option value="">Select Member Related</option>
@@ -84,7 +85,7 @@
                         @error('member')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
-                    </div>
+                    </div> --}}
 
                     <div class="mb-3">
                         <label for="no" class="form-label">Number</label>
@@ -126,9 +127,9 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                      {{-- Add Select Box for Orders/Circulars List Published(1) /Unpublished(0) --}}
+                    {{-- Add Select Box for Orders/Circulars List Published(1) /Unpublished(0) --}}
 
-                      <div class="mb-3">
+                    <div class="mb-3">
                         <label for="status" class="form-label">Published / Unpublished</label>
                         <select class="form-select" id="status" name="status" required>
                             <option value="">Select Published / Unpublished</option>
@@ -148,7 +149,7 @@
 
 </x-app-layout>
 <script>
-      document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
         toggleGoType();
         toggleServiceorMember();
         toggleServiceMember();
@@ -166,16 +167,16 @@
             document.getElementById('go_type').removeAttribute('required');
             document.getElementById('go_type').value = '';
         } else {
-            document.getElementById('service').style.display = 'block';
-            document.getElementById('servc').setAttribute('required', 'required');
+            document.getElementById('service_member_category').style.display = 'block';
+            document.getElementById('servc_memb_catgry').setAttribute('required', 'required');
             document.getElementById('goType').style.display = 'none';
             document.getElementById('go_type').removeAttribute('required');
             document.getElementById('go_type').value = '';
             document.getElementById('service_member').style.display = 'none';
             document.getElementById('serviceMember').removeAttribute('required');
             document.getElementById('serviceMember').value = 'Service';
-            document.getElementById('member').style.display = 'none';
-            document.getElementById('memb').removeAttribute('required');
+            // document.getElementById('member').style.display = 'none';
+            // document.getElementById('memb').removeAttribute('required');
         }
 
     }
@@ -194,22 +195,28 @@
 
     function toggleServiceMember() {
         var serviceMember = document.getElementById('serviceMember').value;
+        // dd(serviceMember);
 
-        if (serviceMember === 'Service') {
-            document.getElementById('service').style.display = 'block';
-            document.getElementById('servc').setAttribute('required', 'required');
-            document.getElementById('member').style.display = 'none';
-            document.getElementById('memb').removeAttribute('required');
-        } else if (serviceMember === 'Member') {
-            document.getElementById('member').style.display = 'block';
-            document.getElementById('memb').setAttribute('required', 'required');
-            document.getElementById('service').style.display = 'none';
-            document.getElementById('servc').removeAttribute('required');
-        } else {
-            document.getElementById('service').style.display = 'none';
-            document.getElementById('servc').removeAttribute('required');
-            document.getElementById('member').style.display = 'none';
-            document.getElementById('memb').removeAttribute('required');
+        if (serviceMember === "Service" || serviceMember === "Member") {
+            document.getElementById('service_member_category').style.display = 'block';
+            document.getElementById('servc_memb_catgry').setAttribute('required', 'required');
         }
+
+        // if (serviceMember === 'Service') {
+        //     document.getElementById('service').style.display = 'block';
+        //     document.getElementById('servc').setAttribute('required', 'required');
+        //     document.getElementById('member').style.display = 'none';
+        //     document.getElementById('memb').removeAttribute('required');
+        // } else if (serviceMember === 'Member') {
+        //     document.getElementById('member').style.display = 'block';
+        //     document.getElementById('memb').setAttribute('required', 'required');
+        //     document.getElementById('service').style.display = 'none';
+        //     document.getElementById('servc').removeAttribute('required');
+        // } else {
+        //     document.getElementById('service').style.display = 'none';
+        //     document.getElementById('servc').removeAttribute('required');
+        //     document.getElementById('member').style.display = 'none';
+        //     document.getElementById('memb').removeAttribute('required');
+        // }
     }
 </script>

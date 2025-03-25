@@ -62,7 +62,7 @@
             @if ($orderTypeKey == 'oo' || $orderTypeKey == 'cr')
                 <!-- Month Tabs for Office Order & Circular -->
                 <div class="tab-class">
-                    <div class="d-flex justify-content-between border-bottom mb-4">
+                    <div class="d-flex justify-content-between border-bottom mb-1">
                         <ul class="nav nav-pills d-inline-flex text-center">
                             @foreach ($months as $month)
                                 <li class="nav-item mb-3">
