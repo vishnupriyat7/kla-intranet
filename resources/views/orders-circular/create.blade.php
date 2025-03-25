@@ -177,6 +177,11 @@
             document.getElementById('serviceMember').value = 'Service';
             // document.getElementById('member').style.display = 'none';
             // document.getElementById('memb').removeAttribute('required');
+            // Remove PA Postings option if type == Circular
+            var paOption = document.getElementById('service_member_category').querySelector('option[value="PA"]');
+            if (type == 'C' && paOption) {
+                paOption.remove();
+            }
         }
 
     }
