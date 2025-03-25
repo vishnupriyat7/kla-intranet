@@ -208,7 +208,7 @@ class HomeController extends Controller
             'type' => 'required',
             'go_type' => 'nullable',
             'serviceMember' => 'nullable',
-            'servc' => 'nullable',
+            'category' => 'nullable',
             'memb' => 'nullable',
             'no' => 'required',
             'date' => 'required|date',
@@ -230,17 +230,17 @@ class HomeController extends Controller
         // $filePath = $request->file('path')->store("uploads/orders-circlular/{$year}/{$categoryFolder}", 'public');
 
         // $filePath = $request->file('go_path')->store('uploads/orders-circular/', 'public');
-        $sub_sub_type = match ($request->serviceMember) {
-            'Service' => $request->servc,
-            'Member' => $request->memb,
-            default => null,
-        };
+        // $sub_sub_type = match ($request->serviceMember) {
+        //     'Service' => $request->servc,
+        //     'Member' => $request->memb,
+        //     default => null,
+        // };
 
         $save_request = OrderCircular::create([
             'type' => $request->type,
             'go_type' => $request->go_type ?? null,
             'sub_type' => $request->serviceMember ?? null,
-            'sub_sub_type' => $sub_sub_type ?? null,
+            'sub_sub_type' => $request->category ?? null,
             'number' => $request->no,
             'date' => $request->date,
             'title' => $request->title,
