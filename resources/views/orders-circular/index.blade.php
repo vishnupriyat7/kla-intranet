@@ -24,13 +24,16 @@
                                 <th>Type</th>
                                 <th>GO Type</th>
                                 <th>Sub Type</th>
-                                <th>Service / Member Type</th>
+                                <th>Category</th>
                                 <th>No</th>
                                 <th>Date</th>
                                 <th>Title</th>
                                 <th>Keyword</th>
-                                <th>Path</th>
+                                {{-- <th>Path</th> --}}
+                                <th>Requested Date</th>
                                 <th>File</th>
+                                <th>Status</th>
+
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -86,9 +89,13 @@
                     data: 'keywords',
                     name: 'keywords'
                 },
+                // {
+                //     data: 'path',
+                //     name: 'path'
+                // },
                 {
-                    data: 'path',
-                    name: 'path'
+                    data: 'created_at',
+                    name: 'created_at'
                 },
                 {
                     data: 'file',
@@ -97,6 +104,11 @@
                     searchable: false
                 },
                 {
+                    data: 'status',
+                    name: 'status'
+                },
+
+                {
                     data: 'action',
                     name: 'action',
                     orderable: false,
@@ -104,8 +116,10 @@
                 }
             ],
             createdRow: function(row, data, dataIndex) {
-                $('td:eq(10)', row).css('white-space', 'nowrap'); // Prevent wrap on index column
-                $('td:eq(11)', row).css('white-space', 'nowrap'); // Prevent wrap on action column
+                $('td:eq(6)', row).css('white-space', 'nowrap'); // Prevent wrap on index column
+                $('td:eq(9)', row).css('white-space', 'nowrap'); // Prevent wrap on index column
+                $('td:eq(10)', row).css('white-space', 'nowrap'); // Prevent wrap on action column
+                $('td:eq(12)', row).css('white-space', 'nowrap'); // Prevent wrap on action column
             }
         });
     });

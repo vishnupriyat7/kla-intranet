@@ -65,15 +65,19 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="mb-3" id="service" style="display: none">
-                        <label for="service" class="form-label">Select Service</label>
-                        <select class="form-select" id="servc" name="servc">
-                            <option value="">Select Service Related</option>
-                            <option value="STP" {{ $order->sub_sub_type == 'STP' ? 'selected' : '' }}>Transfer & Posting
+                    <div class="mb-3" id="service_member_category" style="display: none">
+                        <label for="Category" class="form-label">Category</label>
+                        <select class="form-select" id="servc_memb_cat" name="servc_memb_cat">
+                            <option value="">Select Category</option>
+                            <option value="TP" {{ $order->sub_sub_type == 'TP' ? 'selected' : '' }}>Transfer &
+                                Posting
                             </option>
-                            <option value="SCR" {{ $order->sub_sub_type == 'SCR' ? 'selected' : '' }}>Claim /
+                            <option value="PA" {{ $order->sub_sub_type == 'PA' ? 'selected' : '' }}>PA Postings
+                            </option>
+                            <option value="CR" {{ $order->sub_sub_type == 'CR' ? 'selected' : '' }}>Claim /
                                 Reimbursements</option>
-                            <option value="SAR" {{ $order->sub_sub_type == 'SAR' ? 'selected' : '' }}>Accounts Related
+                            <option value="AR" {{ $order->sub_sub_type == 'AR' ? 'selected' : '' }}>Accounts
+                                Related
                             </option>
                             <option value="G" {{ $order->sub_sub_type == 'G' ? 'selected' : '' }}>General</option>
                         </select>
@@ -82,20 +86,23 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3" id="member" style="display: none">
+                    {{-- <div class="mb-3" id="member" style="display: none">
                         <label for="member" class="form-label">Select Member</label>
                         <select class="form-select" id="memb" name="memb">
                             <option value="">Select Member Related</option>
-                            <option value="MCR" {{ $order->sub_sub_type == 'MCR' ? 'selected' : '' }}>Claim / Reimbursements
+                            <option value="MCR" {{ $order->sub_sub_type == 'MCR' ? 'selected' : '' }}>Claim /
+                                Reimbursements
                             </option>
-                            <option value="PA" {{ $order->sub_sub_type == 'PA' ? 'selected' : '' }}>PA Postings</option>
-                            <option value="MAR" {{ $order->sub_sub_type == 'MAR' ? 'selected' : '' }}>Accounts Related
+                            <option value="PA" {{ $order->sub_sub_type == 'PA' ? 'selected' : '' }}>PA Postings
+                            </option>
+                            <option value="MAR" {{ $order->sub_sub_type == 'MAR' ? 'selected' : '' }}>Accounts
+                                Related
                             </option>
                         </select>
                         @error('member')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
-                    </div>
+                    </div> --}}
 
                     <div class="form-group mb-3">
                         <label for="no" class="form-label">Number</label>
@@ -137,22 +144,6 @@
                                     data-bs-target="#pdfModal">
                                     View PDF
                                 </a>
-                                <div class="modal fade" id="pdfModal" tabindex="-1"
-                                    aria-labelledby="pdfModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="pdfModalLabel">PDF Preview</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <iframe src="{{ asset('storage/' . $order->path) }}" width="100%"
-                                                    height="500px" style="border: none;"></iframe>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             @else
                                 <p>No PDF available</p>
                             @endif
@@ -164,7 +155,13 @@
 
                             </div>
                         </div>
-
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="status" class="form-label">Status</label>
+                        <select class="form-select" id="status" name="status">
+                            <option value="1" {{ $order->status == 1 ? 'selected' : '' }}>Published</option>
+                            <option value="0" {{ $order->status == 0 ? 'selected' : '' }}>Unpublished</option>
+                        </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Update</button>
                     <a href="{{ route('orders-circular.index') }}" class="btn btn-secondary">Back</a>
@@ -174,6 +171,24 @@
     </div>
 </x-app-layout>
 {{-- Script to toggle GO Type --}}
+{{-- PDF MODAL  --}}
+
+<div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pdfModalLabel">PDF Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <iframe src="{{ asset('storage/' . $order->path) }}" width="100%" height="500px"
+                    style="border: none;"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         toggleGoType();
@@ -193,14 +208,14 @@
             document.getElementById('go_type').removeAttribute('required');
 
         } else {
-            document.getElementById('service').style.display = 'block';
-            document.getElementById('servc').setAttribute('required', 'required');
+            document.getElementById('service_member_category').style.display = 'block';
+            document.getElementById('servc_memb_cat').setAttribute('required', 'required');
             document.getElementById('goType').style.display = 'none';
             document.getElementById('go_type').removeAttribute('required');
             document.getElementById('service_member').style.display = 'none';
             document.getElementById('serviceMember').removeAttribute('required');
-            document.getElementById('member').style.display = 'none';
-            document.getElementById('memb').removeAttribute('required');
+            // document.getElementById('member').style.display = 'none';
+            // document.getElementById('memb').removeAttribute('required');
         }
     }
 
@@ -217,23 +232,24 @@
     }
 
     function toggleServiceMember() {
-        var serviceMember = document.getElementById('serviceMember').value;
+        var serviceMemberCategory = document.getElementById('serviceMember').value;
 
-        if (serviceMember === 'Service') {
-            document.getElementById('service').style.display = 'block';
-            document.getElementById('servc').setAttribute('required', 'required');
-            document.getElementById('member').style.display = 'none';
-            document.getElementById('memb').removeAttribute('required');
-        } else if (serviceMember === 'Member') {
-            document.getElementById('member').style.display = 'block';
-            document.getElementById('memb').setAttribute('required', 'required');
-            document.getElementById('service').style.display = 'none';
-            document.getElementById('servc').removeAttribute('required');
-        } else {
-            document.getElementById('service').style.display = 'none';
-            document.getElementById('servc').removeAttribute('required');
-            document.getElementById('member').style.display = 'none';
-            document.getElementById('memb').removeAttribute('required');
+        if (serviceMemberCategory === "Service" || serviceMemberCategory === "Member") {
+            document.getElementById('service_member_category').style.display = 'block';
+            document.getElementById('servc_memb_cat').setAttribute('required', 'required');
+            // document.getElementById('member').style.display = 'none';
+            // document.getElementById('memb').removeAttribute('required');
         }
+        // else if (serviceMember === 'Member') {
+        //     document.getElementById('member').style.display = 'block';
+        //     document.getElementById('memb').setAttribute('required', 'required');
+        //     document.getElementById('service').style.display = 'none';
+        //     document.getElementById('servc').removeAttribute('required');
+        // } else {
+        //     document.getElementById('service').style.display = 'none';
+        //     document.getElementById('servc').removeAttribute('required');
+        //     document.getElementById('member').style.display = 'none';
+        //     document.getElementById('memb').removeAttribute('required');
+        // }
     }
 </script>
