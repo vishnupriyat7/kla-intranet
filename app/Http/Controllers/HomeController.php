@@ -7,7 +7,7 @@ use App\Models\NewsUpdate;
 use App\Models\OrderCircular;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-// use DB;
+use App\Models\Section;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -198,8 +198,9 @@ class HomeController extends Controller
             ->select('periodicals.*')
             ->orderBy('periodical_masters.name', 'asc')
             ->get();
+        $sections = Section::get();
         $save_request = '';
-        return view('orders-circular.upload_request', compact('periodicals', 'save_request'));
+        return view('orders-circular.upload_request', compact('periodicals', 'save_request', 'sections'));
     }
 
     public function storeUploadRequest(Request $request)
@@ -214,29 +215,17 @@ class HomeController extends Controller
             'date' => 'required|date',
             'title' => 'required',
             'keywords' => 'nullable',
-            // 'path' => 'required|file|mimes:pdf|max:1048576',
+            'section' => 'required',
+            'path' => 'required|file|mimes:pdf|max:1048576',
         ]);
-        // Extract Year from provided date
         $year = date('Y', strtotime($request->date));
-        // dd($year);
-
-        //determine the category folder based on the type
         $categoryFolder = match ($request->type) {
             'G' => 'GovtOrders',
             'O' => 'OfficeOrders',
             'C' => 'Circulars',
         };
-
-        // $filePath = $request->file('path')->store("uploads/orders-circlular/{$year}/{$categoryFolder}", 'public');
-
-        // $filePath = $request->file('go_path')->store('uploads/orders-circular/', 'public');
-        // $sub_sub_type = match ($request->serviceMember) {
-        //     'Service' => $request->servc,
-        //     'Member' => $request->memb,
-        //     default => null,
-        // };
-
-        $save_request = OrderCircular::create([
+        $filePath = $request->file('path')->store("uploads/orders-circlular/{$year}/{$categoryFolder}", 'public');
+        OrderCircular::create([
             'type' => $request->type,
             'go_type' => $request->go_type ?? null,
             'sub_type' => $request->serviceMember ?? null,
@@ -245,18 +234,11 @@ class HomeController extends Controller
             'date' => $request->date,
             'title' => $request->title,
             'keywords' => $request->keywords,
-            // 'path' => $filePath,
+            'path' => $filePath,
             'status' => 0,
+            'section_id' => $request->section
         ]);
-        // dd($save_request);
-        $periodicals = Periodical::with('periodicalMaster')
-            ->where('status', 1)
-            ->join('periodical_masters', 'periodicals.periodical_master_id', '=', 'periodical_masters.id')
-            ->select('periodicals.*')
-            ->orderBy('periodical_masters.name', 'asc')
-            ->get();
-        $success_message = "Successfully Created";
-        return view('orders-circular.upload_request', compact('periodicals', 'save_request'));
+        return redirect()->route('home.upload-request')->with('success', 'Your request has been saved successfully.');
     }
 }
 

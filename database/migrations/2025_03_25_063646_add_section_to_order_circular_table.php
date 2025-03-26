@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,7 +13,7 @@ return new class extends Migration
         Schema::table('order_circulars', function (Blueprint $table) {
             $table->unsignedBigInteger('section_id')->after('id')->nullable();
             $table->foreign('section_id')->references('id')->on('sections');
-            $table->string('uploaded_at')->after('created_at');
+            $table->timestamp('uploaded_at')->after('created_at')->nullable();
         });
     }
 
@@ -28,3 +27,4 @@ return new class extends Migration
         });
     }
 };
+
