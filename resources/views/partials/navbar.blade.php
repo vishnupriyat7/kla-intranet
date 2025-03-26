@@ -88,6 +88,7 @@
                                 <a class="dropdown-item" href="{{ route('home.order-circular', 'oo') }}">Office
                                     Order</a>
                                 <a class="dropdown-item" href="{{ route('home.order-circular', 'cr') }}">Circular</a>
+                                <a class="dropdown-item" href="{{ route('home.advanced-search')}}">Advance Search</a>
                             </div>
                         </div>
 
@@ -139,12 +140,16 @@
                         <a href="{{ route('home.upload-request') }}"
                             class="nav-item nav-link {{ request()->routeIs('home.upload-request') ? 'active' : '' }}">Upload
                             Request</a>
+                        {{-- <a href="contact.html" class="nav-item nav-link">Search</a> --}}
+                        <button
+                            class="btn-search btn border border-primary btn-md-square rounded-circle bg-white my-auto"
+                            data-bs-toggle="modal" data-bs-target="#searchModal"><i
+                                class="fas fa-search text-primary"></i>
+                        </button>
 
-
-                        {{-- <a href="contact.html" class="nav-item nav-link">Contact Us</a> --}}
                     </div>
-                    <div class="d-flex flex-nowrap border-top pt-3 pt-xl-0">
-                        {{-- <div class="d-flex">
+                    {{-- <div class="d-flex flex-nowrap border-top pt-3 pt-xl-0">
+                        <div class="d-flex">
                             <img src="img/weather-icon.png" class="img-fluid w-100 me-2" alt="">
                             <div class="d-flex align-items-center">
                                 <strong class="fs-4 text-secondary">31°C</strong>
@@ -153,17 +158,12 @@
                                     <small>Mon. 10 jun 2024</small>
                                 </div>
                             </div>
-                        </div> --}}
-                        {{-- <button
-                            class="btn-search btn border border-primary btn-md-square rounded-circle bg-white my-auto"
-                            data-bs-toggle="modal" data-bs-target="#searchModal"><i
-                                class="fas fa-search text-primary"></i></button> --}}
+                        </div>
                         <button
                             class="btn-search btn border border-primary btn-md-square rounded-circle bg-white my-auto"
                             data-bs-toggle="modal" data-bs-target="#searchModal"><i
-                                class="fas fa-search text-primary"></i>
-                        </button>
-                    </div>
+                                class="fas fa-search text-primary"></i></button>
+                    </div> --}}
                 </div>
             </nav>
         </div>

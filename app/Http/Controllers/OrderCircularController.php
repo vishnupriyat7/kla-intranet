@@ -234,7 +234,7 @@ class OrderCircularController extends Controller
             'title' => $request->title,
             'keywords' => $request->keywords,
             'path' => $filePath,
-            'status' => 0,
+            'status' => $request->status,
         ]);
 
         return redirect()->route('orders-circular.index')->with('success', 'Order / Circular updated successfully');

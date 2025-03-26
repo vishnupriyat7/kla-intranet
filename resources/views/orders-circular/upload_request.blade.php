@@ -25,7 +25,8 @@
                             <a href="{{ route('orders-circular.create') }}" class="btn btn-primary">Check Status</a>
 
                         </div>
-                        <form action="{{ route('home.store-upload-request') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('home.store-upload-request') }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
                                 <select class="form-select" id="section_fe" name="section" required>
@@ -40,7 +41,8 @@
                             </div>
                             <div class="row">
                                 <div class="mb-3 col-6" id="type-fe-div">
-                                    <select class="form-select" id="type_fe" name="type" required onchange="toggleGoType()">
+                                    <select class="form-select" id="type_fe" name="type" required
+                                        onchange="toggleGoType()">
                                         <option value="">Select Order Type</option>
                                         <option value="G">Govt Order</option>
                                         <option value="O">Office Order</option>
@@ -53,7 +55,8 @@
                                 <div class="mb-3 col-6" id="goType_fe" style="display: none">
                                     <select class="form-select" id="go_type_fe" name="go_type" required>
                                         <option value="">Select GO Type</option>
-                                        <option value="M">സർക്കാർ ഉത്തരവുകൾ കയ്യെഴുത്തു (Govt.Order Manuscript)</option>
+                                        <option value="M">സർക്കാർ ഉത്തരവുകൾ കയ്യെഴുത്തു (Govt.Order Manuscript)
+                                        </option>
                                         <option value="R">സർക്കാർ ഉത്തരവുകൾ സാധാ (Govt.Order Routine)</option>
                                         <option value="P">സർക്കാർ ഉത്തരവുകൾ അച്ചടി (Govt. Order Print) </option>
                                     </select>
@@ -104,8 +107,8 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <input type="text" class="form-control" id="title_fe" name="title" placeholder="Enter Title"
-                                    required>
+                                <input type="text" class="form-control" id="title_fe" name="title"
+                                    placeholder="Enter Title" required>
                                 @error('title')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror

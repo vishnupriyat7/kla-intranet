@@ -17,18 +17,19 @@
     </div>
 
     <!-- Month-wise Order Listings -->
-    <div class="tab-content">
+    <div class="tab-content p-3">
         @foreach ($months as $month)
             <div id="{{ $type }}-tab-{{ $month['no'] }}"
                 class="tab-pane fade show {{ $month['no'] == date('m') ? 'active' : '' }}">
                 <div class="row g-4">
                     <div class="col-12">
+
+                        @php $hasOrders = false; @endphp
+
                         @foreach ($orders as $order)
                             @if (\Carbon\Carbon::parse($order->date)->format('m') == $month['no'] && $order->go_type == $type)
+                                @php $hasOrders = true; @endphp
                                 <div class="features-content d-flex flex-column mt-3">
-                                    {{-- <a href="{{ asset('storage/' . $order->path) }}" class="h6" target="_blank">
-                                        <i class="fas fa-solid fa-paperclip me-1"></i> {{ $order->title }}
-                                    </a> --}}
                                     <a href="{{ asset('storage/' . $order->path) }}" class="h6"
                                         data-bs-toggle="modal" data-bs-target="#pdfModal"
                                         data-pdf="{{ asset('storage/' . $order->path) }}"
@@ -44,6 +45,12 @@
                                 </div>
                             @endif
                         @endforeach
+                        @if (!$hasOrders)
+                            <div class="alert alert-warning d-flex align-items-center" role="alert">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                <span>No {{$type == 'M' ? 'Govt.Order Manuscript' : 'Govt.Order Routine'}} uploaded for this month.</span>
+                            </div>
+                        @endif
                     </div>
                 </div>
 

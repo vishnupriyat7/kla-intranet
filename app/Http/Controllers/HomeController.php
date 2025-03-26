@@ -241,5 +241,63 @@ class HomeController extends Controller
         ]);
         return redirect()->route('home.upload-request')->with('success', 'Your request has been saved successfully.');
     }
-}
+    // Function for advanced search for order, circular, office order and news updates
+    public function advancedSearch(Request $request)
+    {
+        $results = collect();
+        if ($request->has('anysearch')) {
+            $search = $request->anysearch;
 
+            // Get all table names from the database, excluding system tables
+            $tables = DB::select("SHOW TABLES");
+            $excludedTables = [
+                'cache',
+                'cache_locks',
+                'failed_jobs',
+                'job_batches',
+                'jobs',
+                'migrations',
+                'password_reset_tokens',
+                'sessions',
+                'users',
+                'news_updates',
+                'order_circulars',
+
+            ];
+
+            foreach ($tables as $table) {
+                $tableName = array_values((array) $table)[0];
+
+                // Skip system tables
+                if (in_array($tableName, $excludedTables)) {
+                    continue;
+                }
+
+                // Get all column names from the current table
+                $columns = DB::getSchemaBuilder()->getColumnListing($tableName);
+
+                // Build the query for the current table
+                $query = DB::table($tableName);
+                foreach ($columns as $column) {
+                    $query->orWhere($column, 'LIKE', "%{$search}%");
+                }
+
+                // Merge the results with the previous ones
+                $tableResults = $query->get();
+                $results = $results->merge($tableResults);
+            }
+        }
+
+        // return response()->json($results);
+
+        // $orders = $query->paginate(20);
+
+        $periodicals = Periodical::with('periodicalMaster')
+            ->where('status', 1)
+            ->join('periodical_masters', 'periodicals.periodical_master_id', '=', 'periodical_masters.id')
+            ->select('periodicals.*')
+            ->orderBy('periodical_masters.name', 'asc')
+            ->get();
+        return view('partials.advanced-search', compact('results', 'periodicals'));
+    }
+}

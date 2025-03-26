@@ -83,29 +83,44 @@
                                 <div class="row g-4">
                                     <div class="col-12 p-4">
 
+                                        @php $hasOrders = false; @endphp
+
                                         @foreach ($orders as $order)
                                             @if (\Carbon\Carbon::parse($order->date)->format('m') == $month['no'])
+                                                @php $hasOrders = true; @endphp
+
                                                 <div class="features-content d-flex flex-column mt-3">
-                                                    {{-- <a href="{{ asset('storage/' . $order->path) }}" class="h6"
-                                                        target="_blank">
-                                                        <i class="fas fa-solid fa-paperclip me-1"></i> {{ $order->title }}
-                                                    </a> --}}
-                                                    <a href="{{ asset('storage/' . $order->path) }}" class="h6"
-                                                        data-bs-toggle="modal" data-bs-target="#pdfModal"
-                                                        data-pdf="{{ asset('storage/' . $order->path) }}"
-                                                        data-title="{{ $order->title }}">
-                                                        {{-- <i class="fas fa-comment-dots me-1"></i> --}}
-                                                        <i class="fas fa-solid fa-paperclip me-1"
-                                                            style="color: rgb(60, 93, 240)"></i> {{ $order->title }}
-                                                    </a>
-                                                    <small class="text-body d-block">
-                                                        <i class="fas fa-calendar-alt me-1"></i>
-                                                        {{ \Carbon\Carbon::parse($order->date)->format('M d Y') }}
-                                                    </small>
-                                                    </br>
+                                                    @if ($order->path === null || trim($order->path) === '')
+                                                        <div class="alert alert-warning d-flex align-items-center"
+                                                            role="alert">
+                                                            <i class="fas fa-exclamation-triangle me-2"></i>
+                                                            <span>No order/circular uploaded yet.</span>
+                                                        </div>
+                                                    @else
+                                                        <a href="{{ asset('storage/' . $order->path) }}" class="h6"
+                                                            data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                            data-pdf="{{ asset('storage/' . $order->path) }}"
+                                                            data-title="{{ $order->title }}">
+                                                            {{-- <i class="fas fa-comment-dots me-1"></i> --}}
+                                                            <i class="fas fa-solid fa-paperclip me-1"
+                                                                style="color: rgb(60, 93, 240)"></i> {{ $order->title }}
+                                                        </a>
+                                                        <small class="text-body d-block">
+                                                            <i class="fas fa-calendar-alt me-1"></i>
+                                                            {{ \Carbon\Carbon::parse($order->date)->format('M d Y') }}
+                                                        </small>
+                                                        </br>
+                                                    @endif
                                                 </div>
                                             @endif
                                         @endforeach
+                                        @if (!$hasOrders)
+                                            <div class="alert alert-warning d-flex align-items-center" role="alert">
+                                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                                <span>No {{ $orderTypeKey == 'oo' ? 'Office Order' : 'Circular' }} uploaded
+                                                    for this month.</span>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
