@@ -5,6 +5,9 @@
     <div class="container-fluid populer-news py-5">
         <div class="container py-5">
             <h1>New Order/Circular Upload Request</h1>
+            <div class="d-flex justify-content-end">
+                <a href="" class="btn btn-info">Check Status</a>
+            </div>
             </br>
             @if (session('error'))
                 <div class="alert alert-danger alert-dismissible fade show">
@@ -18,13 +21,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             @endif
+
             <div class="container py-12 d-flex justify-content-center">
                 <div class="card col-12">
                     <div class="card-body">
-                        <div class="d-flex justify-content-end">
-                            <a href="{{ route('orders-circular.create') }}" class="btn btn-primary">Check Status</a>
-
-                        </div>
                         <form action="{{ route('home.store-upload-request') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
@@ -39,10 +39,10 @@
                                 @enderror
                             </div>
                             <div class="row">
-                                <div class="mb-3 col-6" id="type-fe-div">
+                                <div class="mb-3 col-12" id="type-fe-div">
                                     <select class="form-select" id="type_fe" name="type" required onchange="toggleGoType()">
                                         <option value="">Select Order Type</option>
-                                        <option value="G">Govt Order</option>
+                                        <option value="G">Government Order</option>
                                         <option value="O">Office Order</option>
                                         <option value="C">Circular</option>
                                     </select>
@@ -136,6 +136,18 @@
 <script>
     function toggleGoType() {
         var type = document.getElementById('type_fe').value;
+        var select = document.getElementById('category_fe');
+        var optionToRemove = select.querySelector('option[value="PA"]');
+        if(type !== 'C') {
+            if (optionToRemove) {
+                optionToRemove.remove();
+            } else {
+                var newOption = document.createElement('option');
+                newOption.value = "PA";
+                newOption.textContent = "PA Posting";
+                select.appendChild(newOption);
+            }
+        }
         if (type === 'G') {
             document.getElementById('goType_fe').style.display = 'block';
             document.getElementById('go_type_fe').setAttribute('required', 'required');
