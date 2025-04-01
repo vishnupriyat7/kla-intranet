@@ -139,9 +139,7 @@
         var select = document.getElementById('category_fe');
         var optionToRemove = select.querySelector('option[value="PA"]');
         if(type !== 'C') {
-            if (optionToRemove) {
-                optionToRemove.remove();
-            } else {
+            if (!optionToRemove) {
                 var newOption = document.createElement('option');
                 newOption.value = "PA";
                 newOption.textContent = "PA Posting";
@@ -165,6 +163,7 @@
             document.getElementById('serviceMember_fe').value = '';
             document.getElementById('type-fe-div').classList.replace('col-6', 'col-12');
             document.getElementById('category-fe-div').classList.replace('col-6', 'col-12');
+            optionToRemove.remove();
         } else {
             document.getElementById('goType_fe').style.display = 'none';
             document.getElementById('go_type_fe').removeAttribute('required');
