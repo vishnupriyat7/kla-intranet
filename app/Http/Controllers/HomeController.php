@@ -244,60 +244,96 @@ class HomeController extends Controller
     // Function for advanced search for order, circular, office order and news updates
     public function advancedSearch(Request $request)
     {
-        $results = collect();
-        if ($request->has('anysearch')) {
-            $search = $request->anysearch;
+        $orderResults = collect();
+        $newsResults = collect();
 
-            // Get all table names from the database, excluding system tables
-            $tables = DB::select("SHOW TABLES");
-            $excludedTables = [
-                'cache',
-                'cache_locks',
-                'failed_jobs',
-                'job_batches',
-                'jobs',
-                'migrations',
-                'password_reset_tokens',
-                'sessions',
-                'users',
-                'news_updates',
-                'order_circulars',
-
-            ];
-
-            foreach ($tables as $table) {
-                $tableName = array_values((array) $table)[0];
-
-                // Skip system tables
-                if (in_array($tableName, $excludedTables)) {
-                    continue;
-                }
-
-                // Get all column names from the current table
-                $columns = DB::getSchemaBuilder()->getColumnListing($tableName);
-
-                // Build the query for the current table
-                $query = DB::table($tableName);
-                foreach ($columns as $column) {
-                    $query->orWhere($column, 'LIKE', "%{$search}%");
-                }
-
-                // Merge the results with the previous ones
-                $tableResults = $query->get();
-                $results = $results->merge($tableResults);
-            }
+        // Validate if month is selected but year is not
+        if ($request->filled('month') && !$request->filled('year')) {
+            return redirect()->back()->withErrors(['error' => 'Please select a year when choosing a month.']);
         }
 
-        // return response()->json($results);
+        // Search in order_circulars table
+        if ($request->filled('order_type') && $request->order_type !== 'news') {
+            $query = DB::table('order_circulars');
 
-        // $orders = $query->paginate(20);
+            // Filter by Order Type
+            if ($request->filled('order_type')) {
+                $query->where('type', $request->order_type);
+            }
 
+            // Ensure 'date' column exists and is valid
+            if ($request->filled('year') || $request->filled('month') || $request->filled('date')) {
+                $query->whereNotNull('date');
+            }
+
+            // Filter by Year (Extract from 'date' column)
+            if ($request->filled('year')) {
+                $query->whereYear('date', '=', $request->year);
+            }
+
+            // Filter by Month (Extract from 'date' column)
+            if ($request->filled('month')) {
+                $query->whereMonth('date', '=', $request->month);
+            }
+
+            // Filter by Exact Date
+            if ($request->filled('date')) {
+                $query->whereDate('date', '=', $request->date);
+            }
+
+            // Filter by Keyword
+            if ($request->filled('keyword')) {
+                $query->where(function ($q) use ($request) {
+                    $q->where('title', 'LIKE', "%{$request->keyword}%")
+                        ->orWhere('keywords', 'LIKE', "%{$request->keyword}%");;
+                });
+            }
+
+            $orderResults = $query->get();
+        }
+
+        // Search in news_updates table (only if order_type is 'news')
+        if ($request->filled('order_type') && $request->order_type === 'news') {
+            $newsQuery = DB::table('news_updates');
+
+            // Filter by Year
+            if ($request->filled('year')) {
+                $newsQuery->whereYear('published_date', $request->year);
+            }
+
+            // Filter by Date
+            if ($request->filled('date')) {
+                $newsQuery->whereDate('published_date', $request->date);
+            }
+
+            // Filter by Month
+            if ($request->filled('month')) {
+                $newsQuery->whereMonth('published_date', $request->month);
+            }
+
+            // Filter by Keyword
+            if ($request->filled('keyword')) {
+                $newsQuery->where(function ($q) use ($request) {
+                    $q->where('headline', 'LIKE', "%{$request->keyword}%")
+                        ->orWhere('summary', 'LIKE', "%{$request->keyword}%")
+                        ->orWhere('content', 'LIKE', "%{$request->keyword}%");
+                });
+            }
+
+            $newsResults = $newsQuery->get();
+        }
+
+        // Merge both results
+        $results = $orderResults->merge($newsResults);
+
+        // Fetch periodicals (if needed)
         $periodicals = Periodical::with('periodicalMaster')
             ->where('status', 1)
             ->join('periodical_masters', 'periodicals.periodical_master_id', '=', 'periodical_masters.id')
             ->select('periodicals.*')
             ->orderBy('periodical_masters.name', 'asc')
             ->get();
+
         return view('partials.advanced-search', compact('results', 'periodicals'));
     }
 }

@@ -34,6 +34,9 @@ body {
 #order-circular .tab-class .nav-item a.active {
     background: var(--bs-primary) !important;
 }
+#order-circular .nav-pills .nav-link.active {
+   background-color:  #f4f6f8;
+}
 /*** Spinner Start ***/
 #spinner {
     opacity: 0;
