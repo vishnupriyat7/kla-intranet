@@ -29,22 +29,25 @@
                             </a>
                         </div>
                     </div>
-                </div>
-                <div class="top-link flex-lg-wrap">
-                    <i class="fas fa-calendar-alt text-white border-end border-secondary pe-2 me-2"> <span
-                            class="text-body">{{ date('D') }} {{ date('d') }} {{ date('M') }}
-                            {{ date('Y') }}</span></i>
-                    <span class="text-body">Thiruvananthapuram</span>
-                    {{-- <div class="d-flex icon">
-                        <p class="mb-0 text-white me-2">Follow Us:</p>
-                        <a href="" class="me-2"><i class="fab fa-facebook-f text-body link-hover"></i></a>
-                        <a href="" class="me-2"><i class="fab fa-twitter text-body link-hover"></i></a>
-                        <a href="" class="me-2"><i class="fab fa-instagram text-body link-hover"></i></a>
-                        <a href="" class="me-2"><i class="fab fa-youtube text-body link-hover"></i></a>
-                        <a href="" class="me-2"><i class="fab fa-linkedin-in text-body link-hover"></i></a>
-                        <a href="" class="me-2"><i class="fab fa-skype text-body link-hover"></i></a>
-                        <a href="" class=""><i class="fab fa-pinterest-p text-body link-hover"></i></a>
-                    </div> --}}
+
+                    <div class="top-link flex-lg-wrap">
+                        <i class="fas fa-calendar-alt text-white border-end border-secondary pe-2 me-2"> <span
+                                class="text-body">{{ date('D') }} {{ date('d') }} {{ date('M') }}
+                                {{ date('Y') }}</span></i>
+                        {{-- <span class="text-body">Thiruvananthapuram</span> --}}
+                        <!-- Replace static location with live time -->
+                        <span class="text-body" id="kolkata-time">Loading IST...</span>
+                        <div class="d-flex icon">
+                            <p class="mb-0 text-white me-2">Follow Us:</p>
+                            <a href="" class="me-2"><i class="fab fa-facebook-f text-body link-hover"></i></a>
+                            <a href="" class="me-2"><i class="fab fa-twitter text-body link-hover"></i></a>
+                            <a href="" class="me-2"><i class="fab fa-instagram text-body link-hover"></i></a>
+                            <a href="" class="me-2"><i class="fab fa-youtube text-body link-hover"></i></a>
+                            <a href="" class="me-2"><i class="fab fa-linkedin-in text-body link-hover"></i></a>
+                            <a href="" class="me-2"><i class="fab fa-skype text-body link-hover"></i></a>
+                            <a href="" class=""><i class="fab fa-pinterest-p text-body link-hover"></i></a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -83,12 +86,14 @@
                                 data-bs-toggle="dropdown"> Orders/Circulars
                             </a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                <a class="dropdown-item" href="{{ route('home.order-circular', 'go') }}"> Government
+                                <a class="dropdown-item" href="{{ route('home.order-circular', 'go') }}">
+                                    Government
                                     Order </a>
                                 <a class="dropdown-item" href="{{ route('home.order-circular', 'oo') }}">Office
                                     Order</a>
                                 <a class="dropdown-item" href="{{ route('home.order-circular', 'cr') }}">Circular</a>
-                                <a class="dropdown-item" href="{{ route('home.advanced-search')}}">Advance Search</a>
+                                <a class="dropdown-item" href="{{ route('home.advanced-search') }}">Advance
+                                    Search</a>
                             </div>
                         </div>
 
@@ -111,7 +116,8 @@
                                 {{-- <li>
                                     <a class="dropdown-item" href="" target="_blank">ERP Module</a>
                                 </li> --}}
-                                <a class="dropdown-item" href="http://192.168.11.12/idcard/index.php" target="_blank">ID
+                                <a class="dropdown-item" href="http://192.168.11.12/idcard/index.php"
+                                    target="_blank">ID
                                     Card Proforma</a>
                                 <a class="dropdown-item" href="http://192.168.11.12/hallbooking/index.php"
                                     target="_blank">Conference Hall Booking</a>
@@ -219,3 +225,31 @@
     </div>
 </div>
 <!-- Modal Search End -->
+
+<script>
+    function updateKolkataTime() {
+        // Create a new Date object in UTC
+        const now = new Date();
+
+        // Convert to IST by adding 5.5 hours
+        const istOffsetMs = 5.5 * 60 * 60 * 1000;
+        const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
+        const istTime = new Date(utcTime + istOffsetMs);
+
+        let hours = istTime.getHours();
+        const minutes = istTime.getMinutes().toString().padStart(2, '0');
+        const seconds = istTime.getSeconds().toString().padStart(2, '0');
+
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12 || 12; // Convert 0 -> 12
+
+        const formattedTime = `${hours}:${minutes}:${seconds} ${ampm}`;
+        document.getElementById('kolkata-time').innerText = `Time: ${formattedTime}`;
+    }
+
+    // Initial call
+    updateKolkataTime();
+
+    // Update every second
+    setInterval(updateKolkataTime, 1000);
+</script>

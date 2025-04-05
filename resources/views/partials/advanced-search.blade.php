@@ -97,7 +97,7 @@
                         </div>
                         {{-- </div> --}}
                     @elseif(isset($results))
-                        <div class="alert alert-warning mt-4">Please Select Order Type</div>
+                        <div class="alert alert-warning mt-4">Please Select Order Type &   </div>
                     @endif
 
                 </div>
