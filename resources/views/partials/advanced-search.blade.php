@@ -15,17 +15,20 @@
             @endif
             <div class="card mt-4">
                 <div class="card-body">
-                    <form action="{{ route('home.advanced-search') }}" method="GET">
+                    <form id="advancedSearchForm" action="{{ route('home.advanced-search') }}" method="GET">
                         <div class="row g-4">
                             <!-- Order Type Selection -->
                             <div class="col-md-4">
                                 <label for="orderType" class="form-label">Select Order Type</label>
                                 <select class="form-select" id="orderType" name="order_type" required>
                                     <option value="">Choose...</option>
-                                    <option value="G" {{ request('order_type') == 'G' ? 'selected' : ''}}>Govt. Order</option>
-                                    <option value="C" {{ request('order_type') == 'C' ? 'selected' : ''}}>Circular</option>
-                                    <option value="O" {{ request('order_type') == 'O' ? 'selected' : ''}}>Office Order</option>
-                                    <option value="news">News</option>
+                                    <option value="G" {{ request('order_type') == 'G' ? 'selected' : '' }}>Govt. Order
+                                    </option>
+                                    <option value="C" {{ request('order_type') == 'C' ? 'selected' : '' }}>Circular
+                                    </option>
+                                    <option value="O" {{ request('order_type') == 'O' ? 'selected' : '' }}>Office Order
+                                    </option>
+                                    {{-- <option value="news">News</option> --}}
                                 </select>
                             </div>
                             <!-- Year Selection -->
@@ -34,14 +37,16 @@
                                 <select class="form-select" id="year" name="year">
                                     <option value="">Choose...</option>
                                     @for ($i = date('Y'); $i >= 2000; $i--)
-                                        <option value="{{ $i }}"  {{ request('year') == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                        <option value="{{ $i }}" {{ request('year') == $i ? 'selected' : '' }}>
+                                            {{ $i }}</option>
                                     @endfor
                                 </select>
                             </div>
                             <!-- Date Selection -->
                             <div class="col-md-4">
                                 <label for="date" class="form-label">Select Date</label>
-                                <input type="date" class="form-control" id="date" name="date" value="{{ request('date') }}">
+                                <input type="date" class="form-control" id="date" name="date"
+                                    value="{{ request('date') }}">
                             </div>
                             {{-- Month Selection --}}
                             <div class="col-md-4">
@@ -49,7 +54,8 @@
                                 <select class="form-select" id="month" name="month">
                                     <option value="">Choose...</option>
                                     @for ($i = 1; $i <= 12; $i++)
-                                        <option value="{{ $i }}" {{ request('month') == $i ? 'selected' : '' }}>{{ date('F', mktime(0, 0, 0, $i, 10)) }}
+                                        <option value="{{ $i }}" {{ request('month') == $i ? 'selected' : '' }}>
+                                            {{ date('F', mktime(0, 0, 0, $i, 10)) }}
                                         </option>
                                     @endfor
                                 </select>
@@ -58,7 +64,8 @@
                             <div class="col-md-8">
                                 <label for="keyword" class="form-label">
                                     Search By Keyword</label>
-                                <input type="text" class="form-control" id="keyword" name="keyword" value="{{ request('keyword') }}">
+                                <input type="text" class="form-control" id="keyword" name="keyword"
+                                    value="{{ request('keyword') }}">
                             </div>
                             <!-- Search Button -->
                             <div class="col-12 mt-3">
@@ -75,29 +82,86 @@
                 </div>
                 <div class="card-body">
                     @if (isset($results) && count($results) > 0)
-                        {{-- <div class="card mt-4"> --}}
-                        {{-- <div class="card-header">
-                                <h3>Search Results</h3>
-                            </div> --}}
                         <div class="card-body">
-                            <ul class="list-group">
-                                @foreach ($results as $result)
-                                    <li class="list-group-item">
-                                        <a href="{{ asset('storage/' . $result->path) }}" class="h6"
-                                            data-bs-toggle="modal" data-bs-target="#pdfModal"
-                                            data-pdf="{{ asset('storage/' . $result->path) }}"
-                                            data-title="{{ $result->title }}">
-                                            {{ $result->title ?? 'N/A' }}
-                                        </a>
-                                        <small class="text-muted d-block">{{ ucfirst($result->type ?? 'N/A') }} |
-                                            {{ $result->date ?? 'N/A' }}</small>
-                                    </li>
-                                @endforeach
-                            </ul>
+                            {{-- <ul class="list-group">
+                        @foreach ($results as $result)
+                        <li class="list-group-item">
+                            <a href="{{ asset('storage/' . $result->path) }}" class="h6"
+                                data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                data-pdf="{{ asset('storage/' . $result->path) }}"
+                                data-title="{{ $result->title }}">
+                                {{ $result->title ?? 'N/A' }}
+                            </a>
+                            <small class="text-muted d-block">{{ ucfirst($result->type ?? 'N/A') }} |
+                                {{ $result->date ?? 'N/A' }}</small>
+                        </li>
+                        @endforeach
+                    </ul> --}}
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped align-middle">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Number</th>
+                                            <th scope="col">Date</th>
+
+                                            <th scope="col">Title</th>
+                                            {{-- <th scope="col">Type</th> --}}
+
+                                            <th scope="col">View</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($results as $index => $result)
+                                            <tr>
+                                                <td>{{ $index + 1 }}</td>
+
+                                                <td>
+                                                    @if ($result->type === 'G')
+                                                        @if ($result->go_type === 'M')
+                                                            G.O.(Ms) No.{{ $result->number }}
+                                                        @elseif ($result->go_type === 'R')
+                                                            G.O.(Rt) No.{{ $result->number }}
+                                                        @elseif ($result->go_type === 'P')
+                                                            G.O.(P) No.{{ $result->number }}
+                                                        @else
+                                                            G.O. No.{{ $result->number }}
+                                                        @endif
+                                                    @elseif ($result->type === 'O')
+                                                        Offc.O.No.{{ $result->number }}
+                                                    @elseif ($result->type === 'C')
+                                                        Circular.No.{{ $result->number }}
+                                                    @else
+                                                        {{ $result->number ?? 'N/A' }}
+                                                    @endif
+                                                </td>
+                                                <td>{{ $result->date ?? ($result->published_date ?? 'N/A') }}</td>
+                                                <td>{{ $result->title ?? 'N/A' }}</td>
+                                                {{-- <td>{{ ucfirst($result->type ?? 'N/A') }}</td> --}}
+
+                                                <td>
+                                                    @if (isset($result->path))
+                                                        <a href="{{ asset('storage/' . $result->path) }}" class="h6"
+                                                            data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                                            data-pdf="{{ asset('storage/' . $result->path) }}"
+                                                            data-title="{{ $result->title }}">
+                                                            {{-- <i class="fas fa-comment-dots me-1"></i> --}}
+                                                            <i class="bi bi-eye-fill"
+                                                                style="font-size:18px;color:rgb(60, 93, 240)"></i>
+                                                        </a>
+                                                    @else
+                                                        <span class="text-muted">N/A</span>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         {{-- </div> --}}
                     @elseif(isset($results))
-                        <div class="alert alert-warning mt-4">Please Select Order Type &   </div>
+                        <div class="alert alert-warning mt-4">Please select an Order Type to proceed with the search. </div>
                     @endif
 
                 </div>

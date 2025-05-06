@@ -21,7 +21,7 @@ Route::get('/updatesmore', [HomeController::class, 'updatesMore'])->name('update
 Route::get('/order-circular/{type}', [HomeController::class, 'orderCircular'])->name('home.order-circular');
 Route::get('/search', [HomeController::class, 'search'])->name('home.search');
 Route::get('/upload-request', [HomeController::class, 'uploadRequest'])->name('home.upload-request');
-Route::post('/upload-request/save',[HomeController::class, 'storeUploadRequest'])->name('home.store-upload-request');
+Route::post('/upload-request/save', [HomeController::class, 'storeUploadRequest'])->name('home.store-upload-request');
 
 Route::get('/advanced-search', [HomeController::class, 'advancedSearch'])->name('home.advanced-search');
 
