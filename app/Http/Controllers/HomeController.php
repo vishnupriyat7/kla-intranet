@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Section;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class HomeController extends Controller
 {
@@ -124,12 +125,31 @@ class HomeController extends Controller
                 'name' => now()->subMonths(5 - $i)->format('F') . ' ' . now()->subMonths(5 - $i)->format('Y'),   // Full month name (January, February, etc.)
             ];
         });
+        // Check if the request is an Ajax call
+        if ($request->ajax()) {
+            $month = $request->get('month');
+            $orders = $orders->filter(function ($order) use ($month) {
+                return \Carbon\Carbon::parse($order->date)->format('n') == $month;
+            });
+
+            return DataTables::of($orders)
+                ->addIndexColumn()
+                ->addColumn('view', function ($order) {
+                    return $order->path
+                        ? '<a href="' . asset('storage/' . $order->path) . '" target="_blank"><i class="fas fa-eye text-primary"></i></a>'
+                        : '<i class="fas fa-ban text-danger" title="Not uploaded"></i>';
+                })
+                ->rawColumns(['view'])
+                ->make(true);
+        }
+
         $periodicals = Periodical::with('periodicalMaster')
             ->where('status', 1)
             ->join('periodical_masters', 'periodicals.periodical_master_id', '=', 'periodical_masters.id')
             ->select('periodicals.*')
             ->orderBy('periodical_masters.name', 'asc')
             ->get();
+        // return view('orders-circular.order_circular_recent', compact('orders', 'months', 'orderType', 'periodicals'))->with('orderTypeKey', $request->type);
         return view('orders-circular.order_circular_recent', compact('orders', 'months', 'orderType', 'periodicals'))->with('orderTypeKey', $request->type);
     }
 

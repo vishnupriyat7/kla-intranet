@@ -48,7 +48,8 @@
                         @if (!$hasOrders)
                             <div class="alert alert-warning d-flex align-items-center" role="alert">
                                 <i class="fas fa-exclamation-triangle me-2"></i>
-                                <span>No {{$type == 'M' ? 'Govt.Order Manuscript' : 'Govt.Order Routine'}} uploaded for this month.</span>
+                                <span>No {{ $type == 'M' ? 'Govt.Order Manuscript' : 'Govt.Order Routine' }} uploaded
+                                    for this month.</span>
                             </div>
                         @endif
                     </div>
