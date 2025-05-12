@@ -1,28 +1,21 @@
 <?php
 
-
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PeriodicalController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsUpdateController;
 use App\Http\Controllers\PeriodicalMasterController;
-
 use App\Http\Controllers\OrderCircularController;
-use App\Models\OrderCircular;
-
-// Route::get('/', function () {
-//     return view('home');
-// });
-
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/updatesmore', [HomeController::class, 'updatesMore'])->name('updatesmore');
 Route::get('/order-circular/{type}', [HomeController::class, 'orderCircular'])->name('home.order-circular');
 Route::get('/search', [HomeController::class, 'search'])->name('home.search');
-Route::get('/upload-request', [HomeController::class, 'uploadRequest'])->name('home.upload-request');
-Route::post('/upload-request/save',[HomeController::class, 'storeUploadRequest'])->name('home.store-upload-request');
 
+Route::get('/upload-request', [HomeController::class, 'uploadRequest'])->name('home.upload-request');
+Route::post('/upload-request/save', [HomeController::class, 'storeUploadRequest'])->name('home.store-upload-request');
+Route::get('/upload-request/check-status', action: [HomeController::class, 'checkStatus'])->name('home.check-upload-request');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -34,12 +27,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::post('/periodicals/store', [PeriodicalController::class, 'store'])->name('periodicals.store');
-
     Route::get('/periodicals/create', [PeriodicalController::class, 'create'])->name('periodicals.create');
     Route::get('/periodicals/show/{id}', [PeriodicalController::class, 'show'])->name('periodicals.show');
     Route::get('/periodicals/edit/{id}', [PeriodicalController::class, 'edit'])->name('periodicals.edit');
     Route::patch('/periodicals/update/{id}', [PeriodicalController::class, 'update'])->name('periodicals.update');
-
     Route::get('/periodicals', [PeriodicalController::class, 'index'])->name('periodicals.index');
 
     Route::get('/news-updates', [NewsUpdateController::class, 'index'])->name('news-updates.index');
@@ -55,7 +46,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/periodical-masters/edit/{id}', [PeriodicalMasterController::class, 'edit'])->name('periodical-masters.edit');
     Route::patch('/periodical-masters/update/{id}', [PeriodicalMasterController::class, 'update'])->name('periodical-masters.update');
     Route::delete('/periodical-masters/destroy/{id}', [PeriodicalMasterController::class, 'destroy'])->name('periodical-masters.destroy');
-
     // Orders-Circular CRUD
     Route::get('/orders-circular', [OrderCircularController::class, 'index'])->name('orders-circular.index');
     Route::get('/orders-circular/create', [OrderCircularController::class, 'create'])->name('orders-circular.create');
@@ -64,7 +54,5 @@ Route::middleware('auth')->group(function () {
     Route::patch('/orders-circular/update/{id}', [OrderCircularController::class, 'update'])->name('orders-circular.update');
     Route::delete('/orders-circular/destroy/{id}', [OrderCircularController::class, 'delete'])->name('orders-circular.delete');
 });
-
-
 
 require __DIR__ . '/auth.php';

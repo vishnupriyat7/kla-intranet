@@ -26,5 +26,6 @@ class OrderCircular extends Model
         'keywords',
         'path',
         'status',
+        'section_id'
     ];
 }

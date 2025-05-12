@@ -6,7 +6,9 @@
         <div class="container py-5">
             <h1>New Order/Circular Upload Request</h1>
             <div class="d-flex justify-content-end">
-                <a href="" class="btn btn-info">Check Status</a>
+                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#checkStatusModal">
+                    Check Status
+                </button>
             </div>
             </br>
             @if (session('error'))
@@ -131,6 +133,36 @@
         </div>
     </div>
     <!-- Single Product End -->
+    <!-- Modal -->
+    <div class="modal fade" id="checkStatusModal" tabindex="-1" aria-labelledby="checkStatusModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="checkStatusModalLabel">Check Status</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('home.check-upload-request') }}" method="GET" enctype="multipart/form-data">
+                        @csrf
+                        <select class="form-select mb-2" id="section_status" name="section_status" required>
+                            <option value="">Select Section</option>
+                            @foreach ($sections as $section)
+                                <option value="{{ $section->id }}">{{ $section->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('type')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                        <button type="submit" class="btn btn-success justify-content-end">Check</button>
+                    </form>
+                    <div class="row"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 <script>
@@ -138,7 +170,7 @@
         var type = document.getElementById('type_fe').value;
         var select = document.getElementById('category_fe');
         var optionToRemove = select.querySelector('option[value="PA"]');
-        if(type !== 'C') {
+        if (type !== 'C') {
             if (!optionToRemove) {
                 var newOption = document.createElement('option');
                 newOption.value = "PA";

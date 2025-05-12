@@ -216,7 +216,7 @@ class HomeController extends Controller
             'date' => 'required|date',
             'title' => 'required',
             'keywords' => 'nullable',
-            'section' => 'required',
+            'section' => 'required|exists:sections,id',
             'path' => 'required|file|mimes:pdf|max:1048576',
         ]);
         $year = date('Y', strtotime($request->date));
@@ -240,6 +240,18 @@ class HomeController extends Controller
             'section_id' => $request->section
         ]);
         return redirect()->route('home.upload-request')->with('success', 'Your request has been saved successfully.');
+    }
+
+    public function checkStatus(Request $request)
+    {
+        $request->validate([
+            'section_status' => 'required',
+        ]);
+        $order_status = OrderCircular::where('section_id', $request->section_status)
+            ->where('status', 0)
+            ->orderBy('date', 'desc')
+            ->get();
+        dd($order_status);
     }
 }
 
