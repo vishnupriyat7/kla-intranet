@@ -83,29 +83,58 @@
                                 <div class="row g-4">
                                     <div class="col-12 p-4">
 
-                                        @foreach ($orders as $order)
-                                            @if (\Carbon\Carbon::parse($order->date)->format('m') == $month['no'])
-                                                <div class="features-content d-flex flex-column mt-3">
-                                                    {{-- <a href="{{ asset('storage/' . $order->path) }}" class="h6"
-                                                        target="_blank">
-                                                        <i class="fas fa-solid fa-paperclip me-1"></i> {{ $order->title }}
-                                                    </a> --}}
-                                                    <a href="{{ asset('storage/' . $order->path) }}" class="h6"
-                                                        data-bs-toggle="modal" data-bs-target="#pdfModal"
-                                                        data-pdf="{{ asset('storage/' . $order->path) }}"
-                                                        data-title="{{ $order->title }}">
-                                                        {{-- <i class="fas fa-comment-dots me-1"></i> --}}
-                                                        <i class="fas fa-solid fa-paperclip me-1"
-                                                            style="color: rgb(60, 93, 240)"></i> {{ $order->title }}
-                                                    </a>
-                                                    <small class="text-body d-block">
-                                                        <i class="fas fa-calendar-alt me-1"></i>
-                                                        {{ \Carbon\Carbon::parse($order->date)->format('M d Y') }}
-                                                    </small>
-                                                    </br>
-                                                </div>
-                                            @endif
-                                        @endforeach
+                                        @php $hasOrders = false; @endphp
+                                        @php
+                                            $filteredOrders = $orders->filter(function ($order) use ($month) {
+                                                return \Carbon\Carbon::parse($order->date)->format('m') == $month['no'];
+                                            });
+                                        @endphp
+
+                                        @if ($filteredOrders->isEmpty())
+                                            <div class="alert alert-warning d-flex align-items-center" role="alert">
+                                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                                <span>No {{ $orderTypeKey == 'oo' ? 'Office Order' : 'Circular' }} uploaded
+                                                    for this month.</span>
+                                            </div>
+                                        @else
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-striped">
+                                                    <thead class="table-light">
+                                                        <tr>
+                                                            <th style="width: 60px;">#</th>
+                                                            <th style="width: 160px;">Date</th>
+                                                            <th>Title</th>
+                                                            <th style="width: 100px;">View</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($filteredOrders as $index => $order)
+                                                            <tr>
+                                                                <td>{{ $index + 1 }}</td>
+                                                                <td>{{ \Carbon\Carbon::parse($order->date)->format('d-m-Y') }}
+                                                                </td>
+                                                                <td>{{ $order->title }}</td>
+                                                                <td class="text-center">
+                                                                    @if ($order->path)
+                                                                        <a href="{{ asset('storage/' . $order->path) }}"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#pdfModal"
+                                                                            data-pdf="{{ asset('storage/' . $order->path) }}"
+                                                                            data-title="{{ $order->title }}">
+                                                                            <i class="fas fa-eye text-primary"></i>
+                                                                        </a>
+                                                                    @else
+                                                                        <i class="fas fa-ban text-danger"
+                                                                            title="Not uploaded"></i>
+                                                                    @endif
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        @endif
+
                                     </div>
                                 </div>
                             </div>

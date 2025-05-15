@@ -14,8 +14,10 @@ Route::get('/order-circular/{type}', [HomeController::class, 'orderCircular'])->
 Route::get('/search', [HomeController::class, 'search'])->name('home.search');
 
 Route::get('/upload-request', [HomeController::class, 'uploadRequest'])->name('home.upload-request');
-Route::post('/upload-request/save', [HomeController::class, 'storeUploadRequest'])->name('home.store-upload-request');
+Route::post('/upload-request/save',  [HomeController::class, 'storeUploadRequest'])->name('home.store-upload-request');
 Route::get('/upload-request/check-status', action: [HomeController::class, 'checkStatus'])->name('home.check-upload-request');
+Route::get('/advanced-search', [HomeController::class, 'advancedSearch'])->name('home.advanced-search');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
