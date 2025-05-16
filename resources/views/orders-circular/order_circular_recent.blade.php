@@ -12,12 +12,12 @@
                 <div class="border mb-4 rounded mb-4">
                     <ul class="nav nav-pills d-flex text-center">
                         <li class="nav-item flex-fill">
-                            <a class="nav-link active py-3 border-end" data-bs-toggle="pill" href="#manuscript">
+                            <a class="nav-link active py-3 border-end" data-bs-toggle="tab" href="#manuscript">
                                 <span class="text-dark">Manuscript</span>
                             </a>
                         </li>
                         <li class="nav-item flex-fill">
-                            <a class="nav-link py-3 border-end" data-bs-toggle="pill" href="#routine">
+                            <a class="nav-link py-3 border-end" data-bs-toggle="tab" href="#routine">
                                 <span class="text-dark">Routine</span>
                             </a>
                         </li>

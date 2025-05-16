@@ -79,30 +79,24 @@ class HomeController extends Controller
     {
         $startDate = Carbon::now()->subMonths(5)->startOfMonth(); // 5 months ago (1st day)
         $endDate = Carbon::now()->endOfMonth(); // Last day of the current month
-
+        // dd($request->type);
         if ($request->type == 'go') {
-            $orders = OrderCircular::where('type', 'G')
-                ->where('status', '1')
-                ->whereBetween('date', [$startDate, $endDate]) // Fetch records in range
-                ->orderBy('date', 'desc')
-                ->get();
-            $orderType = 'Government Order';
-        } elseif ($request->type == 'goms') {
+
             $orders = OrderCircular::where('type', 'G')
                 ->where('go_type', 'M')
                 ->where('status', '1')
-                ->whereBetween('date', [$startDate, $endDate]) // Fetch records in range
+                ->whereBetween('date', [$startDate, $endDate])
                 ->orderBy('date', 'desc')
                 ->get();
-            $orderType = 'GO Manuscript';
-        } elseif ($request->type == 'gor') {
+
             $orders = OrderCircular::where('type', 'G')
                 ->where('go_type', 'R')
                 ->where('status', '1')
-                ->whereBetween('date', [$startDate, $endDate]) // Fetch records in range
+                ->whereBetween('date', [$startDate, $endDate])
                 ->orderBy('date', 'desc')
                 ->get();
-            $orderType = 'GO Routine';
+
+            $orderType = 'Government Order';
         } elseif ($request->type == 'oo') {
             $orders = OrderCircular::where('type', 'O')
                 ->where('status', '1')
@@ -118,9 +112,6 @@ class HomeController extends Controller
                 ->get();
             $orderType = 'Circular';
         }
-
-        $type = $request->type == 'goms' ? 'M' : ($request->type == 'gor' ? 'R' : '');
-
         $months = collect(range(0, 5))->map(function ($i) {
             return [
                 'no' => now()->subMonths(5 - $i)->format('m'),  // Month number (1-12)
@@ -135,16 +126,11 @@ class HomeController extends Controller
             // });
             $go_type = $request->get('go_type');
             // $type = $request->type;
+            // dd($request->type);
             $orders = OrderCircular::where('status', '1')
                 ->whereBetween('date', [$startDate, $endDate])
-                ->when($request->type == 'go', function ($q) {
-                    return $q->where('type', 'G');
-                })
-                ->when($request->type == 'goms', function ($q) {
-                    return $q->where('type', 'G')->where('go_type', 'M');
-                })
-                ->when($request->type == 'gor', function ($q) {
-                    return $q->where('type', 'G')->where('go_type', 'R');
+                ->when($request->has('go_type'), function ($query) use ($request) {
+                    return $query->where('go_type', $request->input('go_type'));
                 })
                 ->when($request->type == 'oo', function ($q) {
                     return $q->where('type', 'O');
@@ -180,9 +166,7 @@ class HomeController extends Controller
             ->select('periodicals.*')
             ->orderBy('periodical_masters.name', 'asc')
             ->get();
-        // return view('orders-circular.order_circular_recent', compact('orders', 'months', 'orderType', 'periodicals'))->with('orderTypeKey', $request->type);
-        // return view('orders-circular.order_circular_recent', compact('orders', 'months', 'orderType', 'periodicals'))->with('orderTypeKey', $request->type);
-        return view('orders-circular.order_circular_recent', compact('orders', 'months', 'orderType', 'periodicals', 'type'))
+        return view('orders-circular.order_circular_recent', compact('orders', 'months', 'orderType', 'periodicals' ))
             ->with('orderTypeKey', $request->type);
     }
 
@@ -405,7 +389,7 @@ class HomeController extends Controller
             ->where('status', 0)
             ->orderBy('date', 'desc')
             ->get();
-            return view('orders-circular.upload_request_pending', compact('order_pendings'));
+        return view('orders-circular.upload_request_pending', compact('order_pendings'));
     }
 }
 
