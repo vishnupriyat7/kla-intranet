@@ -66,7 +66,7 @@
                         <ul class="nav nav-pills d-inline-flex text-center">
                             @foreach ($months as $month)
                                 <li class="nav-item mb-3">
-                                    <a class="d-flex py-2 bg-light rounded-pill me-2 {{ $month['no'] == date('n') ? 'active' : '' }}"
+                                    <a class="d-flex py-2 bg-light rounded-pill me-2 {{ $month['no'] == date('m') ? 'active' : '' }}"
                                         data-bs-toggle="pill" href="#tab-{{ $month['no'] }}">
                                         <span class="text-dark" style="width: 200px;">{{ $month['name'] }}</span>
                                     </a>
@@ -98,40 +98,20 @@
                                             </div>
                                         @else
                                             <div class="table-responsive">
-                                                <table class="table table-bordered table-striped">
+                                                <table id="orderTable-{{ $month['no'] }}"
+                                                    class="table table-bordered table-striped yajra-table">
+
                                                     <thead class="table-light">
                                                         <tr>
-                                                            <th style="width: 60px;">#</th>
-                                                            <th style="width: 160px;">Date</th>
+                                                            <th>#</th>
+                                                            <th>Number</th>
+                                                            <th>Date</th>
                                                             <th>Title</th>
-                                                            <th style="width: 100px;">View</th>
+                                                            <th>View</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
-                                                        @foreach ($filteredOrders as $index => $order)
-                                                            <tr>
-                                                                <td>{{ $index + 1 }}</td>
-                                                                <td>{{ \Carbon\Carbon::parse($order->date)->format('d-m-Y') }}
-                                                                </td>
-                                                                <td>{{ $order->title }}</td>
-                                                                <td class="text-center">
-                                                                    @if ($order->path)
-                                                                        <a href="{{ asset('storage/' . $order->path) }}"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#pdfModal"
-                                                                            data-pdf="{{ asset('storage/' . $order->path) }}"
-                                                                            data-title="{{ $order->title }}">
-                                                                            <i class="fas fa-eye text-primary"></i>
-                                                                        </a>
-                                                                    @else
-                                                                        <i class="fas fa-ban text-danger"
-                                                                            title="Not uploaded"></i>
-                                                                    @endif
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
                                                 </table>
+
                                             </div>
                                         @endif
 
@@ -181,5 +161,57 @@
         pdfModal.addEventListener("hidden.bs.modal", function() {
             document.getElementById("pdfViewer").src = ""; // Reset iframe when modal is closed
         });
+
+
+        // Initialize DataTables when a tab is shown
+        let initializedTables = {};
+
+        $('a[data-bs-toggle="pill"]').on('shown.bs.tab', function(e) {
+            var targetId = $(e.target).attr("href");
+            var monthNo = targetId.replace('#tab-', '');
+            var tableId = `#orderTable-${monthNo}`;
+
+            if (!initializedTables[tableId]) {
+                $(tableId).DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: '{{ route('home.order-circular', ['type' => $orderTypeKey]) }}',
+                        data: {
+
+                            month: monthNo
+                        }
+                    },
+                    columns: [{
+                            data: 'DT_RowIndex',
+                            name: 'DT_RowIndex'
+                        },
+                        {
+                            data: 'number',
+                            name: 'number'
+                        },
+                        {
+                            data: 'date',
+                            name: 'date'
+                        },
+                        {
+                            data: 'title',
+                            name: 'title'
+                        },
+                        {
+                            data: 'view',
+                            name: 'view',
+                            orderable: false,
+                            searchable: false
+                        }
+                    ]
+                });
+
+                initializedTables[tableId] = true;
+            }
+        });
+
+        // Initialize current tab table
+        $('a.nav-link.active').trigger('shown.bs.tab');
     });
 </script>

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Section;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class HomeController extends Controller
 {
@@ -118,19 +119,71 @@ class HomeController extends Controller
             $orderType = 'Circular';
         }
 
+        $type = $request->type == 'goms' ? 'M' : ($request->type == 'gor' ? 'R' : '');
+
         $months = collect(range(0, 5))->map(function ($i) {
             return [
-                'no' => now()->subMonths(5 - $i)->format('n'),  // Month number (1-12)
+                'no' => now()->subMonths(5 - $i)->format('m'),  // Month number (1-12)
                 'name' => now()->subMonths(5 - $i)->format('F') . ' ' . now()->subMonths(5 - $i)->format('Y'),   // Full month name (January, February, etc.)
             ];
         });
+        // Check if the request is an Ajax call
+        if ($request->ajax()) {
+            $month = $request->get('month');
+            // $orders = $orders->filter(function ($order) use ($month) {
+            //     return \Carbon\Carbon::parse($order->date)->format('n') == $month;
+            // });
+            $go_type = $request->get('go_type');
+            // $type = $request->type;
+            $orders = OrderCircular::where('status', '1')
+                ->whereBetween('date', [$startDate, $endDate])
+                ->when($request->type == 'go', function ($q) {
+                    return $q->where('type', 'G');
+                })
+                ->when($request->type == 'goms', function ($q) {
+                    return $q->where('type', 'G')->where('go_type', 'M');
+                })
+                ->when($request->type == 'gor', function ($q) {
+                    return $q->where('type', 'G')->where('go_type', 'R');
+                })
+                ->when($request->type == 'oo', function ($q) {
+                    return $q->where('type', 'O');
+                })
+                ->when($request->type == 'cr', function ($q) {
+                    return $q->where('type', 'C');
+                })
+                ->get();
+            $orders = $orders->filter(function ($order) use ($month) {
+                return \Carbon\Carbon::parse($order->date)->format('m') == str_pad($month, 2, '0', STR_PAD_LEFT);
+            });
+
+            return DataTables::of($orders)
+                ->addIndexColumn()
+                ->addColumn('title', function ($order) {
+                    return $order->title;
+                })
+                ->addColumn('date', function ($order) {
+                    return $order->date;
+                })
+                ->addColumn('view', function ($order) {
+                    return $order->path
+                        ? '<a href="' . asset('storage/' . $order->path) . '" target="_blank"><i class="fas fa-eye text-primary"></i></a>'
+                        : '<i class="fas fa-ban text-danger" title="Not uploaded"></i>';
+                })
+                ->rawColumns(['view'])
+                ->make(true);
+        }
+
         $periodicals = Periodical::with('periodicalMaster')
             ->where('status', 1)
             ->join('periodical_masters', 'periodicals.periodical_master_id', '=', 'periodical_masters.id')
             ->select('periodicals.*')
             ->orderBy('periodical_masters.name', 'asc')
             ->get();
-        return view('orders-circular.order_circular_recent', compact('orders', 'months', 'orderType', 'periodicals'))->with('orderTypeKey', $request->type);
+        // return view('orders-circular.order_circular_recent', compact('orders', 'months', 'orderType', 'periodicals'))->with('orderTypeKey', $request->type);
+        // return view('orders-circular.order_circular_recent', compact('orders', 'months', 'orderType', 'periodicals'))->with('orderTypeKey', $request->type);
+        return view('orders-circular.order_circular_recent', compact('orders', 'months', 'orderType', 'periodicals', 'type'))
+            ->with('orderTypeKey', $request->type);
     }
 
     public function search(Request $request)
