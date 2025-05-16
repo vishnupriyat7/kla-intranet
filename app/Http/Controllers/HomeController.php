@@ -79,23 +79,14 @@ class HomeController extends Controller
     {
         $startDate = Carbon::now()->subMonths(5)->startOfMonth(); // 5 months ago (1st day)
         $endDate = Carbon::now()->endOfMonth(); // Last day of the current month
-        // dd($request->type);
+        $typeKey = $request->type;
+
         if ($request->type == 'go') {
-
             $orders = OrderCircular::where('type', 'G')
-                ->where('go_type', 'M')
                 ->where('status', '1')
-                ->whereBetween('date', [$startDate, $endDate])
+                ->whereBetween('date', [$startDate, $endDate]) // Fetch records in range
                 ->orderBy('date', 'desc')
                 ->get();
-
-            $orders = OrderCircular::where('type', 'G')
-                ->where('go_type', 'R')
-                ->where('status', '1')
-                ->whereBetween('date', [$startDate, $endDate])
-                ->orderBy('date', 'desc')
-                ->get();
-
             $orderType = 'Government Order';
         } elseif ($request->type == 'oo') {
             $orders = OrderCircular::where('type', 'O')
