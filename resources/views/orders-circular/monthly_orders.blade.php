@@ -4,7 +4,7 @@
         <ul class="nav nav-pills d-inline-flex text-center">
             @foreach ($months as $month)
                 <li class="nav-item mb-3">
-                    <a class="d-flex py-2 bg-light rounded-pill me-2 {{ $month['no'] == date('n') ? 'active' : '' }}"
+                    <a class="d-flex py-2 bg-light rounded-pill me-2 {{ $month['no'] == date('m') ? 'active' : '' }}"
                         data-bs-toggle="pill" href="#{{ $type }}-tab-{{ $month['no'] }}">
                         <span class="text-dark" style="width: 200px;">
                             {{ $month['name'] }}
@@ -26,7 +26,7 @@
 
                         @php $hasOrders = false; @endphp
 
-                        @foreach ($orders as $order)
+                        {{-- @foreach ($orders as $order)
                             @if (\Carbon\Carbon::parse($order->date)->format('m') == $month['no'] && $order->go_type == $type)
                                 @php $hasOrders = true; @endphp
                                 <div class="features-content d-flex flex-column mt-3">
@@ -44,7 +44,30 @@
                                     </br>
                                 </div>
                             @endif
-                        @endforeach
+                        @endforeach --}}
+                        @php
+                            $hasOrders = $orders
+                                ->where('go_type', $type)
+                                ->filter(function ($order) use ($month) {
+                                    return \Carbon\Carbon::parse($order->date)->format('n') == $month['no'];
+                                })
+                                ->isNotEmpty();
+                        @endphp
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover yajra-table"
+                                id="datatable-{{ $type }}-{{ $month['no'] }}">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Date</th>
+                                        <th>Title</th>
+                                        <th>View</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+
                         @if (!$hasOrders)
                             <div class="alert alert-warning d-flex align-items-center" role="alert">
                                 <i class="fas fa-exclamation-triangle me-2"></i>
@@ -78,23 +101,61 @@
     </div>
 </div>
 <script>
-    // PDF POP UP MODAL Script
     document.addEventListener("DOMContentLoaded", function() {
+        // PDF modal logic
         var pdfModal = document.getElementById("pdfModal");
 
         pdfModal.addEventListener("show.bs.modal", function(event) {
-            var link = event.relatedTarget; // Link that triggered the modal
+            var link = event.relatedTarget;
             var pdfUrl = link.getAttribute("data-pdf");
             var pdfTitle = link.getAttribute("data-title");
 
-            // Set modal title and PDF source
             document.getElementById("pdfModalLabel").textContent = pdfTitle;
             document.getElementById("pdfViewer").src = pdfUrl;
         });
 
         pdfModal.addEventListener("hidden.bs.modal", function() {
-            document.getElementById("pdfViewer").src = ""; // Reset iframe when modal is closed
+            document.getElementById("pdfViewer").src = "";
         });
 
+        // Initialize DataTables
+        @foreach ($months as $month)
+            let tableId = '#datatable-{{ $type }}-{{ $month['no'] }}';
+
+            if ($.fn.DataTable.isDataTable(tableId)) {
+                $(tableId).DataTable().destroy();
+            }
+
+            $(tableId).DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '{{ route('home.order-circular', ['type' => $orderTypeKey]) }}',
+                    data: {
+                        month: '{{ $month['no'] }}',
+                        go_type: '{{ $type }}'
+                    }
+                },
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex'
+                    },
+                    {
+                        data: 'date',
+                        name: 'date'
+                    },
+                    {
+                        data: 'title',
+                        name: 'title'
+                    },
+                    {
+                        data: 'view',
+                        name: 'view',
+                        orderable: false,
+                        searchable: false
+                    }
+                ]
+            });
+        @endforeach
     });
 </script>
