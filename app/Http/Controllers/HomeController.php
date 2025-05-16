@@ -348,11 +348,11 @@ class HomeController extends Controller
         $request->validate([
             'section_status' => 'required',
         ]);
-        $order_status = OrderCircular::where('section_id', $request->section_status)
+        $order_pendings = OrderCircular::where('section_id', $request->section_status)
             ->where('status', 0)
             ->orderBy('date', 'desc')
             ->get();
-        dd($order_status);
+            return view('orders-circular.upload_request_pending', compact('order_pendings'));
     }
 }
 

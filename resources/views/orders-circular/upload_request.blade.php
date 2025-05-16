@@ -6,7 +6,7 @@
         <div class="container py-5">
             <h1>New Order/Circular Upload Request</h1>
             <div class="d-flex justify-content-end">
-                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#checkStatusModal">
+                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#checkStatusModal">
                     Check Status
                 </button>
             </div>
@@ -27,12 +27,7 @@
             <div class="container py-12 d-flex justify-content-center">
                 <div class="card col-12">
                     <div class="card-body">
-                        <div class="d-flex justify-content-end">
-                            <a href="{{ route('orders-circular.create') }}" class="btn btn-primary">Check Status</a>
-
-                        </div>
-                        <form action="{{ route('home.store-upload-request') }}" method="POST"
-                            enctype="multipart/form-data">
+                        <form action="{{ route('home.store-upload-request') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
                                 <select class="form-select" id="section_fe" name="section" required>
@@ -112,8 +107,8 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <input type="text" class="form-control" id="title_fe" name="title"
-                                    placeholder="Enter Title" required>
+                                <input type="text" class="form-control" id="title_fe" name="title" placeholder="Enter Title"
+                                    required>
                                 @error('title')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -148,7 +143,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('home.check-upload-request') }}" method="GET" enctype="multipart/form-data">
+                    <form action="{{ route('home.check-upload-request') }}" method="GET" enctype="multipart/form-data"
+                        id="uploadRequestStatusForm">
                         @csrf
                         <select class="form-select mb-2" id="section_status" name="section_status" required>
                             <option value="">Select Section</option>
@@ -159,12 +155,13 @@
                         @error('type')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
-                        <button type="submit" class="btn btn-success justify-content-end">Check</button>
+                        <div class="container d-flex justify-content-end">
+                            <button type="submit" class="btn btn-success mt-3">Check</button>
+                        </div>
                     </form>
-                    <div class="row"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <div class="row" id="pending_results">
+                        @include('orders-circular.upload_request_pending')
+                    </div>
                 </div>
             </div>
         </div>
@@ -213,4 +210,33 @@
             document.getElementById('category-fe-div').classList.replace('col-12', 'col-6');
         }
     }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("uploadRequestStatusForm");
+        const resultsContainer = document.getElementById("pending_results");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            const params = new URLSearchParams(formData).toString();
+
+            fetch(form.action + "?" + params, {
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest"
+                }
+            })
+                .then(response => response.text())
+                .then(html => {
+                    if (resultsContainer) {
+                        resultsContainer.innerHTML = html;
+                    } else {
+                        console.error("No pending requests!");
+                    }
+                })
+                .catch(error => {
+                    console.error("AJAX Search Error:", error);
+                });
+        });
+    });
 </script>
