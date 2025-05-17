@@ -8,24 +8,24 @@
                          <h1 class="mb-4">What’s New</h1>
                          <ul class="nav nav-pills d-inline-flex text-center">
                              <li class="nav-item mb-3">
-                                 <a class="d-flex py-2 bg-light rounded-pill active me-2" data-bs-toggle="pill"
+                                 <a class="d-flex py-3 bg-light rounded-pill active me-2" data-bs-toggle="pill"
                                      href="#tab-1">
-                                     <span class="text-dark" style="width: 100px;">Gov.Order</span>
+                                     <span class="text-dark" style="width: 160px;">Government Order</span>
                                  </a>
                              </li>
                              <li class="nav-item mb-3">
-                                 <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-2">
-                                     <span class="text-dark" style="width: 100px;">Off.Order</span>
+                                 <a class="d-flex py-3 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-2">
+                                     <span class="text-dark" style="width: 160px;">Office Order</span>
                                  </a>
                              </li>
                              <li class="nav-item mb-3">
-                                 <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-3">
-                                     <span class="text-dark" style="width: 100px;">Circular</span>
+                                 <a class="d-flex py-3 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-3">
+                                     <span class="text-dark" style="width: 160px;">Circular</span>
                                  </a>
                              </li>
                              <li class="nav-item mb-3">
-                                 <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-4">
-                                     <span class="text-dark" style="width: 100px;">News</span>
+                                 <a class="d-flex py-3 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-4">
+                                     <span class="text-dark" style="width: 160px;">News</span>
                                  </a>
                              </li>
 
