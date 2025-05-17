@@ -119,8 +119,8 @@
                                 <a class="dropdown-item" href="http://192.168.11.12/idcard/index.php"
                                     target="_blank">ID
                                     Card Proforma</a>
-                                <a class="dropdown-item" href="http://192.168.11.12/hallbooking/index.php"
-                                    target="_blank">Conference Hall Booking</a>
+                                {{-- <a class="dropdown-item" href="http://192.168.11.12/hallbooking/index.php"
+                                    target="_blank">Conference Hall Booking</a> --}}
                                 <a class="dropdown-item" href="http://172.24.18.21:8080/share/page"
                                     target="_blank">Centralised Storage</a>
                                 <a class="dropdown-item" href="http://172.24.18.18/" target="_blank">LIS</a>
@@ -138,9 +138,18 @@
                             </a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                 @foreach ($periodicals as $periodical)
-                                    <a class="dropdown-item" href="{{ asset('storage/' . $periodical->path) }}"
-                                        target="_blank">{{ $periodical->periodicalMaster->name ?? 'N/A' }}</a>
+                                    {{-- <a class="dropdown-item" href="{{ asset('storage/' . $periodical->path) }}"
+                                        target="_blank">{{ $periodical->periodicalMaster->name ?? 'N/A' }}</a> --}}
+                                    <a href="{{ asset('storage/' . $periodical->path) }}" class="dropdown-item"
+                                        data-bs-toggle="modal" data-bs-target="#pdfModal"
+                                        data-pdf="{{ asset('storage/' . $periodical->path) }}"
+                                        data-title="{{ $periodical->periodicalMaster->name }}">
+                                        {{-- <i class="bi bi-eye-fill" style="font-size:18px;"></i> --}}
+                                        {{ $periodical->periodicalMaster->name ?? 'N/A' }}
+                                    </a>
                                 @endforeach
+
+
                             </div>
                         </div>
                         <a href="{{ route('home.upload-request') }}"
@@ -179,7 +188,7 @@
 
 
 <!-- Modal Search Start -->
-{{-- <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen">
         <div class="modal-content rounded-0">
             <div class="modal-header">
@@ -195,7 +204,7 @@
             </div>
         </div>
     </div>
-</div> --}}
+</div>
 <!-- Modal Search End -->
 <!-- Modal Search Start -->
 <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
