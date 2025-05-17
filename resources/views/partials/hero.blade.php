@@ -3,7 +3,7 @@
      <div class="container py-5">
          <div class="tab-class mb-1">
              <div class="row g-4">
-                 <div class="col-lg-7 col-xl-7">
+                 <div class="col-lg-12 col-xl-12">
                      <div class="d-flex flex-column flex-md-row justify-content-md-between border-bottom mb-4">
                          <h1 class="mb-4">What’s New</h1>
                          <ul class="nav nav-pills d-inline-flex text-center">
@@ -169,12 +169,12 @@
                          </div>
                      </div>
                  </div>
-                 <div class="col-lg-5 col-xl-5">
+                 {{-- <div class="col-lg-5 col-xl-5">
                      <div class="row g-4">
                          <div class="col-12">
                              <div class="p-3 rounded border h-100" style="min-height: 600px;">
                                  <div id="calendar" class="h-100"></div>
-                                 {{-- <h4 class="my-4 mt-5">Periodicals</h4>
+                                 <h4 class="my-4 mt-5">Periodicals</h4>
                                 <div class="row g-4">
                                     <div class="col-12">
                                         <div class="row g-2">
@@ -189,11 +189,11 @@
                                             @endforeach
                                         </div>
                                     </div>
-                                </div> --}}
+                                </div>
                              </div>
                          </div>
                      </div>
-                 </div>
+                 </div> --}}
              </div>
          </div>
      </div>
