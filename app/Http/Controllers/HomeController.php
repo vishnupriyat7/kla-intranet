@@ -112,22 +112,20 @@ class HomeController extends Controller
         // Check if the request is an Ajax call
         if ($request->ajax()) {
             $month = $request->get('month');
-            // $orders = $orders->filter(function ($order) use ($month) {
-            //     return \Carbon\Carbon::parse($order->date)->format('n') == $month;
-            // });
             $go_type = $request->get('go_type');
-            // $type = $request->type;
-            // dd($request->type);
             $orders = OrderCircular::where('status', '1')
                 ->whereBetween('date', [$startDate, $endDate])
                 ->when($request->has('go_type'), function ($query) use ($request) {
                     return $query->where('go_type', $request->input('go_type'));
                 })
-                ->when($request->type == 'oo', function ($q) {
-                    return $q->where('type', 'O');
+                ->when($request->type == 'go', function ($query) {
+                    return $query->where('type', 'G');
                 })
-                ->when($request->type == 'cr', function ($q) {
-                    return $q->where('type', 'C');
+                ->when($request->type == 'oo', function ($query) {
+                    return $query->where('type', 'O');
+                })
+                ->when($request->type == 'cr', function ($query) {
+                    return $query->where('type', 'C');
                 })
                 ->get();
             $orders = $orders->filter(function ($order) use ($month) {
@@ -136,28 +134,30 @@ class HomeController extends Controller
 
             return DataTables::of($orders)
                 ->addIndexColumn()
+                ->addColumn('number', function ($order) {
+                    return $order->number ?: '-'; // Fallback if number is null
+                })
+                ->addColumn('date', function ($order) {
+                    return \Carbon\Carbon::parse($order->date)->format('Y-m-d'); // Match screenshot format
+                })
                 ->addColumn('title', function ($order) {
                     return $order->title;
                 })
-                ->addColumn('date', function ($order) {
-                    return $order->date;
-                })
                 ->addColumn('view', function ($order) {
                     return $order->path
-                        ? '<a href="' . asset('storage/' . $order->path) . '" target="_blank"><i class="fas fa-eye text-primary"></i></a>'
+                        ? '<a href="#" data-bs-toggle="modal" data-bs-target="#pdfModal" data-pdf="' . asset('storage/' . $order->path) . '" data-title="' . e($order->title) . '"><i class="fas fa-eye text-primary"></i></a>'
                         : '<i class="fas fa-ban text-danger" title="Not uploaded"></i>';
                 })
                 ->rawColumns(['view'])
                 ->make(true);
         }
-
         $periodicals = Periodical::with('periodicalMaster')
             ->where('status', 1)
             ->join('periodical_masters', 'periodicals.periodical_master_id', '=', 'periodical_masters.id')
             ->select('periodicals.*')
             ->orderBy('periodical_masters.name', 'asc')
             ->get();
-        return view('orders-circular.order_circular_recent', compact('orders', 'months', 'orderType', 'periodicals' ))
+        return view('orders-circular.order_circular_recent', compact('orders', 'months', 'orderType', 'periodicals'))
             ->with('orderTypeKey', $request->type);
     }
 
@@ -313,8 +313,7 @@ class HomeController extends Controller
             if ($request->filled('keyword')) {
                 $query->where(function ($q) use ($request) {
                     $q->where('title', 'LIKE', "%{$request->keyword}%")
-                        ->orWhere('keywords', 'LIKE', "%{$request->keyword}%");
-                    ;
+                        ->orWhere('keywords', 'LIKE', "%{$request->keyword}%");;
                 });
             }
 
@@ -383,4 +382,3 @@ class HomeController extends Controller
         return view('orders-circular.upload_request_pending', compact('order_pendings'));
     }
 }
-

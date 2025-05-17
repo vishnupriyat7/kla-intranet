@@ -82,15 +82,15 @@
                                 class="tab-pane fade show {{ $month['no'] == date('m') ? 'active' : '' }}">
                                 <div class="row g-4">
                                     <div class="col-12 p-4">
-
-                                        @php $hasOrders = false; @endphp
                                         @php
                                             $filteredOrders = $orders->filter(function ($order) use ($month) {
-                                                return \Carbon\Carbon::parse($order->date)->format('m') == $month['no'];
+                                                return \Carbon\Carbon::parse($order->date)->format('m') ==
+                                                    str_pad($month['no'], 2, '0', STR_PAD_LEFT);
                                             });
+                                            $hasOrders = $filteredOrders->isNotEmpty();
                                         @endphp
 
-                                        @if ($filteredOrders->isEmpty())
+                                        @if (!$hasOrders)
                                             <div class="alert alert-warning d-flex align-items-center" role="alert">
                                                 <i class="fas fa-exclamation-triangle me-2"></i>
                                                 <span>No {{ $orderTypeKey == 'oo' ? 'Office Order' : 'Circular' }} uploaded
@@ -99,9 +99,8 @@
                                         @else
                                             <div class="table-responsive">
                                                 <table id="orderTable-{{ $month['no'] }}"
-                                                    class="table table-bordered table-striped yajra-table">
-
-                                                    <thead class="table-light">
+                                                    class="table table-bordered table-striped table-hover yajra-table">
+                                                    <thead class="table-dark">
                                                         <tr>
                                                             <th>#</th>
                                                             <th>Number</th>
@@ -111,10 +110,8 @@
                                                         </tr>
                                                     </thead>
                                                 </table>
-
                                             </div>
                                         @endif
-
                                     </div>
                                 </div>
                             </div>
