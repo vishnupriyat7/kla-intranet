@@ -135,10 +135,20 @@ class HomeController extends Controller
             return DataTables::of($orders)
                 ->addIndexColumn()
                 ->addColumn('number', function ($order) {
-                    return $order->number ?: '-'; // Fallback if number is null
-                })
+                    if ($order->type == 'G') {
+                        if ($order->go_type == 'M') {
+                            return 'G.' . 'O.' . ('(Ms).') . 'No.' . $order->number ?: '-';
+                        } else {
+                            return 'G.' . 'O.' . ('(Rt).') . 'No.' . $order->number ?: '-';
+                        }
+                    } elseif ($order->type == 'O') {
+                        return 'O.O.' . 'No.' . $order->number ?: '-';
+                    } elseif ($order->type == 'C') {
+                        return 'Cir. ' . 'No.' . $order->number ?: '-';
+                    }
+                    return '-'; })
                 ->addColumn('date', function ($order) {
-                    return \Carbon\Carbon::parse($order->date)->format('Y-m-d'); // Match screenshot format
+                    return \Carbon\Carbon::parse($order->date)->format('d-m-Y'); // Match screenshot format
                 })
                 ->addColumn('title', function ($order) {
                     return $order->title;

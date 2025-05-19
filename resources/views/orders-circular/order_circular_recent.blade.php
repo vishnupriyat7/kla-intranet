@@ -201,7 +201,15 @@
                             orderable: false,
                             searchable: false
                         }
-                    ]
+                    ],
+                    createdRow: function(row, data, dataIndex) {
+                        $('td:eq(1)', row).css('white-space',
+                            'nowrap'); // Prevent wrap on index column
+                        $('td:eq(2)', row).css('white-space',
+                            'nowrap'); // Prevent wrap on index column
+
+                    }
+
                 });
 
                 initializedTables[tableId] = true;

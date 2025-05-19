@@ -20,44 +20,46 @@
     <!-- Month-wise Order Listings -->
     <div class="tab-content p-3">
         @foreach ($months as $month)
-        <div id="{{ $type }}-tab-{{ $month['no'] }}"
-             class="tab-pane fade show {{ $month['no'] == date('m') ? 'active' : '' }}">
-            <div class="row g-4">
-                <div class="col-12 p-4">
-                    @php
-                        $hasOrders = $orders
-                            ->where('go_type', $type)
-                            ->filter(function ($order) use ($month) {
-                                return \Carbon\Carbon::parse($order->date)->format('m') == str_pad($month['no'], 2, '0', STR_PAD_LEFT);
-                            })
-                            ->isNotEmpty();
-                    @endphp
+            <div id="{{ $type }}-tab-{{ $month['no'] }}"
+                class="tab-pane fade show {{ $month['no'] == date('m') ? 'active' : '' }}">
+                <div class="row g-4">
+                    <div class="col-12 p-4">
+                        @php
+                            $hasOrders = $orders
+                                ->where('go_type', $type)
+                                ->filter(function ($order) use ($month) {
+                                    return \Carbon\Carbon::parse($order->date)->format('m') ==
+                                        str_pad($month['no'], 2, '0', STR_PAD_LEFT);
+                                })
+                                ->isNotEmpty();
+                        @endphp
 
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped table-hover yajra-table"
-                               id="datatable-{{ $type }}-{{ $month['no'] }}">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th>#</th>
-                                    <th>Number</th>
-                                    <th class="no-wrap">Date</th>
-                                    <th class="no-wrap">Title</th>
-                                    <th>View</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-
-                    @if (!$hasOrders)
-                        <div class="alert alert-warning d-flex align-items-center" role="alert">
-                            <i class="fas fa-exclamation-triangle me-2"></i>
-                            <span>No {{ $type == 'M' ? 'Govt.Order Manuscript' : 'Govt.Order Routine' }} uploaded for this month.</span>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover yajra-table"
+                                id="datatable-{{ $type }}-{{ $month['no'] }}">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Number</th>
+                                        <th class="no-wrap">Date</th>
+                                        <th class="no-wrap">Title</th>
+                                        <th>View</th>
+                                    </tr>
+                                </thead>
+                            </table>
                         </div>
-                    @endif
+
+                        @if (!$hasOrders)
+                            <div class="alert alert-warning d-flex align-items-center" role="alert">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                <span>No {{ $type == 'M' ? 'Govt.Order Manuscript' : 'Govt.Order Routine' }} uploaded
+                                    for this month.</span>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
-        </div>
-    @endforeach
+        @endforeach
     </div>
 </div>
 <!-- 🔹 Single PDF Modal -->
@@ -154,7 +156,16 @@
                             orderable: false,
                             searchable: false
                         }
-                    ]
+                    ],
+                    createdRow: function(row, data, dataIndex) {
+                        $('td:eq(1)', row).css('white-space',
+                            'nowrap'); // Prevent wrap on index column
+                        $('td:eq(2)', row).css('white-space',
+                            'nowrap'); // Prevent wrap on index column
+
+
+
+                    }
                 });
             });
         });
