@@ -102,11 +102,11 @@
                                                     class="table table-bordered table-striped table-hover yajra-table">
                                                     <thead class="table-dark">
                                                         <tr>
-                                                            <th>#</th>
-                                                            <th>Number</th>
-                                                            <th>Date</th>
-                                                            <th>Title</th>
-                                                            <th>View</th>
+                                                            <th class="text-center fw-bold fs-6 text-white">#</th>
+                                                            <th class="text-center fw-bold fs-6 text-white">Number</th>
+                                                            <th class="text-center fw-bold fs-6 text-white">Date</th>
+                                                            <th class="text-center fw-bold fs-6 text-white">Title</th>
+                                                            <th class="text-center fw-bold fs-6 text-white">View</th>
                                                         </tr>
                                                     </thead>
                                                 </table>
@@ -181,25 +181,30 @@
                     },
                     columns: [{
                             data: 'DT_RowIndex',
-                            name: 'DT_RowIndex'
+                            name: 'DT_RowIndex',
+                            className: 'text-center fs-6'
                         },
                         {
                             data: 'number',
-                            name: 'number'
+                            name: 'number',
+                            className: 'text-nowrap fs-10 text-dark' // No wrap, medium font, dark text
                         },
                         {
                             data: 'date',
-                            name: 'date'
+                            name: 'date',
+                            className: 'text-nowrap fs-10 text-dark' // No wrap, medium font, dark text
                         },
                         {
                             data: 'title',
-                            name: 'title'
+                            name: 'title',
+                            className: 'fw-normal fs-10 text-dark' // Italic, normal weight, medium font, dark text
                         },
                         {
                             data: 'view',
                             name: 'view',
                             orderable: false,
-                            searchable: false
+                            searchable: false,
+                            className: 'text-center fs-5' // Center-align, medium font
                         }
                     ],
                     createdRow: function(row, data, dataIndex) {
