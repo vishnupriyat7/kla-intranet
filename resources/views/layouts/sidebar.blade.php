@@ -1,12 +1,9 @@
-<aside id="sidebar" class="sidebar">
+
     <div class="sidebar-logo">
         <a href="#">KLA INTRANET</a>
     </div>
     <!-- Sidebar Navigation -->
     <ul class="sidebar-nav p-0">
-        {{-- <li class="sidebar-header">
-            Tools & Components
-        </li> --}}
         <li class="sidebar-item {{ Request::routeIs('dashboard') ? 'active' : '' }}">
             <a href="{{ route('dashboard') }}" class="sidebar-link">
                 <i class="lni lni-dashboard"></i>
@@ -22,56 +19,15 @@
         <li class="sidebar-item {{ Request::routeIs('news-updates.index') ? 'active' : '' }}">
             <a href="{{ route('news-updates.index') }}" class="sidebar-link">
                 <i class="ri ri-news-line"></i>
-                <span>News/Upadtes</span>
+                <span>News/Updates</span>
             </a>
         </li>
-
         <li class="sidebar-item {{ Request::routeIs('orders-circular.index') ? 'active' : '' }}">
             <a href="{{ route('orders-circular.index') }}" class="sidebar-link">
                 <i class="ri ri-news-line"></i>
                 <span>Orders / Circular</span>
             </a>
         </li>
-
-
-        {{-- <li class="sidebar-item">
-            <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                data-bs-target="#orders" aria-expanded="true" aria-controls="orders">
-                <i class="lni lni-protection"></i>
-                <span>Orders / Circular</span>
-            </a>
-            <ul id="orders" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                <li class="sidebar-item">
-                    <a href="{{ route('govt-orders.index')}}" class="sidebar-link"> <i
-                            class="lni lni-agenda"></i>Government Orders</a>
-                </li>
-            </ul>
-
-        </li> --}}
-        {{-- <li class="sidebar-item">
-            <a href="#" class="sidebar-link">
-                <i class="lni lni-agenda"></i>
-                <span>Task</span>
-            </a>
-        </li> --}}
-        {{-- <li class="sidebar-header">
-            Pages
-        </li> --}}
-        {{-- <li class="sidebar-item">
-            <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                data-bs-target="#auth" aria-expanded="true" aria-controls="auth">
-                <i class="lni lni-protection"></i>
-                <span>Auth</span>
-            </a>
-            <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">Login</a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">Register</a>
-                </li>
-            </ul>
-        </li> --}}
         <li class="sidebar-item">
             <a href="#" class="sidebar-link has-dropdown collapsed"
                 data-bs-toggle="collapse" data-bs-target="#settings"
@@ -91,36 +47,15 @@
                 </li>
             </ul>
         </li>
-
-        {{-- <li class="sidebar-item">
-            <a href="#" class="sidebar-link">
-                <i class="lni lni-popup"></i>
-                <span>Notification</span>
-            </a>
-        </li> --}}
         <li class="sidebar-item">
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-
                 <a href="route('logout')" class="sidebar-link"
-                    onclick="event.preventDefault();
-                                    this.closest('form').submit();">
+                    onclick="event.preventDefault(); this.closest('form').submit();">
                     <i class="lni lni-exit"></i>
                     <span>Log Out</span>
                 </a>
-
             </form>
         </li>
-
-
-
     </ul>
     <!-- Sidebar Navigation Ends -->
-    {{-- <div class="sidebar-footer">
-        <a href="#" class="sidebar-link">
-            <i class="lni lni-exit"></i>
-            <span>Setting</span>
-        </a>
-    </div> --}}
-
-</aside>

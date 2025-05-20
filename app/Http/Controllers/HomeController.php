@@ -146,7 +146,8 @@ class HomeController extends Controller
                     } elseif ($order->type == 'C') {
                         return 'Cir. ' . 'No.' . $order->number ?: '-';
                     }
-                    return '-'; })
+                    return '-';
+                })
                 ->addColumn('date', function ($order) {
                     return \Carbon\Carbon::parse($order->date)->format('d-m-Y'); // Match screenshot format
                 })

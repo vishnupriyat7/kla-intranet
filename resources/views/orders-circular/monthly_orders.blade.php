@@ -164,7 +164,6 @@
                             'nowrap'); // Prevent wrap on index column
 
 
-
                     }
                 });
             });
