@@ -83,9 +83,6 @@
                                     Order </a>
                                 <a class="dropdown-item" href="{{ route('home.order-circular', 'oo') }}">Office
                                     Order</a>
-                                <a class="dropdown-item" href="{{ route('home.order-circular', 'cr') }}">Circular</a>
-                                <a class="dropdown-item" href="{{ route('home.advanced-search') }}">Advance
-                                    Search</a>
                             </div>
                         </div>
 
@@ -149,9 +146,9 @@
                             Request</a>
                         {{-- <a href="contact.html" class="nav-item nav-link">Search</a> --}}
                         <button
-                            class="btn-search btn border border-primary btn-md-square rounded-circle bg-white my-auto"
-                            data-bs-toggle="modal" data-bs-target="#searchModal"><i
-                                class="fas fa-search text-primary"></i>
+                            class="btn-search btn border border-primary btn-md-square rounded-circle bg-white my-auto">
+                            <a href="{{ route('home.advanced-search') }}"><i
+                                class="fas fa-search text-primary"></i></a>
                         </button>
 
                     </div>
