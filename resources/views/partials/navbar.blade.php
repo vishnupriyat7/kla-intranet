@@ -68,18 +68,10 @@
                     <div class="navbar-nav mx-auto border-top">
                         <a href="{{ route('home.index') }}"
                             class="nav-item nav-link {{ request()->is('/') ? 'active' : '' }}">Home</a>
+                            <a href="{{ route('home.index-other') }}"
+                            class="nav-item nav-link {{ request()->routeIs('home.index-other') ? 'active' : '' }}">Home I</a>
 
-                        {{-- <a href="detail-page.html" class="nav-item nav-link">Detail Page</a>
-                        <a href="404.html" class="nav-item nav-link">404 Page</a> --}}
-                        {{-- <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Dropdown</a>
-                            <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                <a href="#" class="dropdown-item">Dropdown 1</a>
-                                <a href="#" class="dropdown-item">Dropdown 2</a>
-                                <a href="#" class="dropdown-item">Dropdown 3</a>
-                                <a href="#" class="dropdown-item">Dropdown 4</a>
-                            </div>
-                        </div> --}}
+
                         <div class="nav-item dropdown">
                             <a href="{{ route('home.index') }}"
                                 class="nav-link dropdown-toggle {{ request()->routeIs('home.order-circular') || request()->routeIs('home.order-circular.*') ? 'active' : '' }}"

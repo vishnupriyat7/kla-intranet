@@ -9,6 +9,7 @@ use App\Http\Controllers\PeriodicalMasterController;
 use App\Http\Controllers\OrderCircularController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::get('/index-other', [HomeController::class, 'indexOther'])->name('home.index-other');
 Route::get('/updatesmore', [HomeController::class, 'updatesMore'])->name('updatesmore');
 Route::get('/order-circular/{type}', [HomeController::class, 'orderCircular'])->name('home.order-circular');
 Route::get('/search', [HomeController::class, 'search'])->name('home.search');
