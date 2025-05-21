@@ -6,9 +6,6 @@
                     <th>#</th>
                     <th>Number</th>
                     <th>Date</th>
-                    @if($orderType == 'G')
-                        <th>Type</th>
-                    @endif
                     <th>Title</th>
                     <th>View</th>
                 </tr>
@@ -17,17 +14,16 @@
                 @foreach ($results as $index => $result)
                     <tr>
                         <td>{{ $index + 1 }}</td>
-                        <td>{{ $result->number }}</td>
-                        <td>{{ $result->date ? \Carbon\Carbon::parse($result->date)->format('d-m-Y') :
-                        ($result->published_date ? \Carbon\Carbon::parse($result->published_date)->format('d-m-Y') :
-                        'N/A') }}</td>
                         @if($orderType == 'G')
-                            <td>{{
-                            $result->go_type == 'M' ? 'Manuscript (കയ്യെഴുത്ത്)' :
-                            ($result->go_type == 'R' ? 'Routine (സാധാ)' :
-                                ($result->go_type == 'P' ? 'Print' : 'N/A'))
-                                                            }}</td>
+                            <td class='text-nowrap'>G.O.({{ $result->go_type == 'M' ? 'Ms' :
+                            ($result->go_type == 'R' ? 'Rt' :
+                                ($result->go_type == 'P' ? 'P' : '')) }}).No.{{ $result->number }}</td>
+                        @else
+                            <td>{{ $result->number }}</td>
                         @endif
+                        <td class='text-nowrap'>{{ $result->date ? \Carbon\Carbon::parse($result->date)->format('d-m-Y') :
+                    ($result->published_date ? \Carbon\Carbon::parse($result->published_date)->format('d-m-Y') :
+                        'N/A') }}</td>
                         <td>{{ $result->title ?? 'N/A' }}</td>
                         <td>
                             @if (isset($result->path))
@@ -45,6 +41,6 @@
             </tbody>
         </table>
     </div>
-@elseif(isset($results))
-    <div class="alert alert-warning mt-4">Please select an Order Type to proceed with the search.</div>
+@else
+    <div class="alert alert-danger mt-4">{{ $error }}</div>
 @endif

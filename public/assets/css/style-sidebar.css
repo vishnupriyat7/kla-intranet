@@ -19,24 +19,30 @@ a {
 .main {
     min-height: 100vh;
     width: 100%;
-    overflow: hidden;
     background-color: #f9f9f9;
+    transition: all 0.35s ease-in-out;
+    margin-left: 0;
+    position: relative;
+    overflow-y: auto;
 }
 
 #sidebar {
     max-width: 264px;
     min-width: 264px;
-    height: 100vh; /* Ensures full height */
+    height: 100vh;
     background-color: #000;
     display: flex;
     flex-direction: column;
-    transition: all 0.7s ease-in-out;
+    transition: all 0.35s ease-in-out;
     overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
 }
 
-#sidebar.collapsed {
+#sidebar:not(.show) {
     margin-left: -264px;
-    transition: all 0.7s ease-in-out;
 }
 
 .toggler-btn {
@@ -48,13 +54,16 @@ a {
 .toggler-btn i {
     font-size: 1.75rem;
     color: #000;
-    /* color: #fff; */
     font-weight: 1000;
 }
 
 .navbar {
     padding: 1.15rem 1.5rem;
     border-bottom: 2px inset #b3a8a8;
+    position: sticky;
+    top: 0;
+    background-color: #f9f9f9;
+    z-index: 900;
 }
 
 .sidebar-nav {
@@ -88,8 +97,7 @@ a.sidebar-link {
 }
 
 a.sidebar-link:hover {
-    /* background-color: #f9f6f630; */
-    background-color: rgba(255, 255, 255, 0.15); /* Better visibility */
+    background-color: rgba(255, 255, 255, 0.15);
 }
 
 .sidebar-link[data-bs-toggle="collapse"]::after {
@@ -103,52 +111,83 @@ a.sidebar-link:hover {
     top: 1.4rem;
     transform: rotate(-135deg);
     transition: all 0.1s ease-out;
-    /* transition: transform 0.3s ease-in-out; */
 }
 
 .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
     transform: rotate(45deg);
-    /* transition: all 0.1s ease-out; */
-    /* transition: transform 0.3s ease-in-out; */
 }
+
 .sidebar-item.active .sidebar-link {
-    background-color: #665c35; /* Change this to your desired highlight color */
-    color: #ffffff !important; /* Ensure text is visible */
+    background-color: #665c35;
+    color: #ffffff !important;
     font-weight: bold;
-    border-radius: 5px; /* Optional rounded corners */
+    border-radius: 5px;
 }
-/* Ensure dropdown items also get the highlight */
+
 .sidebar-dropdown .sidebar-item .sidebar-link.active {
     background-color: #665c35 !important;
     color: #ffffff !important;
 }
 
-/* Prevent the parent "Settings" from getting the active style */
 .sidebar-item.has-dropdown > .sidebar-link {
     background-color: transparent !important;
     color: inherit !important;
     font-weight: normal;
 }
 
-/* Screen size less than 768px */
+.main table.dataTable {
+    width: 100% !important;
+    margin: 0 !important;
+}
 
-/* @media (max-width:768px) {
+.main .dataTables_wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
 
-    .sidebar-toggle {
+main {
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+/* Large screens: Sidebar visible by default */
+@media (min-width: 769px) {
+    #sidebar {
+        margin-left: 0;
+    }
+
+    #sidebar:not(.show) {
         margin-left: -264px;
     }
 
-    #sidebar.collapsed {
-        margin-left: 0;
+    .main {
+        margin-left: 264px;
+        width: calc(100% - 264px);
     }
-} */
+
+    #sidebar:not(.show) + .main {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
+/* Small screens: Sidebar hidden by default */
 @media (max-width: 768px) {
     #sidebar {
         margin-left: -264px;
-        transition: all 0.35s ease-in-out;
     }
 
-    #sidebar.collapsed {
+    #sidebar.show {
         margin-left: 0;
+    }
+
+    .main {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    #sidebar.show + .main {
+        margin-left: 264px;
+        width: calc(100% - 264px);
     }
 }

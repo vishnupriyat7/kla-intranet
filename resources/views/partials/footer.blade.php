@@ -201,6 +201,7 @@
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.8/main.min.js"></script> --}}
 <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.15/index.global.min.js'></script>
 <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.15/index.global.min.js'></script>
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
 <!-- jQuery (required for DataTables) -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -215,3 +216,4 @@
 
 <!-- Template Javascript -->
 <script src="{{ asset('assets/js/main.js') }}"></script>
+

@@ -1,34 +1,32 @@
 <!-- Hero Section Start -->
-<div class="bg"></div>
-<div class="bg bg2"></div>
-<div class="bg bg3"></div>
-<div class="container-fluid hero py-5">
-    <div class="container py-5">
+<div class="container-fluid hero py-5 position-relative">
+    <div id="particles-js" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></div>
+    <div class="container py-5" style="position: relative; z-index: 1;">
         <div class="tab-class mb-1">
             <div class="row g-4">
-                <div class="col-lg-7 col-xl-7">
+                <div class="col-lg-12 col-xl-12">
                     <div class="d-flex flex-column flex-md-row justify-content-md-between border-bottom mb-4">
                         <h1 class="mb-4">What’s New</h1>
                         <ul class="nav nav-pills d-inline-flex text-center">
                             <li class="nav-item mb-3">
-                                <a class="d-flex py-2 bg-light rounded-pill active me-2" data-bs-toggle="pill"
+                                <a class="d-flex py-3 bg-light rounded-pill active me-2" data-bs-toggle="pill"
                                     href="#tab-1">
-                                    <span class="text-dark" style="width: 100px;">Gov.Order</span>
+                                    <span class="text-dark" style="width: 160px;">Government Order</span>
                                 </a>
                             </li>
                             <li class="nav-item mb-3">
-                                <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-2">
-                                    <span class="text-dark" style="width: 100px;">Off.Order</span>
+                                <a class="d-flex py-3 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-2">
+                                    <span class="text-dark" style="width: 160px;">Office Order</span>
                                 </a>
                             </li>
                             <li class="nav-item mb-3">
-                                <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-3">
-                                    <span class="text-dark" style="width: 100px;">Circular</span>
+                                <a class="d-flex py-3 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-3">
+                                    <span class="text-dark" style="width: 160px;">Circular</span>
                                 </a>
                             </li>
                             <li class="nav-item mb-3">
-                                <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-4">
-                                    <span class="text-dark" style="width: 100px;">News</span>
+                                <a class="d-flex py-3 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-4">
+                                    <span class="text-dark" style="width: 160px;">News</span>
                                 </a>
                             </li>
 
@@ -161,12 +159,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-5 col-xl-5">
+                {{-- <div class="col-lg-5 col-xl-5">
                     <div class="row g-4">
                         <div class="col-12">
                             <div class="p-3 rounded border h-100" style="min-height: 600px;">
                                 <div id="calendar" class="h-100"></div>
-                                {{-- <h4 class="my-4 mt-5">Periodicals</h4>
+                                <h4 class="my-4 mt-5">Periodicals</h4>
                                 <div class="row g-4">
                                     <div class="col-12">
                                         <div class="row g-2">
@@ -180,11 +178,11 @@
                                             @endforeach
                                         </div>
                                     </div>
-                                </div> --}}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -205,7 +203,75 @@
 </div>
 
 {{-- Hero Section End --}}
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
+    particlesJS("particles-js", {
+        "particles": {
+            "number": {
+                "value": 50, // Reduced for lightweight performance
+                "density": {
+                    "enable": true,
+                    "value_area": 800
+                }
+            },
+            "color": {
+                "value": "#3c5df0" // Matches your theme (blue color)
+            },
+            "shape": {
+                "type": "circle",
+                "stroke": {
+                    "width": 0,
+                    "color": "#000000"
+                }
+            },
+            "opacity": {
+                "value": 0.5,
+                "random": true,
+                "anim": {
+                    "enable": false
+                }
+            },
+            "size": {
+                "value": 3,
+                "random": true,
+                "anim": {
+                    "enable": false
+                }
+            },
+            "line_linked": {
+                "enable": true,
+                "distance": 150,
+                "color": "#3c5df0",
+                "opacity": 0.4,
+                "width": 1
+            },
+            "move": {
+                "enable": true,
+                "speed": 2, // Slow movement for subtle effect
+                "direction": "none",
+                "random": false,
+                "straight": false,
+                "out_mode": "out",
+                "bounce": false
+            }
+        },
+        "interactivity": {
+            "detect_on": "canvas",
+            "events": {
+                "onhover": {
+                    "enable": true,
+                    "mode": "repulse" // Particles move away from cursor
+                },
+                "onclick": {
+                    "enable": true,
+                    "mode": "push" // Add particles on click
+                },
+                "resize": true
+            }
+        },
+        "retina_detect": true
+    });
+
     document.addEventListener("DOMContentLoaded", function () {
         var pdfModal = document.getElementById("pdfModal");
 

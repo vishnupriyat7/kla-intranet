@@ -84,7 +84,7 @@
                     <div class="card-body" id="search-results">
                         @if (isset($results) && count($results) > 0)
                             @include('partials.advanced-search-results', ['results' => $results, 'orderType' => $orderType])
-                        @elseif(isset($results))
+                        @else
                             <div class="alert alert-warning mt-4">Please select an Order Type to proceed with the search. </div>
                         @endif
                     </div>

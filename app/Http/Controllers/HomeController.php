@@ -10,8 +10,6 @@ use Carbon\Carbon;
 use App\Models\Section;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
-// use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -137,10 +135,21 @@ class HomeController extends Controller
             return DataTables::of($orders)
                 ->addIndexColumn()
                 ->addColumn('number', function ($order) {
-                    return $order->number ?: '-'; // Fallback if number is null
+                    if ($order->type == 'G') {
+                        if ($order->go_type == 'M') {
+                            return 'G.' . 'O.' . ('(Ms).') . 'No.' . $order->number ?: '-';
+                        } else {
+                            return 'G.' . 'O.' . ('(Rt).') . 'No.' . $order->number ?: '-';
+                        }
+                    } elseif ($order->type == 'O') {
+                        return 'O.O.' . 'No.' . $order->number ?: '-';
+                    } elseif ($order->type == 'C') {
+                        return 'Cir. ' . 'No.' . $order->number ?: '-';
+                    }
+                    return '-';
                 })
                 ->addColumn('date', function ($order) {
-                    return \Carbon\Carbon::parse($order->date)->format('Y-m-d'); // Match screenshot format
+                    return \Carbon\Carbon::parse($order->date)->format('d-m-Y'); // Match screenshot format
                 })
                 ->addColumn('title', function ($order) {
                     return $order->title;
@@ -276,59 +285,49 @@ class HomeController extends Controller
     {
         $orderResults = collect();
         $newsResults = collect();
-
         // Validate if month is selected but year is not
         if ($request->filled('month') && !$request->filled('year')) {
-            return redirect()->back()->withErrors(['error' => 'Please select a year when choosing a month.']);
+            $error = 'Please select an Year while choosing a month.';
+            return view('partials.advanced-search-results', compact('error'));
         }
 
-        // Require at least one additional filter for order_circulars
-        if ($request->filled('order_type') && $request->order_type !== 'news') {
-            if (!$request->filled('year') && !$request->filled('month') && !$request->filled('date') && !$request->filled('keyword')) {
-                return redirect()->back()->withErrors(['error' => 'Please provide at least one additional filter (year, month, date, or keyword).']);
+        if ($request->filled('order_type')) {
+            $query = DB::table('order_circulars');
+
+            // Filter by Order Type
+            if ($request->filled('order_type')) {
+                $query->where('type', $request->order_type);
             }
 
-            try {
-                $query = DB::table('order_circulars');
-
-                // Filter by Order Type
-                if ($request->filled('order_type')) {
-                    $query->where('type', $request->order_type);
-                }
-
-                // Ensure 'date' column exists and is valid
-                if ($request->filled('year') || $request->filled('month') || $request->filled('date')) {
-                    $query->whereNotNull('date');
-                }
-
-                // Filter by Year
-                if ($request->filled('year')) {
-                    $query->whereYear('date', '=', $request->year);
-                }
-
-                // Filter by Month
-                if ($request->filled('month')) {
-                    $query->whereMonth('date', '=', $request->month);
-                }
-
-                // Filter by Exact Date
-                if ($request->filled('date')) {
-                    $query->whereDate('date', '=', $request->date);
-                }
-
-                // Filter by Keyword
-                if ($request->filled('keyword')) {
-                    $query->where(function ($q) use ($request) {
-                        $q->where('title', 'LIKE', "%{$request->keyword}%")
-                            ->orWhere('keywords', 'LIKE', "%{$request->keyword}%");
-                    });
-                }
-
-                $orderResults = $query->take(100)->get(); // Limit to 100 results
-            } catch (\Exception $e) {
-                \Log::error('Error in order_circulars query: ' . $e->getMessage());
-                return redirect()->back()->withErrors(['error' => 'An error occurred while fetching results. Please try again later.']);
+            // Ensure 'date' column exists and is valid
+            if ($request->filled('year') || $request->filled('month') || $request->filled('date')) {
+                $query->whereNotNull('date');
             }
+
+            // Filter by Year
+            if ($request->filled('year')) {
+                $query->whereYear('date', '=', $request->year);
+            }
+
+            // Filter by Month
+            if ($request->filled('month')) {
+                $query->whereMonth('date', '=', $request->month);
+            }
+
+            // Filter by Exact Date
+            if ($request->filled('date')) {
+                $query->whereDate('date', '=', $request->date);
+            }
+
+            // Filter by Keyword
+            if ($request->filled('keyword')) {
+                $query->where(function ($q) use ($request) {
+                    $q->where('title', 'LIKE', "%{$request->keyword}%")
+                        ->orWhere('keywords', 'LIKE', "%{$request->keyword}%");
+                });
+            }
+
+            $orderResults = $query->take(100)->get(); // Limit to 100 results
         }
 
         // Search in news_updates table (only if order_type is 'news')
