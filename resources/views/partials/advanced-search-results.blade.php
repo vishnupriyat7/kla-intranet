@@ -18,7 +18,9 @@
                     <tr>
                         <td>{{ $index + 1 }}</td>
                         <td>{{ $result->number }}</td>
-                        <td>{{ $result->date ? \Carbon\Carbon::parse($result->date)->format('d-m-Y') : ($result->published_date ? \Carbon\Carbon::parse($result->published_date)->format('d-m-Y') : 'N/A') }}</td>
+                        <td>{{ $result->date ? \Carbon\Carbon::parse($result->date)->format('d-m-Y') :
+                        ($result->published_date ? \Carbon\Carbon::parse($result->published_date)->format('d-m-Y') :
+                        'N/A') }}</td>
                         @if($orderType == 'G')
                             <td>{{
                             $result->go_type == 'M' ? 'Manuscript (കയ്യെഴുത്ത്)' :

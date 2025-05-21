@@ -10,6 +10,8 @@ use Carbon\Carbon;
 use App\Models\Section;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
+// use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -280,82 +282,97 @@ class HomeController extends Controller
             return redirect()->back()->withErrors(['error' => 'Please select a year when choosing a month.']);
         }
 
-        // Search in order_circulars table
+        // Require at least one additional filter for order_circulars
         if ($request->filled('order_type') && $request->order_type !== 'news') {
-            $query = DB::table('order_circulars');
-
-            // Filter by Order Type
-            if ($request->filled('order_type')) {
-                $query->where('type', $request->order_type);
+            if (!$request->filled('year') && !$request->filled('month') && !$request->filled('date') && !$request->filled('keyword')) {
+                return redirect()->back()->withErrors(['error' => 'Please provide at least one additional filter (year, month, date, or keyword).']);
             }
 
-            // Ensure 'date' column exists and is valid
-            if ($request->filled('year') || $request->filled('month') || $request->filled('date')) {
-                $query->whereNotNull('date');
-            }
+            try {
+                $query = DB::table('order_circulars');
 
-            // Filter by Year (Extract from 'date' column)
-            if ($request->filled('year')) {
-                $query->whereYear('date', '=', $request->year);
-            }
+                // Filter by Order Type
+                if ($request->filled('order_type')) {
+                    $query->where('type', $request->order_type);
+                }
 
-            // Filter by Month (Extract from 'date' column)
-            if ($request->filled('month')) {
-                $query->whereMonth('date', '=', $request->month);
-            }
+                // Ensure 'date' column exists and is valid
+                if ($request->filled('year') || $request->filled('month') || $request->filled('date')) {
+                    $query->whereNotNull('date');
+                }
 
-            // Filter by Exact Date
-            if ($request->filled('date')) {
-                $query->whereDate('date', '=', $request->date);
-            }
+                // Filter by Year
+                if ($request->filled('year')) {
+                    $query->whereYear('date', '=', $request->year);
+                }
 
-            // Filter by Keyword
-            if ($request->filled('keyword')) {
-                $query->where(function ($q) use ($request) {
-                    $q->where('title', 'LIKE', "%{$request->keyword}%")
-                        ->orWhere('keywords', 'LIKE', "%{$request->keyword}%");;
-                });
-            }
+                // Filter by Month
+                if ($request->filled('month')) {
+                    $query->whereMonth('date', '=', $request->month);
+                }
 
-            $orderResults = $query->get();
+                // Filter by Exact Date
+                if ($request->filled('date')) {
+                    $query->whereDate('date', '=', $request->date);
+                }
+
+                // Filter by Keyword
+                if ($request->filled('keyword')) {
+                    $query->where(function ($q) use ($request) {
+                        $q->where('title', 'LIKE', "%{$request->keyword}%")
+                            ->orWhere('keywords', 'LIKE', "%{$request->keyword}%");
+                    });
+                }
+
+                $orderResults = $query->take(100)->get(); // Limit to 100 results
+            } catch (\Exception $e) {
+                \Log::error('Error in order_circulars query: ' . $e->getMessage());
+                return redirect()->back()->withErrors(['error' => 'An error occurred while fetching results. Please try again later.']);
+            }
         }
 
         // Search in news_updates table (only if order_type is 'news')
-        if ($request->filled('order_type') && $request->order_type === 'news') {
-            $newsQuery = DB::table('news_updates');
+        // if ($request->filled('order_type') && $request->order_type === 'news') {
+        //     try {
+        //         $newsQuery = DB::table('news_updates');
 
-            // Filter by Year
-            if ($request->filled('year')) {
-                $newsQuery->whereYear('published_date', $request->year);
-            }
+        //         // Filter by Year
+        //         if ($request->filled('year')) {
+        //             $newsQuery->whereYear('published_date', $request->year);
+        //         }
 
-            // Filter by Date
-            if ($request->filled('date')) {
-                $newsQuery->whereDate('published_date', $request->date);
-            }
+        //         // Filter by Date
+        //         if ($request->filled('date')) {
+        //             $newsQuery->whereDate('published_date', $request->date);
+        //         }
 
-            // Filter by Month
-            if ($request->filled('month')) {
-                $newsQuery->whereMonth('published_date', $request->month);
-            }
+        //         // Filter by Month
+        //         if ($request->filled('month')) {
+        //             $newsQuery->whereMonth('published_date', $request->month);
+        //         }
 
-            // Filter by Keyword
-            if ($request->filled('keyword')) {
-                $newsQuery->where(function ($q) use ($request) {
-                    $q->where('headline', 'LIKE', "%{$request->keyword}%")
-                        ->orWhere('summary', 'LIKE', "%{$request->keyword}%")
-                        ->orWhere('content', 'LIKE', "%{$request->keyword}%");
-                });
-            }
+        //         // Filter by Keyword
+        //         if ($request->filled('keyword')) {
+        //             $newsQuery->where(function ($q) use ($request) {
+        //                 $q->where('headline', 'LIKE', "%{$request->keyword}%")
+        //                     ->orWhere('summary', 'LIKE', "%{$request->keyword}%")
+        //                     ->orWhere('content', 'LIKE', "%{$request->keyword}%");
+        //             });
+        //         }
 
-            $newsResults = $newsQuery->get();
-        }
+        //         $newsResults = $newsQuery->take(100)->get(); // Limit to 100 results
+        //     } catch (\Exception $e) {
+        //         \Log::error('Error in news_updates query: ' . $e->getMessage());
+        //         return redirect()->back()->withErrors(['error' => 'An error occurred while fetching news results. Please try again later.']);
+        //     }
+        // }
 
         // Merge both results
-        $results = $orderResults->merge($newsResults);
+        // $results = $orderResults->merge($newsResults);
+        $results = $orderResults;
         $orderType = $request->order_type;
 
-        // Fetch periodicals (if needed)
+        // Fetch periodicals
         $periodicals = Periodical::with('periodicalMaster')
             ->where('status', 1)
             ->join('periodical_masters', 'periodicals.periodical_master_id', '=', 'periodical_masters.id')
