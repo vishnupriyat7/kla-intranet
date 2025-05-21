@@ -4,9 +4,11 @@
     {{-- Hero Component --}}
     @include('partials.hero')
     {{-- Periodicals Component --}}
-    @include('partials.periodicals')
+
     {{-- Useful Links Component --}}
-    @include('partials.tools-application')
+    {{-- @include('partials.tools-application') --}}
+
+     @include('partials.periodicals')
 
     {{-- Advanced Search Component --}}
 @endsection
