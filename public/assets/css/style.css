@@ -17,6 +17,34 @@ body {
 .hero .tab-class .nav-item a.active {
     background: var(--bs-primary) !important;
 }
+/* Add to the end of style-sidebar.css */
+/* Add to the end of style-sidebar.css */
+.hero .tools-application .col-4 {
+    margin-bottom: 2.5rem;
+}
+
+.hero .tools-application a {
+    transition: color 0.3s ease;
+}
+
+.hero .tools-application a:hover {
+    color: #333;
+}
+
+.hero .tools-application i {
+    margin-bottom: 0.75rem !important;
+    transition: transform 0.3s ease;
+}
+
+.hero .tools-application a:hover i {
+    transform: scale(1.1);
+}
+
+.hero .tools-application h2 {
+    text-align: center;
+    font-weight: 700;
+    color: #333;
+}
 #order-circular .h6 {
     font-family: "Noto Sans Malayalam", "Montserrat", sans-serif;
     font-style: normal;

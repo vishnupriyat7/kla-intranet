@@ -3,29 +3,29 @@
      <div class="container py-5">
          <div class="tab-class mb-1">
              <div class="row g-4">
-                 <div class="col-lg-12 col-xl-12">
+                 <div class="col-lg-7 col-xl-7">
                      <div class="d-flex flex-column flex-md-row justify-content-md-between border-bottom mb-4">
                          <h1 class="mb-4">What’s New</h1>
                          <ul class="nav nav-pills d-inline-flex text-center">
                              <li class="nav-item mb-3">
-                                 <a class="d-flex py-3 bg-light rounded-pill active me-2" data-bs-toggle="pill"
+                                 <a class="d-flex py-2 bg-light rounded-pill active me-2" data-bs-toggle="pill"
                                      href="#tab-1">
-                                     <span class="text-dark" style="width: 160px;">Government Order</span>
+                                     <span class="text-dark" style="width: 100px;">Govt.Order</span>
                                  </a>
                              </li>
                              <li class="nav-item mb-3">
-                                 <a class="d-flex py-3 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-2">
-                                     <span class="text-dark" style="width: 160px;">Office Order</span>
+                                 <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-2">
+                                     <span class="text-dark" style="width: 100px;">Offc.Order</span>
                                  </a>
                              </li>
                              <li class="nav-item mb-3">
-                                 <a class="d-flex py-3 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-3">
-                                     <span class="text-dark" style="width: 160px;">Circular</span>
+                                 <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-3">
+                                     <span class="text-dark" style="width: 100px;">Circular</span>
                                  </a>
                              </li>
                              <li class="nav-item mb-3">
-                                 <a class="d-flex py-3 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-4">
-                                     <span class="text-dark" style="width: 160px;">News</span>
+                                 <a class="d-flex py-2 bg-light rounded-pill me-2" data-bs-toggle="pill" href="#tab-4">
+                                     <span class="text-dark" style="width: 100px;">News</span>
                                  </a>
                              </li>
 
@@ -169,31 +169,106 @@
                          </div>
                      </div>
                  </div>
-                 {{-- <div class="col-lg-5 col-xl-5">
+                 <div class="col-lg-5 col-xl-5">
                      <div class="row g-4">
                          <div class="col-12">
                              <div class="p-3 rounded border h-100" style="min-height: 600px;">
-                                 <div id="calendar" class="h-100"></div>
-                                 <h4 class="my-4 mt-5">Periodicals</h4>
-                                <div class="row g-4">
-                                    <div class="col-12">
-                                        <div class="row g-2">
-                                            @foreach ($periodicals as $periodical)
-                                                <div class="col-12">
-                                                    <a href="{{ asset('storage/' . $periodical->path) }}"
-                                                        target="_blank"
-                                                        class="link-hover btn btn-light w-100 rounded text-uppercase text-dark py-3">
-                                                        {{ $periodical->periodicalMaster->name ?? 'N/A' }}
-                                                    </a>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                </div>
+                                 <h2 class="mb-5">Tools/Application</h2>
+                                 <div class="row g-4 text-center tools-application">
+                                     <!-- Attendance -->
+                                     <div class="col-4 mb-4">
+                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
+                                             href="http://172.24.18.28/attendance-app/" target="_blank">
+                                             <i class="fas fa-user-check fa-2x mb-2"
+                                                 style="color: rgb(60, 93, 240)"></i>
+                                             <span>Attendance</span>
+                                         </a>
+                                     </div>
+                                     <!-- E office -->
+                                     <div class="col-4 mb-4">
+                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
+                                             href="https://e-kla.kerala.gov.in/SSOComponent/auth.php" target="_blank">
+                                             <i class="fas fa-laptop-code fa-2x mb-2" style="color: #ec4297"></i>
+                                             <span>E office</span>
+                                         </a>
+                                     </div>
+                                     <!-- e-Niyamasabha -->
+                                     <div class="col-4 mb-4">
+                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
+                                             href="https://eniyamasabha.in/auth/login" target="_blank">
+                                             <i class="fas fa-university fa-2x mb-2" style="color: #17a2b8"></i>
+                                             <span>e-Niyamasabha</span>
+                                         </a>
+                                     </div>
+
+                                     <!-- Official eMail -->
+                                     <div class="col-4 mb-4">
+                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
+                                             href="https://email.gov.in/" target="_blank">
+                                             <i class="fas fa-envelope fa-2x mb-2" style="color: #28a745"></i>
+                                             <span>Official eMail</span>
+                                         </a>
+                                     </div>
+                                     <!-- Mail ID Dropdown -->
+                                     <div class="col-4 mb-4">
+                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark dropdown-toggle"
+                                             href="#" role="button" data-bs-toggle="dropdown">
+                                             <i class="fas fa-user-circle fa-2x mb-2" style="color: #dc3545"></i>
+                                             <span>Mail ID</span>
+                                         </a>
+                                         <div class="dropdown-menu text-center">
+                                             <a class="dropdown-item"  href="http://192.168.11.12/data/All%20employee%20Mail%20ID.pdf" target="_blank"><i
+                                                     class="fas fa-users me-2"></i> Employees</a>
+                                             <a class="dropdown-item"  href="http://192.168.11.12/mailid-sect.html" target="_blank"><i
+                                                     class="fas fa-building me-2"></i> Section</a>
+                                         </div>
+                                     </div>
+
+                                     <!-- ID Card Proforma -->
+                                     <div class="col-4 mb-4">
+                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
+                                             href="http://192.168.11.12/idcard/index.php" target="_blank">
+                                             <i class="fas fa-id-card fa-2x mb-2" style="color: #ffc107"></i>
+                                             <span>ID Card Proforma</span>
+                                         </a>
+                                     </div>
+                                     <!-- Centralised Storage -->
+                                     <div class="col-4 mb-4">
+                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
+                                             href="http://172.24.18.21:8080/share/page" target="_blank">
+                                             <i class="fas fa-database fa-2x mb-2" style="color: #6f42c1"></i>
+                                             <span>Centralised Storage</span>
+                                         </a>
+                                     </div>
+                                     <!-- LIS -->
+                                     <div class="col-4 mb-4">
+                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
+                                             href="http://172.24.18.18/" target="_blank">
+                                             <i class="fas fa-book fa-2x mb-2" style="color: #fd7e14"></i>
+                                             <span>LIS</span>
+                                         </a>
+                                     </div>
+                                     <!-- Digital Archives -->
+                                     <div class="col-4 mb-4">
+                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
+                                             href="http://klaproceedings.niyamasabha.org/" target="_blank">
+                                             <i class="fas fa-archive fa-2x mb-2" style="color: #20c997"></i>
+                                             <span>Digital Archives</span>
+                                         </a>
+                                     </div>
+                                     <!-- Overtime Allowance Portal -->
+                                     <div class="col-4 mb-4">
+                                         <a class="d-flex flex-column align-items-center text-decoration-none text-dark"
+                                             href="http://172.24.18.16/login" target="_blank">
+                                             <i class="fas fa-money-check-alt fa-2x mb-2" style="color: #6610f2"></i>
+                                             <span>Overtime Allowance</span>
+                                         </a>
+                                     </div>
+                                 </div>
                              </div>
                          </div>
                      </div>
-                 </div> --}}
+                 </div>
              </div>
          </div>
      </div>

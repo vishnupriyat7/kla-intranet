@@ -118,7 +118,7 @@
 
                 </div>
             </div>
-            <div class="col-lg-6 col-xl-3">
+            {{-- <div class="col-lg-6 col-xl-3">
                 <div class="footer-item-4">
                     <h4 class="mb-4 text-white">Our Gallary</h4>
                     <div class="row g-2">
@@ -160,7 +160,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
