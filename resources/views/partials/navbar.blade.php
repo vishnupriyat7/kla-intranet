@@ -68,8 +68,9 @@
                     <div class="navbar-nav mx-auto border-top">
                         <a href="{{ route('home.index') }}"
                             class="nav-item nav-link {{ request()->is('/') ? 'active' : '' }}">Home</a>
-                            <a href="{{ route('home.index-other') }}"
-                            class="nav-item nav-link {{ request()->routeIs('home.index-other') ? 'active' : '' }}">Home I</a>
+                        <a href="{{ route('home.index-other') }}"
+                            class="nav-item nav-link {{ request()->routeIs('home.index-other') ? 'active' : '' }}">Home
+                            I</a>
 
 
                         <div class="nav-item dropdown">
@@ -148,7 +149,7 @@
                         <button
                             class="btn-search btn border border-primary btn-md-square rounded-circle bg-white my-auto">
                             <a href="{{ route('home.advanced-search') }}"><i
-                                class="fas fa-search text-primary"></i></a>
+                                    class="fas fa-search text-primary"></i></a>
                         </button>
 
                     </div>
