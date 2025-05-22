@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\OrderCircular;
 use Yajra\DataTables\Facades\DataTables;
+use App\Models\Section;
 
 class OrderCircularController extends Controller
 {
@@ -117,12 +118,13 @@ class OrderCircularController extends Controller
     }
     public function create()
     {
-        return view('orders-circular.create');
+        $sections = Section::get();
+        return view('orders-circular.create', compact('sections'));
     }
     public function store(Request $request)
     {
-
         $request->validate([
+            'section' => 'nullable',
             'type' => 'required',
             'go_type' => 'nullable',
             'serviceMember' => 'nullable',
@@ -156,6 +158,7 @@ class OrderCircularController extends Controller
         // };
 
         OrderCircular::create([
+            'section_id' => $request->section,
             'type' => $request->type,
             'go_type' => $request->go_type ?? null,
             'sub_type' => $request->serviceMember ?? null,

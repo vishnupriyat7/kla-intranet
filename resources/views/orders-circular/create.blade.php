@@ -16,6 +16,18 @@
                 <form action="{{ route('orders-circular.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
+                        <label for="type" class="form-label">Select Section</label>
+                        <select class="form-select" id="section" name="section" required>
+                            <option value="">Select Section</option>
+                            @foreach ($sections as $section)
+                                <option value="{{ $section->id }}">{{ $section->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('type')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
                         <label for="type" class="form-label">Select Type</label>
                         <select class="form-select" id="type" name="type" required onchange="toggleGoType()">
                             <option value="">Select Type</option>
@@ -83,30 +95,28 @@
 
                         </select>
                         @error('member')
-                            <div class="text-danger">{{ $message }}</div>
+                        <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div> --}}
 
                     <div class="mb-3">
                         <label for="no" class="form-label">Number</label>
-                        <input type="text" class="form-control" id="no" name="no" placeholder="Enter No"
-                            required>
+                        <input type="text" class="form-control" id="no" name="no" placeholder="Enter No" required>
                         @error('no')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="mb-3">
                         <label for="date" class="form-label">Date</label>
-                        <input type="date" class="form-control" id="date" name="date"
-                            placeholder="Enter Date" required>
+                        <input type="date" class="form-control" id="date" name="date" placeholder="Enter Date" required>
                         @error('date')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="mb-3">
                         <label for="title" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="title" name="title"
-                            placeholder="Enter Title" required>
+                        <input type="text" class="form-control" id="title" name="title" placeholder="Enter Title"
+                            required>
                         @error('title')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -149,7 +159,7 @@
 
 </x-app-layout>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         toggleGoType();
         toggleServiceorMember();
         toggleServiceMember();
