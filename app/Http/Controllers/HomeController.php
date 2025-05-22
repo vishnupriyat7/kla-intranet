@@ -155,6 +155,7 @@ class HomeController extends Controller
                 'name' => now()->subMonths(5 - $i)->format('F') . ' ' . now()->subMonths(5 - $i)->format('Y'),   // Full month name (January, February, etc.)
             ];
         });
+
         // Check if the request is an Ajax call
         if ($request->ajax()) {
             $month = $request->get('month');
@@ -173,11 +174,13 @@ class HomeController extends Controller
                 ->when($request->type == 'cr', function ($query) {
                     return $query->where('type', 'C');
                 })
+                ->orderBy('date', 'desc')
+
                 ->get();
             $orders = $orders->filter(function ($order) use ($month) {
                 return \Carbon\Carbon::parse($order->date)->format('m') == str_pad($month, 2, '0', STR_PAD_LEFT);
             });
-
+// \Log::info('Filtered Orders:', ['orders' => $orders]);
             return DataTables::of($orders)
                 ->addIndexColumn()
                 ->addColumn('number', function ($order) {
