@@ -63,17 +63,15 @@
                 <!-- Month Tabs for Office Order & Circular -->
                 <div class="tab-class">
                     <div class="d-flex justify-content-between border-bottom mb-1">
-
-                            <ul class="nav nav-pills d-inline-flex text-center">
-                                @foreach ($months as $month)
-                                    <li class="nav-item mb-3">
-                                        <a class="nav-link d-flex py-2 bg-light rounded-pill me-2 {{ $month['no'] == date('m') ? 'active' : '' }}"
-                                            data-bs-toggle="pill" href="#tab-{{ $month['no'] }}">
-                                            <span class="text-dark" style="width: 200px;">{{ $month['name'] }}</span>
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
+                        <ul class="nav nav-pills d-inline-flex text-center">
+                            @foreach ($months as $month)
+                                <li class="nav-item mb-3">
+                                    <a class="nav-link d-flex py-2 bg-light rounded-pill me-2 {{ $month['no'] == date('m') ? 'active' : '' }}"
+                                        data-bs-toggle="pill" href="#tab-{{ $month['no'] }}">
+                                        <span class="text-dark" style="width: 175px;">{{ $month['name'] }}</span>
+                                    </a>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
 
@@ -148,24 +146,28 @@
         var pdfModal = document.getElementById("pdfModal");
 
         pdfModal.addEventListener("show.bs.modal", function(event) {
-            var link = event.relatedTarget;
+            var link = event.relatedTarget; // Link that triggered the modal
             var pdfUrl = link.getAttribute("data-pdf");
             var pdfTitle = link.getAttribute("data-title");
 
+            // Set modal title and PDF source
             document.getElementById("pdfModalLabel").textContent = pdfTitle;
             document.getElementById("pdfViewer").src = pdfUrl;
         });
 
         pdfModal.addEventListener("hidden.bs.modal", function() {
-            document.getElementById("pdfViewer").src = "";
+            document.getElementById("pdfViewer").src = ""; // Reset iframe when modal is closed
         });
+
 
         // Initialize DataTables when a tab is shown
         let initializedTables = {};
 
-        function initializeDataTable(monthNo) {
+        $('a[data-bs-toggle="pill"]').on('shown.bs.tab', function(e) {
+            var targetId = $(e.target).attr("href");
+            var monthNo = targetId.replace('#tab-', '');
             var tableId = `#orderTable-${monthNo}`;
-            console.log("Initializing DataTable for month:", monthNo);
+
             if (!initializedTables[tableId]) {
                 $(tableId).DataTable({
                     processing: true,
@@ -173,17 +175,11 @@
                     ajax: {
                         url: '{{ route('home.order-circular', ['type' => $orderTypeKey]) }}',
                         data: {
+
                             month: monthNo
-                        },
-                        error: function(xhr, error, thrown) {
-                            console.log("AJAX error for month " + monthNo + ":", error, thrown);
-                        },
-                        success: function(data) {
-                            console.log("AJAX success for month " + monthNo + ":", data);
                         }
                     },
-                    columns: [
-                        {
+                    columns: [{
                             data: 'DT_RowIndex',
                             name: 'DT_RowIndex',
                             className: 'text-center fs-6'
@@ -191,54 +187,41 @@
                         {
                             data: 'number',
                             name: 'number',
-                            className: 'text-nowrap fs-5 text-dark' // Fixed fs-10 to fs-5
+                            className: 'text-nowrap fs-10 text-dark' // No wrap, medium font, dark text
                         },
                         {
                             data: 'date',
                             name: 'date',
-                            className: 'text-nowrap fs-5 text-dark'
+                            className: 'text-nowrap fs-10 text-dark' // No wrap, medium font, dark text
                         },
                         {
                             data: 'title',
                             name: 'title',
-                            className: 'fw-normal fs-5 text-dark'
+                            className: 'fw-normal fs-10 text-dark' // Italic, normal weight, medium font, dark text
                         },
                         {
                             data: 'view',
                             name: 'view',
                             orderable: false,
                             searchable: false,
-                            className: 'text-center fs-5'
+                            className: 'text-center fs-5' // Center-align, medium font
                         }
                     ],
                     createdRow: function(row, data, dataIndex) {
-                        $('td:eq(1)', row).css('white-space', 'nowrap');
-                        $('td:eq(2)', row).css('white-space', 'nowrap');
+                        $('td:eq(1)', row).css('white-space',
+                            'nowrap'); // Prevent wrap on index column
+                        $('td:eq(2)', row).css('white-space',
+                            'nowrap'); // Prevent wrap on index column
+
                     }
+
                 });
 
                 initializedTables[tableId] = true;
             }
-        }
-
-        // Initialize DataTable when a tab is shown (for tab switching)
-        $('a[data-bs-toggle="pill"]').on('shown.bs.tab', function(e) {
-            var targetId = $(e.target).attr("href");
-            var monthNo = targetId.replace('#tab-', '');
-            initializeDataTable(monthNo);
         });
 
-        // Initialize the DataTable for the active tab on page load with a slight delay
-        setTimeout(function() {
-            var activeTab = $('a.nav-link.active[data-bs-toggle="pill"]');
-            if (activeTab.length) {
-                var targetId = activeTab.attr("href");
-                var monthNo = targetId.replace('#tab-', '');
-                console.log("Active tab month on load:", monthNo);
-                initializeDataTable(monthNo);
-            } else {
-                console.log("No active tab found on load");
-            }
-        }, 100);
+        // Initialize current tab table
+        $('a.nav-link.active').trigger('shown.bs.tab');
     });
 </script>
