@@ -34,9 +34,9 @@
             <!-- Navbar -->
             <nav class="navbar navbar-expand">
                 <button class="toggler-btn" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar"
-    aria-expanded="true" aria-controls="sidebar">
-    <i class="lni lni-text-align-left"></i>
-</button>
+                    aria-expanded="true" aria-controls="sidebar">
+                    <i class="lni lni-text-align-left"></i>
+                </button>
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
@@ -67,7 +67,8 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
 
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
