@@ -4,7 +4,7 @@
         <ul class="nav nav-pills d-inline-flex text-center">
             @foreach ($months as $month)
                 <li class="nav-item mb-3">
-                    <a class="nav-link d-flex py-2 bg-light rounded-pill me-2 {{ $month['no'] == date('m') ? 'active' : '' }} month-tab"
+                    <a class="d-flex py-2 bg-light rounded-pill me-2 {{ $month['no'] == date('m') ? 'active' : '' }} month-tab"
                         data-bs-toggle="pill" href="#{{ $type }}-tab-{{ $month['no'] }}"
                         data-month="{{ $month['no'] }}" data-type="{{ $type }}">
                         <span class="text-dark" style="width: 200px;">
@@ -76,8 +76,6 @@
         </div>
     </div>
 </div>
-
-
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
