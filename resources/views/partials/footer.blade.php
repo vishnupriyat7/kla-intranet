@@ -45,7 +45,7 @@
 
             <div class="col-lg-6 col-xl-3">
                 <div class="footer-item-2">
-                    <div class="d-flex flex-column mb-4">
+                    {{-- <div class="d-flex flex-column mb-4">
                         <h4 class="mb-4 text-white">Recent Posts</h4>
                         <a href="#">
                             <div class="d-flex align-items-center">
@@ -81,7 +81,7 @@
                                 </div>
                             </div>
                         </a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             <div class="col-lg-6 col-xl-3">

@@ -68,8 +68,9 @@
                     <div class="navbar-nav mx-auto border-top">
                         <a href="{{ route('home.index') }}"
                             class="nav-item nav-link {{ request()->is('/') ? 'active' : '' }}">Home</a>
-                            <a href="{{ route('home.index-other') }}"
-                            class="nav-item nav-link {{ request()->routeIs('home.index-other') ? 'active' : '' }}">Home I</a>
+                        <a href="{{ route('home.index-other') }}"
+                            class="nav-item nav-link {{ request()->routeIs('home.index-other') ? 'active' : '' }}">Home
+                            I</a>
 
 
                         <div class="nav-item dropdown">
@@ -84,7 +85,7 @@
                                 <a class="dropdown-item" href="{{ route('home.order-circular', 'oo') }}">Office
                                     Order</a>
                                 <a class="dropdown-item" href="{{ route('home.order-circular', 'cr') }}">Circular
-                                    </a>
+                                </a>
                             </div>
                         </div>
 
@@ -107,7 +108,8 @@
                                 {{-- <li>
                                     <a class="dropdown-item" href="" target="_blank">ERP Module</a>
                                 </li> --}}
-                                <a class="dropdown-item" href="http://192.168.11.12/idcard/index.php" target="_blank">ID
+                                <a class="dropdown-item" href="http://192.168.11.12/idcard/index.php"
+                                    target="_blank">ID
                                     Card Proforma</a>
                                 {{-- <a class="dropdown-item" href="http://192.168.11.12/hallbooking/index.php"
                                     target="_blank">Conference Hall Booking</a> --}}
@@ -118,6 +120,15 @@
                                     target="_blank">Digital Archives of Assembly Documents</a>
                                 <a class="dropdown-item" href="http://172.24.18.16/login" target="_blank">Overtime
                                     Allowance Portal</a>
+                                <a class="dropdown-item"
+                                    href="https://www.spark.gov.in/webspark/(S(n425hz24mxho4mv4ojp4yzk0))/sparklogin.aspx"
+                                    target="_blank">Spark</a>
+                                <a class="dropdown-item" href="https://prism.kerala.gov.in/"
+                                    target="_blank">Prism</a>
+                                    <a class="dropdown-item" href="https://score.kerala.gov.in/"
+                                    target="_blank">Score</a>
+
+
 
                             </div>
                         </div>
@@ -148,7 +159,8 @@
                         {{-- <a href="contact.html" class="nav-item nav-link">Search</a> --}}
                         <button
                             class="btn-search btn border border-primary btn-md-square rounded-circle bg-white my-auto">
-                            <a href="{{ route('home.advanced-search') }}"><i class="fas fa-search text-primary"></i></a>
+                            <a href="{{ route('home.advanced-search') }}"><i
+                                    class="fas fa-search text-primary"></i></a>
                         </button>
 
                     </div>
