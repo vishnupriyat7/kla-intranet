@@ -5,8 +5,8 @@
             @foreach ($months as $month)
                 <li class="nav-item mb-3">
                     <a class="d-flex py-2 bg-light rounded-pill me-2 {{ $month['no'] == date('m') ? 'active' : '' }} month-tab"
-                        data-bs-toggle="pill" href="#{{ $type }}-tab-{{ $month['no'] }}"
-                        data-month="{{ $month['no'] }}" data-type="{{ $type }}">
+                        data-bs-toggle="pill" href="#{{ $type }}-tab-{{ $month['no'] }}" data-month="{{ $month['no'] }}"
+                        data-type="{{ $type }}">
                         <span class="text-dark" style="width: 200px;">
                             {{ $month['name'] }}
                         </span>
@@ -78,115 +78,121 @@
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    // PDF modal logic
-    const pdfModal = document.getElementById("pdfModal");
+    document.addEventListener("DOMContentLoaded", function () {
+        // PDF modal logic
+        const pdfModal = document.getElementById("pdfModal");
 
-    pdfModal.addEventListener("show.bs.modal", function(event) {
-        const link = event.relatedTarget;
-        const pdfUrl = link.getAttribute("data-pdf");
-        const pdfTitle = link.getAttribute("data-title");
+        pdfModal.addEventListener("show.bs.modal", function (event) {
+            const link = event.relatedTarget;
+            const pdfUrl = link.getAttribute("data-pdf");
+            const pdfTitle = link.getAttribute("data-title");
 
-        document.getElementById("pdfModalLabel").textContent = pdfTitle;
-        document.getElementById("pdfViewer").src = pdfUrl;
-    });
+            document.getElementById("pdfModalLabel").textContent = pdfTitle;
+            document.getElementById("pdfViewer").src = pdfUrl;
+        });
 
-    pdfModal.addEventListener("hidden.bs.modal", function() {
-        document.getElementById("pdfViewer").src = "";
-    });
+        pdfModal.addEventListener("hidden.bs.modal", function () {
+            document.getElementById("pdfViewer").src = "";
+        });
 
-    // Function to initialize DataTable for a given tab
-    function initializeDataTable(tab) {
-        const month = tab.getAttribute('data-month');
-        const type = tab.getAttribute('data-type');
-        const tableId = `#datatable-${type}-${month}`;
+        // Function to initialize DataTable for a given tab
+        function initializeDataTable(tab) {
+            const month = tab.getAttribute('data-month');
+            const type = tab.getAttribute('data-type');
+            const tableId = `#datatable-${type}-${month}`;
 
-        // Debugging: Log tab attributes and table ID
-        console.log(`Tab attributes - month: ${month}, type: ${type}, tableId: ${tableId}`);
-        console.log(`Table element exists: ${$(tableId).length > 0}`);
+            // Debugging: Log tab attributes and table ID
+            console.log(`Tab attributes - month: ${month}, type: ${type}, tableId: ${tableId}`);
+            console.log(`Table element exists: ${$(tableId).length > 0}`);
 
-        // Check if table element exists
-        if ($(tableId).length === 0) {
-            console.error(`Table with ID ${tableId} not found in the DOM.`);
-            return;
-        }
-
-        // Destroy existing DataTable if initialized
-        if ($.fn.DataTable.isDataTable(tableId)) {
-            console.log(`Destroying existing DataTable for ${tableId}`);
-            $(tableId).DataTable().destroy();
-        }
-
-        // Initialize DataTable
-        $(tableId).DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: {
-                url: '{{ route("home.order-circular", ["type" => $orderTypeKey]) }}',
-                method: 'GET',
-                data: {
-                    month: month,
-                    go_type: type,
-                    _t: new Date().getTime()
-                },
-                error: function(xhr, status, error) {
-                    console.error(`AJAX error for type ${type}, month ${month}:`, status, error);
-                    console.error('Response:', xhr.responseText);
-                }
-            },
-            columns: [
-                {
-                    data: 'DT_RowIndex',
-                    name: 'DT_RowIndex',
-                    className: 'text-center fs-6'
-                },
-                {
-                    data: 'number',
-                    name: 'number',
-                    className: 'text-nowrap fs-10 text-dark'
-                },
-                {
-                    data: 'date',
-                    name: 'date',
-                    className: 'text-nowrap fs-10 text-dark'
-                },
-                {
-                    data: 'title',
-                    name: 'title',
-                    className: 'fw-normal fs-10 text-dark'
-                },
-                {
-                    data: 'view',
-                    name: 'view',
-                    orderable: false,
-                    searchable: false,
-                    className: 'text-center fs-5'
-                }
-            ],
-            createdRow: function(row, data, dataIndex) {
-                $('td:eq(1)', row).css('white-space', 'nowrap');
-                $('td:eq(2)', row).css('white-space', 'nowrap');
+            // Check if table element exists
+            if ($(tableId).length === 0) {
+                console.error(`Table with ID ${tableId} not found in the DOM.`);
+                return;
             }
+
+            // Destroy existing DataTable if initialized
+            if ($.fn.DataTable.isDataTable(tableId)) {
+                console.log(`Destroying existing DataTable for ${tableId}`);
+                $(tableId).DataTable().destroy();
+            }
+
+            // Initialize DataTable
+            $(tableId).DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '{{ route("home.order-circular", ["type" => $orderTypeKey]) }}',
+                    method: 'GET',
+                    data: {
+                        month: month,
+                        go_type: type,
+                        _t: new Date().getTime()
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(`AJAX error for type ${type}, month ${month}:`, status, error);
+                        console.error('Response:', xhr.responseText);
+                    }
+                },
+                columns: [
+                    {
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        className: 'text-center fs-6'
+                    },
+                    {
+                        data: 'number',
+                        name: 'number',
+                        className: 'text-nowrap fs-10 text-dark'
+                    },
+                    {
+                        data: 'date',
+                        name: 'date',
+                        className: 'text-nowrap fs-10 text-dark'
+                    },
+                    {
+                        data: 'title',
+                        name: 'title',
+                        className: 'fw-normal fs-10 text-dark'
+                    },
+                    {
+                        data: 'view',
+                        name: 'view',
+                        orderable: false,
+                        searchable: false,
+                        className: 'text-center fs-5'
+                    }
+                ],
+                createdRow: function (row, data, dataIndex) {
+                    $('td:eq(1)', row).css('white-space', 'nowrap');
+                    $('td:eq(2)', row).css('white-space', 'nowrap');
+                }
+            });
+
+            console.log(`DataTable initialized for ${tableId}`);
+        }
+
+        // Handle month tab clicks for both Manuscript and Routine
+        document.querySelectorAll('.month-tab').forEach(tab => {
+            tab.addEventListener('shown.bs.tab', function (event) {
+                console.log('Tab shown:', event.target);
+                initializeDataTable(event.target);
+            });
         });
 
-        console.log(`DataTable initialized for ${tableId}`);
-    }
+        // Initialize DataTable for the active month tab on page load
+        const activeTab = document.querySelector('.month-tab.active');
+        if (activeTab) {
+            console.log('Active tab on page load:', activeTab);
+            initializeDataTable(activeTab);
+        } else {
+            console.error('No active month tab found on page load.');
+        }
 
-    // Handle month tab clicks for both Manuscript and Routine
-    document.querySelectorAll('.month-tab').forEach(tab => {
-        tab.addEventListener('shown.bs.tab', function(event) {
-            console.log('Tab shown:', event.target);
-            initializeDataTable(event.target);
-        });
+        const routineActive = document.querySelector('.month-tab[data-type="R"].active');
+        if (routineActive) {
+            console.log('Manually triggering Routine tab init');
+            initializeDataTable(routineActive);
+        }
     });
-
-    // Initialize DataTable for the active month tab on page load
-    const activeTab = document.querySelector('.month-tab.active');
-    if (activeTab) {
-        console.log('Active tab on page load:', activeTab);
-        initializeDataTable(activeTab);
-    } else {
-        console.error('No active month tab found on page load.');
-    }
-});
 </script>
