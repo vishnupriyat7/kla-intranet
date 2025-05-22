@@ -23,7 +23,6 @@ class OrderCircularController extends Controller
                     } elseif ($data->type == 'C') {
                         return 'Circular';
                     }
-                    // return $data->type;
                 })
                 ->addColumn('go_type', function ($data) {
                     if ($data->go_type == 'M') {
@@ -33,8 +32,6 @@ class OrderCircularController extends Controller
                     } elseif ($data->go_type == 'P') {
                         return 'സ.ഉ.അച്ചടി (GO.Print)';
                     }
-
-                    // return $data->go_type;
                 })
                 ->addColumn('serviceMember', function ($data) {
                     if ($data->sub_type == 'Service') {
@@ -42,12 +39,10 @@ class OrderCircularController extends Controller
                     } elseif ($data->sub_type == 'Member') {
                         return 'Member';
                     }
-                    // return $data->sub_type;
                 })
                 ->addColumn('sub_sub_type', function ($data) {
                     return $data->sub_sub_type;
                 })
-
                 ->addColumn('number', function ($data) {
                     return $data->number;
                 })
@@ -60,9 +55,6 @@ class OrderCircularController extends Controller
                 ->addColumn('keywords', function ($data) {
                     return $data->keywords;
                 })
-                // ->addColumn('path', function ($data) {
-                //     return $data->path;
-                // })
                 ->addColumn('created_at', function ($data) {
                     return $data->created_at ? $data->created_at->format('d-m-Y') : '-';
                 })
@@ -111,9 +103,6 @@ class OrderCircularController extends Controller
                 ->rawColumns(['file', 'status', 'action'])
                 ->make(true);
         }
-
-        // $orders = OrderCircular::all();
-
         return view('orders-circular.index');
     }
     public function create()
@@ -168,7 +157,7 @@ class OrderCircularController extends Controller
             'title' => $request->title,
             'keywords' => $request->keywords,
             'path' => $filePath,
-            'status' => 0,
+            'status' => $request->status,
 
         ]);
         return redirect()->route('orders-circular.index')->with('success', 'Order / Circular added successfully');
@@ -183,8 +172,8 @@ class OrderCircularController extends Controller
     }
     public function update(Request $request)
     {
-
         $request->validate([
+            'section' => 'nullable',
             'type' => 'required',
             'go_type' => 'nullable',
             'serviceMember' => 'nullable',
@@ -196,11 +185,8 @@ class OrderCircularController extends Controller
             'path' => 'nullable|file|mimes:pdf|max:1048576',
             'status' => 'required',
         ]);
-
-
         $order = OrderCircular::find($request->id);
         $year = date('Y', strtotime($request->date));
-
         $categoryFolder = match ($request->type) {
             'G' => 'GovtOrders',
             'O' => 'OfficeOrders',
@@ -228,6 +214,7 @@ class OrderCircularController extends Controller
         // };
 
         $order->update([
+            'section_id' => $request->section,
             'type' => $request->type,
             'go_type' => $request->go_type ?? null,
             'sub_type' => $request->serviceMember ?? null,

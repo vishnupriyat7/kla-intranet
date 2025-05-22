@@ -80,104 +80,115 @@
 
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // PDF modal logic
-        const pdfModal = document.getElementById("pdfModal");
+document.addEventListener("DOMContentLoaded", function() {
+    // PDF modal logic
+    const pdfModal = document.getElementById("pdfModal");
 
-        pdfModal.addEventListener("show.bs.modal", function(event) {
-            const link = event.relatedTarget;
-            const pdfUrl = link.getAttribute("data-pdf");
-            const pdfTitle = link.getAttribute("data-title");
+    pdfModal.addEventListener("show.bs.modal", function(event) {
+        const link = event.relatedTarget;
+        const pdfUrl = link.getAttribute("data-pdf");
+        const pdfTitle = link.getAttribute("data-title");
 
-            document.getElementById("pdfModalLabel").textContent = pdfTitle;
-            document.getElementById("pdfViewer").src = pdfUrl;
-        });
-
-        pdfModal.addEventListener("hidden.bs.modal", function() {
-            document.getElementById("pdfViewer").src = "";
-        });
-
-        // Handle month tab clicks for both Manuscript and Routine
-        document.querySelectorAll('.tab-class').forEach(container => {
-            container.addEventListener('shown.bs.tab', function(event) {
-                const tab = event.target;
-                if (!tab.classList.contains('month-tab')) return; // Only handle month tabs
-
-                const month = tab.getAttribute('data-month');
-                const type = tab.getAttribute('data-type');
-                const tableId = `#datatable-${type}-${month}`;
-
-                console.log(
-                    `Initializing DataTable for type: ${type}, month: ${month}, tableId: ${tableId}`
-                );
-
-                // Destroy existing DataTable if initialized
-                if ($.fn.DataTable.isDataTable(tableId)) {
-                    $(tableId).DataTable().destroy();
-                }
-
-                // Initialize DataTable
-                $(tableId).DataTable({
-                    processing: true,
-                    serverSide: true,
-                    ajax: {
-                        url: '{{ route('home.order-circular', ['type' => $orderTypeKey]) }}',
-                        method: 'GET',
-                        data: {
-                            month: month,
-                            go_type: type,
-                            _t: new Date().getTime()
-                        },
-                        error: function(xhr, status, error) {
-                            console.error(
-                                `AJAX error for type ${type}, month ${month}:`,
-                                status, error);
-                        }
-                    },
-                    columns: [{
-                        data: 'DT_RowIndex',
-                            name: 'DT_RowIndex',
-                            className: 'text-center fs-6'
-                        },
-                        {
-                            data: 'number',
-                            name: 'number',
-                            className: 'text-nowrap fs-10 text-dark' // No wrap, medium font, dark text
-                        },
-                        {
-                            data: 'date',
-                            name: 'date',
-                            className: 'text-nowrap fs-10 text-dark' // No wrap, medium font, dark text
-                        },
-                        {
-                            data: 'title',
-                            name: 'title',
-                            className: 'fw-normal fs-10 text-dark' // Italic, normal weight, medium font, dark text
-                        },
-                        {
-                            data: 'view',
-                            name: 'view',
-                            orderable: false,
-                            searchable: false,
-                            className: 'text-center fs-5' // Center-align, medium font
-                        }
-                    ],
-                    createdRow: function(row, data, dataIndex) {
-                        $('td:eq(1)', row).css('white-space',
-                            'nowrap'); // Prevent wrap on index column
-                        $('td:eq(2)', row).css('white-space',
-                            'nowrap'); // Prevent wrap on index column
-
-
-                    }
-                });
-            });
-        });
-
-        // Initialize DataTable for the active month tab on page load
-        const activeTab = document.querySelector('.month-tab.active');
-        if (activeTab) {
-            activeTab.dispatchEvent(new CustomEvent('shown.bs.tab'));
-        }
+        document.getElementById("pdfModalLabel").textContent = pdfTitle;
+        document.getElementById("pdfViewer").src = pdfUrl;
     });
+
+    pdfModal.addEventListener("hidden.bs.modal", function() {
+        document.getElementById("pdfViewer").src = "";
+    });
+
+    // Function to initialize DataTable for a given tab
+    function initializeDataTable(tab) {
+        const month = tab.getAttribute('data-month');
+        const type = tab.getAttribute('data-type');
+        const tableId = `#datatable-${type}-${month}`;
+
+        // Debugging: Log tab attributes and table ID
+        console.log(`Tab attributes - month: ${month}, type: ${type}, tableId: ${tableId}`);
+        console.log(`Table element exists: ${$(tableId).length > 0}`);
+
+        // Check if table element exists
+        if ($(tableId).length === 0) {
+            console.error(`Table with ID ${tableId} not found in the DOM.`);
+            return;
+        }
+
+        // Destroy existing DataTable if initialized
+        if ($.fn.DataTable.isDataTable(tableId)) {
+            console.log(`Destroying existing DataTable for ${tableId}`);
+            $(tableId).DataTable().destroy();
+        }
+
+        // Initialize DataTable
+        $(tableId).DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: '{{ route("home.order-circular", ["type" => $orderTypeKey]) }}',
+                method: 'GET',
+                data: {
+                    month: month,
+                    go_type: type,
+                    _t: new Date().getTime()
+                },
+                error: function(xhr, status, error) {
+                    console.error(`AJAX error for type ${type}, month ${month}:`, status, error);
+                    console.error('Response:', xhr.responseText);
+                }
+            },
+            columns: [
+                {
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    className: 'text-center fs-6'
+                },
+                {
+                    data: 'number',
+                    name: 'number',
+                    className: 'text-nowrap fs-10 text-dark'
+                },
+                {
+                    data: 'date',
+                    name: 'date',
+                    className: 'text-nowrap fs-10 text-dark'
+                },
+                {
+                    data: 'title',
+                    name: 'title',
+                    className: 'fw-normal fs-10 text-dark'
+                },
+                {
+                    data: 'view',
+                    name: 'view',
+                    orderable: false,
+                    searchable: false,
+                    className: 'text-center fs-5'
+                }
+            ],
+            createdRow: function(row, data, dataIndex) {
+                $('td:eq(1)', row).css('white-space', 'nowrap');
+                $('td:eq(2)', row).css('white-space', 'nowrap');
+            }
+        });
+
+        console.log(`DataTable initialized for ${tableId}`);
+    }
+
+    // Handle month tab clicks for both Manuscript and Routine
+    document.querySelectorAll('.month-tab').forEach(tab => {
+        tab.addEventListener('shown.bs.tab', function(event) {
+            console.log('Tab shown:', event.target);
+            initializeDataTable(event.target);
+        });
+    });
+
+    // Initialize DataTable for the active month tab on page load
+    const activeTab = document.querySelector('.month-tab.active');
+    if (activeTab) {
+        console.log('Active tab on page load:', activeTab);
+        initializeDataTable(activeTab);
+    } else {
+        console.error('No active month tab found on page load.');
+    }
+});
 </script>
