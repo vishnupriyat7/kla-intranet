@@ -14,16 +14,22 @@
                 @foreach ($results as $index => $result)
                     <tr>
                         <td>{{ $index + 1 }}</td>
-                        @if($orderType == 'G')
-                            <td class='text-nowrap'>G.O.({{ $result->go_type == 'M' ? 'Ms' :
-                            ($result->go_type == 'R' ? 'Rt' :
-                                ($result->go_type == 'P' ? 'P' : '')) }}).No.{{ $result->number }}</td>
+                        @if ($orderType == 'G')
+                            <td class='text-nowrap'>
+                                G.O.({{ $result->go_type == 'M' ? 'Ms' : ($result->go_type == 'R' ? 'Rt' : ($result->go_type == 'P' ? 'P' : '')) }}).No.{{ $result->number }}
+                            </td>
+                        @elseif($orderType == 'O')
+                            <td>OO.No.{{ $result->number }}</td>
                         @else
-                            <td>{{ $result->number }}</td>
+                            <td class='text-nowrap'>Cir.No.{{ $result->number ?? 'N/A' }}</td>
                         @endif
-                        <td class='text-nowrap'>{{ $result->date ? \Carbon\Carbon::parse($result->date)->format('d-m-Y') :
-                    ($result->published_date ? \Carbon\Carbon::parse($result->published_date)->format('d-m-Y') :
-                        'N/A') }}</td>
+                        <td class='text-nowrap'>
+                            {{ $result->date
+                                ? \Carbon\Carbon::parse($result->date)->format('d-m-Y')
+                                : ($result->published_date
+                                    ? \Carbon\Carbon::parse($result->published_date)->format('d-m-Y')
+                                    : 'N/A') }}
+                        </td>
                         <td>{{ $result->title ?? 'N/A' }}</td>
                         <td>
                             @if (isset($result->path))

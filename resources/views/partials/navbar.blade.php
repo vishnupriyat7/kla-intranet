@@ -68,9 +68,9 @@
                     <div class="navbar-nav mx-auto border-top">
                         <a href="{{ route('home.index') }}"
                             class="nav-item nav-link {{ request()->is('/') ? 'active' : '' }}">Home</a>
-                        <a href="{{ route('home.index-other') }}"
+                        {{-- <a href="{{ route('home.index-other') }}"
                             class="nav-item nav-link {{ request()->routeIs('home.index-other') ? 'active' : '' }}">Home
-                            I</a>
+                            I</a> --}}
 
 
                         <div class="nav-item dropdown">

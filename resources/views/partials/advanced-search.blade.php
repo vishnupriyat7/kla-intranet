@@ -42,26 +42,41 @@
                                     @endfor
                                 </select>
                             </div>
-                            <!-- Date Selection -->
-                            <div class="col-md-4">
-                                <label for="date" class="form-label">Select Date</label>
-                                <input type="date" class="form-control" id="date" name="date"
-                                    value="{{ request('date') }}">
-                            </div>
-                            {{-- Month Selection --}}
+
+                             {{-- Month Selection --}}
                             <div class="col-md-4">
                                 <label for="month" class="form-label">Select Month</label>
                                 <select class="form-select" id="month" name="month">
                                     <option value="">Choose...</option>
                                     @for ($i = 1; $i <= 12; $i++)
-                                        <option value="{{ $i }}" {{ request('month') == $i ? 'selected' : '' }}>
+                                        <option value="{{ $i }}"
+                                            {{ request('month') == $i ? 'selected' : '' }}>
                                             {{ date('F', mktime(0, 0, 0, $i, 10)) }}
                                         </option>
                                     @endfor
                                 </select>
                             </div>
+                            {{-- <!-- Date Selection -->
+                            <div class="col-md-4">
+                                <label for="date" class="form-label">Select Date</label>
+                                <input type="date" class="form-control" id="date" name="date"
+                                    value="{{ request('date') }}">
+                            </div> --}}
+                            <!-- From Date Selection -->
+                            <div class="col-md-4">
+                                <label for="from_date" class="form-label">From Date</label>
+                                <input type="date" class="form-control" id="from_date" name="from_date"
+                                    value="{{ request('from_date') }}">
+                            </div>
+                            <!-- To Date Selection -->
+                            <div class="col-md-4">
+                                <label for="to_date" class="form-label">To Date</label>
+                                <input type="date" class="form-control" id="to_date" name="to_date"
+                                    value="{{ request('to_date') }}">
+                            </div>
+
                             {{-- Input field to Serch Based on Keyword --}}
-                            <div class="col-md-8">
+                            <div class="col-md-4">
                                 <label for="keyword" class="form-label">
                                     Search By Keyword</label>
                                 <input type="text" class="form-control" id="keyword" name="keyword"
@@ -83,9 +98,13 @@
                 <div class="card-body">
                     <div class="card-body" id="search-results">
                         @if (isset($results) && count($results) > 0)
-                            @include('partials.advanced-search-results', ['results' => $results, 'orderType' => $orderType])
+                            @include('partials.advanced-search-results', [
+                                'results' => $results,
+                                'orderType' => $orderType,
+                            ])
                         @else
-                            <div class="alert alert-warning mt-4">Please select an Order Type to proceed with the search. </div>
+                            <div class="alert alert-warning mt-4">Please select an Order Type to proceed with the search.
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -130,21 +149,33 @@
         });
     });
 
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         const form = document.getElementById("advancedSearchForm");
+        const fromDateInput = document.getElementById("from_date");
+        const toDateInput = document.getElementById("to_date");
         const resultsContainer = document.getElementById("search-results");
 
-        form.addEventListener("submit", function (e) {
+        form.addEventListener("submit", function(e) {
             e.preventDefault();
+
+            // Client-side validation for date range
+            if (toDateInput.value && !fromDateInput.value) {
+                alert("Please select a From Date when choosing a To Date.");
+                return;
+            }
+            if (fromDateInput.value && toDateInput.value && fromDateInput.value > toDateInput.value) {
+                alert("To Date cannot be earlier than From Date.");
+                return;
+            }
 
             const formData = new FormData(form);
             const params = new URLSearchParams(formData).toString();
 
             fetch(form.action + "?" + params, {
-                headers: {
-                    "X-Requested-With": "XMLHttpRequest"
-                }
-            })
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest"
+                    }
+                })
                 .then(response => response.text())
                 .then(html => {
                     if (resultsContainer) {

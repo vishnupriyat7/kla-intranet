@@ -180,7 +180,7 @@ class HomeController extends Controller
             $orders = $orders->filter(function ($order) use ($month) {
                 return \Carbon\Carbon::parse($order->date)->format('m') == str_pad($month, 2, '0', STR_PAD_LEFT);
             });
-// \Log::info('Filtered Orders:', ['orders' => $orders]);
+            // \Log::info('Filtered Orders:', ['orders' => $orders]);
             return DataTables::of($orders)
                 ->addIndexColumn()
                 ->addColumn('number', function ($order) {
@@ -339,6 +339,11 @@ class HomeController extends Controller
             $error = 'Please select an Year while choosing a month.';
             return view('partials.advanced-search-results', compact('error'));
         }
+        // Validate if to_date is provided without from_date
+        if ($request->filled('to_date') && !$request->filled('from_date')) {
+            $error = 'Please select a From Date when choosing a To Date.';
+            return view('partials.advanced-search-results', compact('error'));
+        }
 
         if ($request->filled('order_type')) {
             $query = DB::table('order_circulars');
@@ -363,9 +368,11 @@ class HomeController extends Controller
                 $query->whereMonth('date', '=', $request->month);
             }
 
-            // Filter by Exact Date
-            if ($request->filled('date')) {
-                $query->whereDate('date', '=', $request->date);
+            // Filter by Date Range
+            if ($request->filled('from_date') && $request->filled('to_date')) {
+                $query->whereBetween('date', [$request->from_date, $request->to_date]);
+            } elseif ($request->filled('from_date')) {
+                $query->whereDate('date', '>=', $request->from_date);
             }
 
             // Filter by Keyword
@@ -376,7 +383,7 @@ class HomeController extends Controller
                 });
             }
 
-            $orderResults = $query->take(100)->get(); // Limit to 100 results
+            $orderResults = $query->take(100)->orderBy('date')->get(); // Limit to 100 results
         }
 
         // Search in news_updates table (only if order_type is 'news')
