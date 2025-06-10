@@ -23,12 +23,15 @@
                         @else
                             <td class='text-nowrap'>Cir.No.{{ $result->number ?? 'N/A' }}</td>
                         @endif
-                        <td class='text-nowrap'>
+                        {{-- <td class='text-nowrap'>
                             {{ $result->date
                                 ? \Carbon\Carbon::parse($result->date)->format('d-m-Y')
                                 : ($result->published_date
                                     ? \Carbon\Carbon::parse($result->published_date)->format('d-m-Y')
                                     : 'N/A') }}
+                        </td> --}}
+                        <td class='text-nowrap'>
+                            {{ $result->date ? \Carbon\Carbon::parse($result->date)->format('d-m-Y') : 'N/A' }}
                         </td>
                         <td>{{ $result->title ?? 'N/A' }}</td>
                         <td>
