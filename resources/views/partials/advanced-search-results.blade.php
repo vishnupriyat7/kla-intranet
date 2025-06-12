@@ -31,8 +31,8 @@
                                     : 'N/A') }}
                         </td> --}}
                         <td class='text-nowrap'>
-                            {{-- {{ $result->date ? \Carbon\Carbon::parse($result->date)->format('d-m-Y') : 'N/A' }} --}}
-                             {{ $result->date ?? 'N/A' }}
+                            {{ $result->date ? \Carbon\Carbon::parse($result->date)->format('d-m-Y') : 'N/A' }}
+                             {{-- {{ $result->date ?? 'N/A' }} --}}
                         </td>
                         <td>{{ $result->title ?? 'N/A' }}</td>
                         <td>
