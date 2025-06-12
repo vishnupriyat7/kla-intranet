@@ -383,47 +383,8 @@ class HomeController extends Controller
                 });
             }
 
-            $orderResults = $query->take(100)->orderBy('date')->get(); // Limit to 100 results
+            $orderResults = $query->orderBy('date')->get(); // Limit to 100 results
         }
-
-        // Search in news_updates table (only if order_type is 'news')
-        // if ($request->filled('order_type') && $request->order_type === 'news') {
-        //     try {
-        //         $newsQuery = DB::table('news_updates');
-
-        //         // Filter by Year
-        //         if ($request->filled('year')) {
-        //             $newsQuery->whereYear('published_date', $request->year);
-        //         }
-
-        //         // Filter by Date
-        //         if ($request->filled('date')) {
-        //             $newsQuery->whereDate('published_date', $request->date);
-        //         }
-
-        //         // Filter by Month
-        //         if ($request->filled('month')) {
-        //             $newsQuery->whereMonth('published_date', $request->month);
-        //         }
-
-        //         // Filter by Keyword
-        //         if ($request->filled('keyword')) {
-        //             $newsQuery->where(function ($q) use ($request) {
-        //                 $q->where('headline', 'LIKE', "%{$request->keyword}%")
-        //                     ->orWhere('summary', 'LIKE', "%{$request->keyword}%")
-        //                     ->orWhere('content', 'LIKE', "%{$request->keyword}%");
-        //             });
-        //         }
-
-        //         $newsResults = $newsQuery->take(100)->get(); // Limit to 100 results
-        //     } catch (\Exception $e) {
-        //         \Log::error('Error in news_updates query: ' . $e->getMessage());
-        //         return redirect()->back()->withErrors(['error' => 'An error occurred while fetching news results. Please try again later.']);
-        //     }
-        // }
-
-        // Merge both results
-        // $results = $orderResults->merge($newsResults);
         $results = $orderResults;
         $orderType = $request->order_type;
 
